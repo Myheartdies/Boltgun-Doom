@@ -4,7 +4,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		dropSoundVolume = 0.5;
 		queueLength = 12;
 		maxCasingCount = 5;
-		casingDropSound = "weapons/bolter_casing";
+		casingDropSound = "weapons/heavybolter_casing";
 		super.BeginPlay();
 	}
 	Default
@@ -144,7 +144,7 @@ class HeavyBolterProjectile: BolterProjectile{
     States
 	{
 	Spawn:
-		BOLT A 1 Bright TrailParticle(16, 60, 30, 6, 5);
+		BOLT A 1 Bright TrailParticle(16, 60, 30, 8, 6);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
