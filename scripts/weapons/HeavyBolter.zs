@@ -2,9 +2,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 {
     override void BeginPlay(){
 		dropSoundVolume = 0.5;
-		queueLength = 12;
-		maxCasingCount = 5;
+		queueLength = 10;
+		maxCasingCount = 20;
 		casingDropSound = "weapons/heavybolter_casing";
+        extraOffset_x = -120;
+        extraOffset_y = 0;
 		super.BeginPlay();
 	}
 	Default
@@ -43,7 +45,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Goto LightDone;
 	Casing2:
 		CSNH NO 2 Bright;
-		CASH PABCDEGHIJKLMNOP 2;
+		CSNH PABCDEGHIJKLMNOP 2;
 		Goto LightDone;
 	Casing3:
 		CSNH FG 2 Bright;
@@ -73,10 +75,29 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         HBTR D 1 A_ReFire("Windup3");
         Goto Winddown2;
     Firing:
-        HBTR G 2;
+        HBTR G 1;
+        TNT1 A 0 A_ZoomFactor(0.992);
+		TNT1 A 0 A_SetPitch(pitch - 1.1);
+		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
+		TNT1 A 0 OverlayRecoil(15,55);
+        HBTR G 1;
 		// HBTR H 3 A_FireCGun;
-        HBTR H 3 FireHeavyBolter;
+        HBTR H 1 Bright FireHeavyBolter;
+        TNT1 A 0 A_ZoomFactor(0.993);
+		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
+		TNT1 A 0 OverlayRecoil(-6, -10);
+        HBTR H 1 Bright;
+        TNT1 A 0 A_SetPitch(pitch + 0.4);
+        TNT1 A 0 A_ZoomFactor(0.995);
+		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
+		TNT1 A 0 OverlayRecoil(-5, -28);
+        HBTR H 1;
+        TNT1 A 0 A_SetPitch(pitch + 0.7);
+        TNT1 A 0 OverlayRecoil(-4, -17);
 		HBTR I 0 A_ReFire("Firing");
+        // TNT1 A 0 A_SetPitch(pitch + 0.35);
+        TNT1 A 0 A_ZoomFactor(1);
+		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		Goto Winddown3;
 	Flash:
 		CHGF A 5 Bright A_Light1;
@@ -109,7 +130,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			accurate = true;
 		}
 		// if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
+		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 15,10 );
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
 		A_StartSound ("weapons/heavybolter_fire", CHAN_AUTO, 0, 1);
@@ -133,8 +154,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 class HeavyBolterProjectile: BolterProjectile{
     Default
 	{
-		Radius 5;
-		Height 6;
+		Radius 4;
+		Height 4;
 		Speed 80;
 		Scale 0.8;
 		Damage 14;
@@ -144,13 +165,13 @@ class HeavyBolterProjectile: BolterProjectile{
     States
 	{
 	Spawn:
-		BOLT A 1 Bright TrailParticle(16, 60, 30, 8, 6);
+		BOLT A 1 Bright TrailParticle(10, 80, 30, 5, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		BTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, damagetype="SmallExplosion");
-		BTRE BCDEFGHIJKL 2 Bright;
-		BTRE MNOPQ 2;
+		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, damagetype="SmallExplosion");
+		HTRE BCDEFGHIJKL 2 Bright;
+		HTRE MNOP 2;
 // 		Goto LightDone;
 		Stop;
 	}
