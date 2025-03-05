@@ -85,7 +85,8 @@ class Bolter : ShellEjectingWeapon
 		
 
 		BOTR D 2 A_ReFire;
-		
+		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, 1);
+		TNT1 A 0 A_GiveInventory("isFullReload", 1);
 		Goto Ready;
 	MuzzleFlash:
 		TNT1 A 0 A_jump(255, "FireRing");
