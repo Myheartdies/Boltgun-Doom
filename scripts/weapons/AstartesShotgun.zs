@@ -184,7 +184,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		double pitch = BulletSlope ();
 
 
-		A_FireBullets (7.5, 2, 6, /*7*/ 0, "BulletPuff",0,0 ,"ShotgunProjectile",15,8);
+		A_FireBullets (6.5, 2, 6, /*7*/ 0, "BulletPuff",0,0 ,"ShotgunProjectile",15,8);
 // 			A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
 // 			GunShot (false, "BulletPuff", pitch);
 
