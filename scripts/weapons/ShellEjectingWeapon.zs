@@ -49,7 +49,7 @@ class ShellEjectingWeapon : DoomWeapon
 		offsetCompensationX = 0;
 		offsetCompensationY = 0;
 		shot = False;
-		isHeld = True;
+		isHeld = False;
 		super.BeginPlay();
 	}
 	Default
@@ -156,6 +156,7 @@ class ShellEjectingWeapon : DoomWeapon
 		offsetCompensationX = 0;
 		offsetCompensationY = 0;
 	}
+
 	void CasingDropSoundTick(float dropSoundVolume = 0.3){
 // 		Play Delayed sounds for casing
 
