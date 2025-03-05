@@ -15,8 +15,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Weapon.AmmoUse 2;
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "Clip";
-        +WEAPON.AMMO_OPTIONAL
-		+WEAPON.ALT_AMMO_OPTIONAL
+//         +WEAPON.AMMO_OPTIONAL
+// 		+WEAPON.ALT_AMMO_OPTIONAL
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
 		Inventory.PickupMessage "$GOTCHAINGUN";
@@ -82,7 +82,10 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		TNT1 A 0 OverlayRecoil(15,55);
         HBTR G 1;
 		// HBTR H 3 A_FireCGun;
+        TNT1 A 0 A_Quake(0.5,4,0,50,"");
         HBTR H 1 Bright FireHeavyBolter;
+        TNT1 A 0 A_Recoil(0.3);
+        
         TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 OverlayRecoil(-6, -10);
@@ -165,7 +168,7 @@ class HeavyBolterProjectile: BolterProjectile{
     States
 	{
 	Spawn:
-		BOLT A 1 Bright TrailParticle(10, 80, 30, 5, 3);
+		BOLT A 1 Bright TrailParticle(10, 60, 15, 6, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
