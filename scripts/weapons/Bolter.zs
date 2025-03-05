@@ -85,11 +85,11 @@ class Bolter : ShellEjectingWeapon
 		
 
 		BOTR D 2 A_ReFire;
-		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, 1);
-		TNT1 A 0 A_GiveInventory("isFullReload", 1);
+		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, "Ready");
+		BOTR A 0 A_GiveInventory("isFullReload", 1);
 		Goto Ready;
 	MuzzleFlash:
-		TNT1 A 0 A_jump(255, "FireRing");
+		TNT1 A 0 A_jump(256, "FireRing");
 	FireRing:
 		BTRF A 2 Bright A_Light(2);
 		BTRF BC 1 Bright A_Light(2);
@@ -145,15 +145,15 @@ class Bolter : ShellEjectingWeapon
 	ReloadingPartial:	
 		BOTR G 4 A_Startsound("weapons/bolter_reload_partial");
 		BOTR H 4;
-		BOTR IJ 5; 
-// 		BOTR J 4;
+		BOTR I 5; 
+		BOTR J 5;
 		BOTR KL 3;
 		Goto ReloadLogic;
 	ReloadingFull:
 		BOTR G 2 A_Startsound("weapons/bolter_reload_full");
 		BOTR HIJKL 3;
 		BOTR PQRST 2;
-		TNT1 A 0 A_TakeInventory("isFullReload", 255);
+		TNT1 A 0 A_TakeInventory("isFullReload", 256);
 		Goto ReloadLogic;
 	ReloadLogic:
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 0, "ReloadOver");
@@ -228,7 +228,7 @@ class BolterProjectile: TrailedProjectile{
 		Radius 3;
 		Height 4;
 		Speed 120;
-		Scale 0.8;
+		Scale 0.65;
 		Damage 11;
 		DeathSound "weapons/bolter_impact";
 	}
