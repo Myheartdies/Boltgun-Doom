@@ -125,11 +125,11 @@ class ShellEjectingWeapon : DoomWeapon
 // 	casingLayerReady and Exit must be called on select and deselect to turn on/off the tick
 // 	Otherwise the tick() will always run even after a weapon is lowered , causing two weapons to change casing overlay offset
 // 	at the same time.
-	action void casingLayerReady(){
+	action void CasingLayerReady(){
 		invoker.isHeld = True;
 	}
 	
-	action void casingLayerExit(){
+	action void CasingLayerExit(){
 		invoker.isHeld = False;
 	}
 	
