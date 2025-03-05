@@ -5,6 +5,8 @@ class ShellEjectingWeapon : DoomWeapon
 	Array<float> ejectSpeed_x; //The inital x speed of casing
 	Array<float> ejectSpeed_y; //The inital y speed of casing
 	int maxCasingCount;
+	float extraOffset_x; 	//How much offset does the spawn position deviate from bolter's ejection position, positive is right negative is left
+	float extraOffset_y;	//positive is down negative is up
 	int casingIdx;
 	
 // 	For playing casing drop sound
@@ -86,7 +88,7 @@ class ShellEjectingWeapon : DoomWeapon
 		A_Overlay(invoker.casingIdx, CasingState);
 		A_OverlayPivot(invoker.casingIdx, 0.5, 0.5);
 		A_OverlayScale(invoker.casingIdx, casingScale, casingScale);
-		A_OverlayOffset(invoker.casingIdx, 302, 30);
+		A_OverlayOffset(invoker.casingIdx, 302 + invoker.extraOffset_x, 30 + invoker.extraOffset_y);
 		invoker.casingTimeElapsed[invoker.casingIdx - 2] = 0;
 		
 // 		Set base eject speed of the casing
@@ -99,6 +101,10 @@ class ShellEjectingWeapon : DoomWeapon
 	action void AddToSoundQueue(int baseDelay = 25){
 		invoker.soundDelays[invoker.insertIdx] = baseDelay;
 		invoker.insertIdx = (invoker.insertIdx + 1)%invoker.queueLength;
+	}
+	action void OverlayRecoil(int offsetX, int offsetY){
+		A_WeaponOffset(offsetX, offsetY, WOF_ADD);
+		CompensateOffset(-offsetX, -offsetY);
 	}
 	
 // 	Compensate the movement of casing overlay when recoil moves the weapon offset
