@@ -89,6 +89,8 @@ weapons/bolter_reload_full BOTRRLDF
 
 // Reload Partial
 weapons/bolter_reload_partial BOTRRLDP
+
+
 // ========================================================================
 // For astartes shotgun
 // ========================================================================
@@ -135,6 +137,48 @@ $pitchset weapon/scout_shotgun_casing4 0.8 0.85
 $pitchset weapon/scout_shotgun_casing5 0.8 0.85
 
 
+// ========================================================================
+// For heavy bolter
+// ========================================================================
+
+// Firing
+$random weapons/heavybolter_fire {weapons/heavybolter_fire1 weapons/heavybolter_fire2 
+weapons/heavybolter_fire3 weapons/heavybolter_fire4 weapons/heavybolter_fire5 
+weapons/heavybolter_fire6 weapons/heavybolter_fire7 weapons/heavybolter_fire8 
+weapons/heavybolter_fire9 weapons/heavybolter_fire10
+}
+weapons/heavybolter_fire1 HBTRFR01
+weapons/heavybolter_fire2 HBTRFR02
+weapons/heavybolter_fire3 HBTRFR03
+weapons/heavybolter_fire4 HBTRFR04
+weapons/heavybolter_fire5 HBTRFR05
+weapons/heavybolter_fire6 HBTRFR06
+weapons/heavybolter_fire7 HBTRFR07
+weapons/heavybolter_fire8 HBTRFR08
+weapons/heavybolter_fire9 HBTRFR09
+weapons/heavybolter_fire10 HBTRFR10
+
+
+/* Casing Drop */
+$random weapons/heavybolter_casing {weaheavybolter_casingasingheavybolter_casingter_cheavybolter_casings/bolter_casing3 
+weapons/heavybolter_casing4 weaheavybolter_casingasingheavybolter_casingter_cheavybolter_casings/bolter_casing7 
+weapons/heavybolter_casing8 weaheavybolter_casingasingheavybolter_casingter_caheavybolter_casings/bolter_casing11 
+weapons/heavybolter_casing12 weaheavybolter_casingasing1heavybolter_casingter_caheavybolter_casings/bolter_casing15}
+weapons/heavybolter_casing1 BTRHCN01
+weapons/heavybolter_casing2 BTRHCN02
+weapons/heavybolter_casing3 BTRHCN03
+weapons/heavybolter_casing4 BTRHCN04
+weapons/heavybolter_casing5 BTRHCN05
+weapons/heavybolter_casing6 BTRHCN06
+weapons/heavybolter_casing7 BTRHCN07
+weapons/heavybolter_casing8 BTRHCN08
+weapons/heavybolter_casing9 BTRHCN09
+weapons/heavybolter_casing10 BTRHCN10
+weapons/heavybolter_casing11 BTRHCN11
+weapons/heavybolter_casing12 BTRHCN12
+weapons/heavybolter_casing13 BTRHCN13
+weapons/heavybolter_casing14 BTRHCN14
+weapons/heavybolter_casing15 BTRHCN15
 
 
 ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
