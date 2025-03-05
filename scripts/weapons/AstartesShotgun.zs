@@ -59,26 +59,27 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 1);
 		Goto Reload;
 		
-		TNT1 A 0 A_ZoomFactor(0.992);
+		TNT1 A 0 A_ZoomFactor(0.99);
 		TNT1 A 0 A_SetPitch(pitch - 1.15);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
-		TNT1 A 0 A_WeaponOffset(13, 25, WOF_ADD);
-		TNT1 A 0 CompensateOffset(-13, -25);
+		TNT1 A 0 OverlayRecoil(13,25);
+		// TNT1 A 0 A_WeaponOffset(13, 25, WOF_ADD);
+		// TNT1 A 0 CompensateOffset(-13, -25);
 		STGN B 1; //Recoil should dampen entirely after first firing frame
-		TNT1 A 0 A_ZoomFactor(0.994);
+		TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 A_WeaponOffset(13, 20, WOF_ADD);
 		TNT1 A 0 CompensateOffset(-13, -20);
 		STGN B 1;
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
-		TNT1 A 0 A_ZoomFactor(0.996);
+		TNT1 A 0 A_ZoomFactor(0.995);
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(0, -15);
 		STGN B 1 Bright {FireScoutShotgun(); }
 		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
 		TNT1 A 0 CompensateOffset(12, 23);
-		TNT1 A 0 A_ZoomFactor(0.998);
+		TNT1 A 0 A_ZoomFactor(0.997);
 		TNT1 A 0 A_SetPitch(pitch + 0.4);
 		TNT1 A 0 A_OverlayScale(1, 1.1, 1.1);
 		STGN B 1 Bright ;
@@ -104,6 +105,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		STGN J 2  A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		STGN KL 2 A_WeaponReady(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_ReFire("Fire");
 		Goto Ready;
 	ShotgunCasing:
 		TNT1 A 0 A_jump(80, "Casing1");
