@@ -1,0 +1,12 @@
+OptionMenu "ParryMe_Options" {
+	Title "ParryMe Options"
+    Slider "Parry Time Window", "sv_parryMe_time", 3, 20, 1
+	Slider "Fail Time Window", "sv_parryMe_failTime", 0, 8, 1
+	Slider "Parry Cooldown Time", "sv_parryMe_cooldown", 0, 20, 1
+	Option "Melee Parries Inflict Pain", "sv_parryMe_pain", "YesNo"
+
+}
+
+AddOptionMenu "OptionsMenu" {
+    Submenu "ParryMe Options", "ParryMe_Options"
+}

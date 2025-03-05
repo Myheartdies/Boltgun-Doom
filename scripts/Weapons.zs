@@ -1,0 +1,4 @@
+#include "scripts/weapons/ShellEjectingWeapon.zs"
+#include "scripts/weapons/Bolter.zs"
+#include "scripts/weapons/AstartesShotgun.zs"
+#include "scripts/weapons/TrailedProjectile.zs"

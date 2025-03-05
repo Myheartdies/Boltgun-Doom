@@ -1,0 +1,4 @@
+// generator Bolter CacoScorch
+generator BolterProjectile CacoScorch
+generator AstartesShotgun BulletChip
+generator ShotgunProjectile BulletChip

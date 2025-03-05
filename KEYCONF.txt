@@ -1,0 +1,14 @@
+   
+// Somehow binding the user1 key with an alias cause the input to repeat forever
+// TODO: Change the parry key from btn_user1 to a custom keybind   
+   addkeysection "Parry Me" ParryKeysection
+
+   addmenukey "Parry Key" "+user1"
+   defaultbind  q "+user1"
+   
+// 	addkeysection "My Custom Mod Keys" MyModKeys
+// 	addmenukey "Activate Special Ability" "+user1"
+// 	defaultbind q "+user1"
+
+	clearplayerclasses
+	addplayerclass "SternGuard"

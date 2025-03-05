@@ -1,0 +1,329 @@
+
+// ========================================================================
+// For parry
+// ========================================================================
+ParryMe/parry PM_PARRY
+ParryMe/combo1 PM_COMB1
+ParryMe/combo2 PM_COMB2
+ParryMe/combo3 PM_COMB3
+ParryMe/combo4 PM_COMB4
+
+ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
+
+// ========================================================================
+// For player sound
+// ========================================================================
+// $playersound      sternguard	male	*pain100	STNPAIN1
+// $playersounddup   sternguard	male	*pain100	STNPAIN3
+// $playersounddup   sternguard	male	*pain75		*pain100
+// $playersounddup   sternguard	male	*pain50		*pain100
+// $playersounddup   sternguard	male	*pain25		*pain100
+
+$playeralias sternguard gender *pain100 sternguard/pain
+$playeralias sternguard gender *pain75 *pain100
+$playeralias sternguard gender *pain50 *pain100
+$playeralias sternguard gender *pain25 *pain100
+
+$random sternguard/pain {sternguard/pain1 sternguard/pain2 sternguard/pain3 sternguard/pain4 
+sternguard/pain5 sternguard/pain6 sternguard/pain7 sternguard/pain8 sternguard/pain9}
+sternguard/pain1 STNPAIN1
+sternguard/pain2 STNPAIN2
+sternguard/pain3 STNPAIN3
+sternguard/pain4 STNPAIN4
+sternguard/pain5 STNPAIN5
+sternguard/pain6 STNPAIN6
+sternguard/pain7 STNPAIN7
+sternguard/pain8 STNPAIN8
+sternguard/pain9 STNPAIN9
+
+// ========================================================================
+// For bolter
+// ========================================================================
+
+// Fireing
+$random weapons/bolter_fire {weapons/bolter_fire1 weapons/bolter_fire2 weapons/bolter_fire3 weapons/bolter_fire4 weapons/bolter_fire5}
+weapons/bolter_fire1 BOTRFRE1
+weapons/bolter_fire2 BOTRFRE2
+weapons/bolter_fire3 BOTRFRE3
+weapons/bolter_fire4 BOTRFRE4
+weapons/bolter_fire5 BOTRFRE5
+
+// Low Ammo click
+weapons/bolter_low_ammo_click BOTRCLIK
+$pitchset weapons/bolter_low_ammo_click 0.9 0.98
+
+// Impact
+$random weapons/bolter_impact {weapons/bolter_impact1 weapons/bolter_impact2 weapons/bolter_impact3 weapons/bolter_impact4 weapons/bolter_impact5 weapons/bolter_impact6}
+weapons/bolter_impact1 BOTRIMP1
+weapons/bolter_impact2 BOTRIMP2
+weapons/bolter_impact3 BOTRIMP3
+weapons/bolter_impact4 BOTRIMP4
+weapons/bolter_impact5 BOTRIMP5
+weapons/bolter_impact6 BOTRIMP6
+
+// Casing drop
+$random weapons/bolter_casing {weapons/bolter_casing1 weapons/bolter_casing2 weapons/bolter_casing3 
+weapons/bolter_casing4 weapons/bolter_casing5 weapons/bolter_casing6 weapons/bolter_casing7 
+weapons/bolter_casing8 weapons/bolter_casing9 weapons/bolter_casing10 weapons/bolter_casing11 
+weapons/bolter_casing12 weapons/bolter_casing13 weapons/bolter_casing14 weapons/bolter_casing15}
+weapons/bolter_casing1 BOTRCS01
+weapons/bolter_casing2 BOTRCS02
+weapons/bolter_casing3 BOTRCS03
+weapons/bolter_casing4 BOTRCS04
+weapons/bolter_casing5 BOTRCS05
+weapons/bolter_casing6 BOTRCS06
+weapons/bolter_casing7 BOTRCS07
+weapons/bolter_casing8 BOTRCS08
+weapons/bolter_casing9 BOTRCS09
+weapons/bolter_casing10 BOTRCS10
+weapons/bolter_casing11 BOTRCS11
+weapons/bolter_casing12 BOTRCS12
+weapons/bolter_casing13 BOTRCS13
+weapons/bolter_casing14 BOTRCS14
+weapons/bolter_casing15 BOTRCS15
+
+
+
+// Reload partial
+weapons/bolter_reload_full BOTRRLDF
+
+// Reload Partial
+weapons/bolter_reload_partial BOTRRLDP
+// ========================================================================
+// For astartes shotgun
+// ========================================================================
+
+// Fire
+weapons/scout_shotgun_fire STGNFRE1 
+
+// Impact
+$random weapons/scout_shotgun_impact {
+weapons/scout_shotgun_impact1 weapons/scout_shotgun_impact2 
+weapons/scout_shotgun_impact3 weapons/scout_shotgun_impact4 
+weapons/scout_shotgun_impact5
+}
+weapons/scout_shotgun_impact1 STGNIMP1
+weapons/scout_shotgun_impact2 STGNIMP2
+weapons/scout_shotgun_impact3 STGNIMP3
+weapons/scout_shotgun_impact4 STGNIMP4
+weapons/scout_shotgun_impact5 STGNIMP5
+
+// Pump
+weapons/scout_shotgun_pump STGNPMP1 
+$pitchset weapons/scout_shotgun_pump 0.85 0.9
+
+// Reload insert shell
+weapons/scout_shotgun_insert_shell STGNRLD2
+$pitchset weapons/scout_shotgun_insert_shell 0.9 0.95
+
+// Casing drop
+$random weapon/scout_shotgun_casing {
+weapon/scout_shotgun_casing1 weapon/scout_shotgun_casing2 
+weapon/scout_shotgun_casing3 weapon/scout_shotgun_casing4 
+weapon/scout_shotgun_casing5
+}
+weapon/scout_shotgun_casing1 STGNSHL1
+weapon/scout_shotgun_casing2 STGNSHL2
+weapon/scout_shotgun_casing3 STGNSHL3
+weapon/scout_shotgun_casing4 STGNSHL4
+weapon/scout_shotgun_casing5 STGNSHL5
+
+$pitchset weapon/scout_shotgun_casing1 0.8 0.85
+$pitchset weapon/scout_shotgun_casing2 0.8 0.85
+$pitchset weapon/scout_shotgun_casing3 0.8 0.85
+$pitchset weapon/scout_shotgun_casing4 0.8 0.85
+$pitchset weapon/scout_shotgun_casing5 0.8 0.85
+
+
+
+
+ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
+
+
+
+
+
+// ========================================================================
+// For plasma renegade
+// ========================================================================
+CLTP/charge CLTPCRG1
+CLTP/attack CLTPFRE1
+$pitchset CLTP/attack 0.97 1.03 
+
+// ========================================================================
+// For tactical chaos marine
+// ========================================================================
+TCSM/melee sounds/TCSM/melee/melee1.ogg
+$pitchset TCSM/melee 0.95 1.05 
+
+$random TCSM/sight {TCSM/sight1 TCSM/sight2}
+TCSM/sight1 sounds/TCSM/sight/alert1.ogg
+TCSM/sight2 sounds/TCSM/sight/alert2.ogg
+
+$random TCSM/active {TCSM/active1 TCSM/active2}
+TCSM/active1 sounds/TCSM/active/active1.wav
+TCSM/active2 sounds/TCSM/active/active2.wav
+
+$pitchset TCSM/active 0.97 1.03
+
+$random TCSM/death {TCSM/death1 TCSM/death2}
+TCSM/death1 sounds/TCSM/death/death1.wav
+TCSM/death2 sounds/TCSM/death/death2.wav
+
+TCSM/pain sounds/TCSM/pain/pain.wav
+TCSM/bark sounds/TCSM/bark/bark1.ogg
+
+$random TCSM/steps {TCSM/step1 TCSM/step2 TCSM/step3 TCSM/step4 TCSM/step5}
+TCSM/step1 sounds/TCSM/steps/step1.ogg
+TCSM/step2 sounds/TCSM/steps/step2.ogg
+TCSM/step3 sounds/TCSM/steps/step3.ogg
+TCSM/step4 sounds/TCSM/steps/step4.ogg
+TCSM/step5 sounds/TCSM/steps/step5.ogg
+
+$random TCSM/attack {TCSM/attack1 TCSM/attack2 TCSM/attack3 TCSM/attack4 TCSM/attack5}
+TCSM/attack1 TCSMFRE1
+TCSM/attack2 TCSMFRE2
+TCSM/attack3 TCSMFRE3
+TCSM/attack4 TCSMFRE4
+TCSM/attack5 TCSMFRE5
+
+TCSM/charge sounds/TCSM/steps/step_charge.wav
+
+// ========================================================================
+
+
+// ========================================================================
+// For plasma chaos marine
+// ========================================================================
+$random PCSM/sight {PCSM/sight1 PCSM/sight2}
+PCSM/sight1 sounds/PCSM/sight/alert1.wav
+PCSM/sight2 sounds/PCSM/sight/alert2.wav
+
+PCSM/attack sounds/PCSM/attack/marine_plasma.ogg
+$pitchset PCSM/attack 0.92 1.07
+
+PCSM/chargeup sounds/PCSM/attack/marine_plasma_chargeup.wav
+$pitchset PCSM/chargeup 0.92 1.03
+
+PCSM/pain sounds/PCSM/pain/pain.wav
+
+$random PCSM/death {PCSM/death1 PCSM/death2}
+PCSM/death1 sounds/PCSM/death/death1.ogg
+PCSM/death2 sounds/PCSM/death/death2.ogg
+
+// ========================================================================
+
+plush/generic BUYMRCH1
+plush/hurt BUYMRCH2
+
+// ========================================================================
+// For terminator
+// ========================================================================
+$random TERM/steps {TERM/steps1 TERM/steps2 TERM/steps3 TERM/steps4 TERM/steps5}
+TERM/steps1 TRMSTEP1
+TERM/steps2 TRMSTEP2
+TERM/steps3 TRMSTEP3
+TERM/steps4 TRMSTEP4
+TERM/steps5 TRMSTEP5
+
+$random TERM/active {TERM/active1 TERM/active2 TERM/active3 TERM/active4}
+TERM/active1 TRMACTS1
+TERM/active2 TRMACTS2
+TERM/active3 TRMACTS3
+TERM/active4 TRMACTS4
+
+TERM/raisegun TRMRAIS1
+TERM/sight TRMALERT
+TERM/melee TRMMELEE
+
+$random TERM/pain {TERM/pain1 TERM/pain2 TERM/pain3 TERM/pain4 TERM/pain5}
+TERM/pain1 TRMPAIN1
+TERM/pain2 TRMPAIN2
+TERM/pain3 TRMPAIN3
+TERM/pain4 TRMPAIN4
+TERM/pain5 TRMPAIN5
+
+$random TERM/death {TERM/death1 TERM/death2}
+TERM/death1 TRMDETH1
+TERM/death2 TRMDETH2
+
+TERM/reload TRMRLOD1
+
+// ========================================================================
+// For champion
+// ========================================================================
+$random CCSM/sight {CCSM/sight1 CCSM/sight2 CCSM/sight3}
+CCSM/sight1 CAPNSIT1
+CCSM/sight2 CAPNSIT2
+CCSM/sight3 CAPNSIT3
+
+$random CCSM/active {CCSM/active1 CCSM/active2 CCSM/active3 CCSM/active4 CCSM/active5 CCSM/active6}
+CCSM/active1 CAPNACT1
+CCSM/active2 CAPNACT2
+CCSM/active3 CAPNACT3
+CCSM/active4 CAPNACT4
+CCSM/active5 CAPNACT5
+CCSM/active6 CAPNACT6
+
+$random CCSM/pain {CCSM/pain1 CCSM/pain2 CCSM/pain3 CCSM/pain4 CCSM/pain5 CCSM/pain6}
+CCSM/pain1 CAPNPAN1
+CCSM/pain2 CAPNPAN2
+CCSM/pain3 CAPNPAN3
+CCSM/pain4 CAPNPAN4
+CCSM/pain5 CAPNPAN5
+CCSM/pain6 CAPNPAN6
+
+CCSM/melee CAPNAXE1
+$pitchset CCSM/melee 0.97 1.03
+
+CCSM/attack CAPNATK1
+$pitchset CCSM/attack 0.97 1.03
+
+$random CCSM/death {CCSM/death1 CCSM/death2 CCSM/death3 CCSM/death4 CCSM/death5}
+CCSM/death1 CAPNDTH1
+CCSM/death2 CAPNDTH2
+CCSM/death3 CAPNDTH3
+CCSM/death4 CAPNDTH4
+CCSM/death5 CAPNDTH5
+
+$random CCSM/bark {CCSM/bark1 CCSM/bark2 CCSM/bark3}
+CCSM/bark1 CAPNBRK1
+CCSM/bark2 CAPNBRK2
+CCSM/bark3 CAPNBRK3
+
+// ========================================================================
+
+
+// ========================================================================
+// For flamer
+// ========================================================================
+flamer/death FLMRDTH1
+$pitchset flamer/death 0.8 0.9
+
+$random flamer/attack {flamer/attack1 flamer/attack2 flamer/attack3 flamer/attack4}
+flamer/attack1 FLMRATK4
+flamer/attack2 FLMRATK4
+flamer/attack3 FLMRATK4
+flamer/attack4 FLMRATK4
+
+flamer/pain FLMRPAIN
+
+$random flamer/active {flamer/active1 flamer/active2}
+flamer/active1 FLMRACT1
+flamer/active2 FLMRACT2
+
+$random flamer/sight {flamer/sight1 flamer/sight2 flamer/sight3}
+flamer/sight1 FLMRSIT1
+flamer/sight2 FLMRSIT2
+flamer/sight3 FLMRSIT3
+
+
+
+
+// ========================================================================
+
+
+// ========================================================================
+// For  Exalted flamer
+// ========================================================================
+exflamer/death EFLMDTH1

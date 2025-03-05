@@ -1,0 +1,4 @@
+server int sv_parryMe_time = 7;
+server int sv_parryMe_failTime = 6;
+server int sv_parryMe_cooldown = 4;
+server bool sv_parryMe_pain = true;

@@ -1,0 +1,10 @@
+
+texture SMOKETES, 3, 3{
+	Patch PLSHA0,0,0
+}
+NoTrim BTRFA0
+NoTrim BTRFB0
+NoTrim BTRFC0
+
+NoTrim SMOKA0
+
