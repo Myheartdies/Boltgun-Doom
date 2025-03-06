@@ -90,6 +90,8 @@ weapons/bolter_reload_full BOTRRLDF
 // Reload Partial
 weapons/bolter_reload_partial BOTRRLDP
 
+// Reload magainze drop
+weapons/bolter_mag_drop BOTRMGZN
 
 // ========================================================================
 // For astartes shotgun
@@ -179,6 +181,22 @@ weapons/heavybolter_casing12 BTRHCN12
 weapons/heavybolter_casing13 BTRHCN13
 weapons/heavybolter_casing14 BTRHCN14
 weapons/heavybolter_casing15 BTRHCN15
+
+$pitchset weapons/heavybolter_casing1 0.75 0.77
+$pitchset weapons/heavybolter_casing2 0.75 0.78
+$pitchset weapons/heavybolter_casing3 0.75 0.78
+$pitchset weapons/heavybolter_casing4 0.75 0.78
+$pitchset weapons/heavybolter_casing5 0.75 0.78
+$pitchset weapons/heavybolter_casing6 0.75 0.78
+$pitchset weapons/heavybolter_casing7 0.75 0.77
+$pitchset weapons/heavybolter_casing8 0.75 0.78
+$pitchset weapons/heavybolter_casing9 0.75 0.78
+$pitchset weapons/heavybolter_casing10 0.75 0.78
+$pitchset weapons/heavybolter_casing11 0.75 0.78
+$pitchset weapons/heavybolter_casing12 0.75 0.78
+$pitchset weapons/heavybolter_casing13 0.75 0.78
+$pitchset weapons/heavybolter_casing14 0.75 0.78
+$pitchset weapons/heavybolter_casing15 0.75 0.78
 
 
 ParryMe/ready sounds/ParryMe/MeleeFoley.ogg

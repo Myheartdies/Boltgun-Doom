@@ -1,5 +1,5 @@
 
-texture SMOKETES, 3, 3{
+texture SMOKET, 3, 3{
 	Patch PLSHA0,0,0
 }
 NoTrim BTRFA0
