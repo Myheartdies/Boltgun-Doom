@@ -227,7 +227,7 @@ class BolterProjectile: TrailedProjectile{
 	{
 		Radius 3;
 		Height 4;
-		Speed 120;
+		Speed 140;
 		Scale 0.65;
 		Damage 11;
 		DeathSound "weapons/bolter_impact";
