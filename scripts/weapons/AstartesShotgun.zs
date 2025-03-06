@@ -27,6 +27,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Weapon.AmmoGive2 10;
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
+		Weapon.BobSpeed 2;
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1.1;
 		Obituary "$OB_MPSHOTGUN";
