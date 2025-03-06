@@ -12,7 +12,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 	Default
 	{
 		Weapon.SelectionOrder 700;
-		Weapon.AmmoUse 2;
+		Weapon.AmmoUse 3;
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "Clip";
 //         +WEAPON.AMMO_OPTIONAL
@@ -80,11 +80,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		TNT1 A 0 A_SetPitch(pitch - 1.1);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 OverlayRecoil(15,55);
-        HBTR G 1;
+        HBTR G 1 A_Light1;
 		// HBTR H 3 A_FireCGun;
         TNT1 A 0 A_Quake(0.5,4,0,50,"");
         HBTR H 1 Bright FireHeavyBolter;
-        TNT1 A 0 A_Recoil(0.3);
+        TNT1 A 0 A_Recoil(0.8);
         
         TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
@@ -137,7 +137,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
 		A_StartSound ("weapons/heavybolter_fire", CHAN_AUTO, 0, 1);
-
+        A_Light2();
         // 		Eject casing
 		EjectCasing("Casing");
 		
@@ -157,11 +157,12 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 class HeavyBolterProjectile: BolterProjectile{
     Default
 	{
-		Radius 4;
-		Height 4;
-		Speed 80;
+		Radius 5;
+		Height 5;
+		Speed 90;
 		Scale 0.8;
-		Damage 14;
+// 		Damage 15;
+		DamageFunction 8 * random(4, 14);
 		DeathSound "weapons/bolter_impact";
 	}
 
@@ -172,7 +173,7 @@ class HeavyBolterProjectile: BolterProjectile{
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, damagetype="SmallExplosion");
+		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, True, 30/*, damagetype="SmallExplosion"*/);
 		HTRE BCDEFGHIJKL 2 Bright;
 		HTRE MNOP 2;
 // 		Goto LightDone;
