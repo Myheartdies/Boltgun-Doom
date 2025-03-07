@@ -8,34 +8,69 @@ class VolkiteCaliver : DoomWeapon
 		Weapon.AmmoType "Cell";
 		Inventory.PickupMessage "$GOTPLASMA";
 		Tag "$TAG_PLASMARIFLE";
+		Weapon.WeaponScaleX 0.6; 
+		Weapon.WeaponScaleY 0.6;	
+		Weapon.BobSpeed 2;
+		Weapon.BobRangeX 0.2;
+		Weapon.BobRangeY 1.1;
 	}
 	States
 	{
 	Ready:
-		PLSG A 1 A_WeaponReady;
+		TNT1 A 0;
+		VKT1 A 1 A_WeaponReady;
 		Loop;
 	Deselect:
-		PLSG A 1 A_Lower;
+		VKT1 A 1 A_Lower(18);
 		Loop;
 	Select:
-		PLSG A 1 A_Raise;
+		VKT1 A 1 A_Raise(18);
 		Loop;
 	Fire:
-		PLSG A 3 A_FirePlasma;
-		PLSG B 20 A_ReFire;
+		VKT1 I 3 FireVolkite;
+// 		VKT1 JK 3 A_FirePlasma;
+		VKT2 A 0 {A_ReFire();}
+		VKT2 A 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
 		Goto Ready;
 	Flash:
-		PLSF A 4 Bright A_Light1;
-		Goto LightDone;
-		PLSF B 4 Bright A_Light1;
+// 		PLSF A 4 Bright A_Light1;
+// 		Goto LightDone;
+// 		PLSF B 4 Bright A_Light1;
 		Goto LightDone;
 	Spawn:
 		PLAS A -1;
 		Stop;
 	}
+	
+	action void FireVolkite()
+	{
+		if (player == null)
+		{
+			return;
+		}
+		Weapon weap = player.ReadyWeapon;
+		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
+		{
+			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
+				return;
+			
+			State flash = weap.FindState('Flash');
+			if (flash != null)
+			{
+				player.SetSafeFlash(weap, flash, random[FirePlasma](0, 1));
+			}
+			
+		}
+		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,1.3,ATTN_NONE);
+		
+		SpawnPlayerMissile ("VolkiteBall");
+	}
 }
 
-class PlasmaBall : Actor
+
+
+
+class VolkiteBall : Actor
 {
 	Default
 	{
@@ -48,7 +83,7 @@ class PlasmaBall : Actor
 		+ZDOOMTRANS
 		RenderStyle "Add";
 		Alpha 0.75;
-		SeeSound "weapons/plasmaf";
+// 		SeeSound "weapons/plasmaf";
 		DeathSound "weapons/plasmax";
 		Obituary "$OB_MPPLASMARIFLE";
 	}

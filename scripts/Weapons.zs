@@ -2,4 +2,5 @@
 #include "scripts/weapons/Bolter.zs"
 #include "scripts/weapons/AstartesShotgun.zs"
 #include "scripts/weapons/HeavyBolter.zs"
+#include "scripts/weapons/volkite.zs"
 #include "scripts/weapons/TrailedProjectile.zs"

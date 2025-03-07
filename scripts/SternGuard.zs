@@ -14,6 +14,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Player.WeaponSlot 2, "Bolter";
 		Player.WeaponSlot 3, "AstartesShotgun", "SuperShotgun";
 		Player.WeaponSlot 4, "HeavyBolter";
+		Player.WeaponSlot 6, "VolkiteCaliver";
 		Player.SoundClass "sternguard";
 		Player.ViewHeight 52;
 // 		PainSound "sternguard/pain";
