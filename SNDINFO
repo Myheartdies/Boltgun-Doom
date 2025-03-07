@@ -202,6 +202,14 @@ $pitchset weapons/heavybolter_casing15 0.75 0.78
 ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
 
 
+// ========================================================================
+// For volkite caliver
+// ========================================================================
+weapons/volkite_fire VKTEFR01
+
+
+
+
 
 
 
