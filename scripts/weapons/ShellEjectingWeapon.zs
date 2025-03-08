@@ -148,6 +148,9 @@ class ShellEjectingWeapon : DoomWeapon
 // 		Move casing layers
 		for (int i=0; i < maxCasingCount; i++){
 			casingTimeElapsed[i] = casingTimeElapsed[i] + 1;
+			// If too much time has passed, so obviously there is no longer a casing to move, don't move it
+			if (casingTimeElapsed[i] > 40)
+				continue;
 // 			owner.A_OverlayOffset(i + 2
 // 				, GetModifiedSpeed(ejectSpeed_x[i],frandom(0.3,0.5),casingTimeElapsed[i],-0.5) + offsetCompensationX
 // 				, ejectSpeed_y[i]+ casingTimeElapsed[i] * 0.9 + offsetCompensationY

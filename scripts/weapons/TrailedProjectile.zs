@@ -60,7 +60,7 @@ class TrailedProjectile: FastProjectile {
 	}
 	
 // 	convert the facing to a vector
-	Vector3 facingToVector(float angle, float pitch, int length){
+	static Vector3 facingToVector(float angle, float pitch, int length){
 		vector3 vec = quat.FromAngles(angle, pitch, 0) * (length, 0, 0);
 // 		vector3 vec;
 // 		vec.x = cos(angle) * sin(-pitch)*length;
@@ -83,6 +83,8 @@ class TrailedProjectile: FastProjectile {
 	}
 // 	The simulated particle that should exist between current tick and last tick
 	void SpawnTrailSubDivided(){}
+
+// 	SMOKA0 round_smoke_1
 	
 	void SpawnSmokePuff(float baseTTL, int div = 0){
 		speedx = frandom(-0.15,0.15);
@@ -103,9 +105,7 @@ class TrailedProjectile: FastProjectile {
 	{
 		
 	}
-	void TrailParticleEnd(
-		
-	){}
+
 	
 	void TrailParticle(int subdivide
 		, float baseTTL = 120,float baseTTL_trail=10
@@ -124,7 +124,8 @@ class TrailedProjectile: FastProjectile {
 	
 		int length = vel.length()/subdivide;
 		facing = facingToVector(angle,pitch, length);
-
+		
+		
 // 		Spawn center smoke trail
 		A_SpawnParticle/*Ex*/("7f7f7f",/*null,STYLE_Add,*/ 0,baseTTL,mainSmokeSize+frandom(-0.5,0.5), 0
 		, 0,0,0
