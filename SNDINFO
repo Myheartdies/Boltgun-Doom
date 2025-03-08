@@ -198,6 +198,33 @@ $pitchset weapons/heavybolter_casing13 0.75 0.78
 $pitchset weapons/heavybolter_casing14 0.75 0.78
 $pitchset weapons/heavybolter_casing15 0.75 0.78
 
+// Mechanical loop of the feeding mechanism
+weapons/heavybolter_mechanical HBTRMK01
+
+// Windup
+$random weapons/heavybolter_windup { weapons/heavybolter_windup1 weapons/heavybolter_windup2 
+weapons/heavybolter_windup3 weapons/heavybolter_windup4 weapons/heavybolter_windup5 
+}
+weapons/heavybolter_windup1 HBTRIN01
+weapons/heavybolter_windup2 HBTRIN02
+weapons/heavybolter_windup3 HBTRIN03
+weapons/heavybolter_windup4 HBTRIN04
+weapons/heavybolter_windup5 HBTRIN05
+
+
+// Winddown
+$random weapons/heavybolter_winddown { weapons/heavybolter_winddown1 weapons/heavybolter_winddown2 
+weapons/heavybolter_winddown3 weapons/heavybolter_winddown4 weapons/heavybolter_winddown5 
+}
+weapons/heavybolter_winddown1 HBTROT01
+weapons/heavybolter_winddown2 HBTROT02
+weapons/heavybolter_winddown3 HBTROT03
+weapons/heavybolter_winddown4 HBTROT04
+weapons/heavybolter_winddown5 HBTROT05
+
+// Pick up
+weapons/heavybolter_pickup HBTRPICK
+
 
 ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
 
