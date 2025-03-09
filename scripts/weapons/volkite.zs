@@ -1,4 +1,4 @@
-class VolkiteCaliver : DoomWeapon
+class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 {
 	Default
 	{
@@ -28,7 +28,7 @@ class VolkiteCaliver : DoomWeapon
 		Loop;
 	Fire:
 		VKT1 I 3 FireVolkite;
-// 		VKT1 JK 3 A_FirePlasma;
+// 		VKT1 JK 3 FireVolkite;
 		VKT2 A 0 {A_ReFire();}
 		VKT2 A 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
 		Goto Ready;
