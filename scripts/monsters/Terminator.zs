@@ -2,7 +2,7 @@ class Terminator : Fatso Replaces Fatso
 {
 	Default
 	{
-		Health 1200;
+		Health 1100;
 		Radius 30;
 		Height 64;
 		Mass 1000;
@@ -16,6 +16,7 @@ class Terminator : Fatso Replaces Fatso
 		ActiveSound "TERM/active";
 		PainSound "TERM/pain";
 		DeathSound  "TERM/death";
+		DropItem "Clip";
 		DamageFactor "SmallExplosion", 0.1;
 	}
 	States
