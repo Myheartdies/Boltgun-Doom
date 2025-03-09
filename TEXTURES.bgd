@@ -6,5 +6,11 @@ NoTrim BTRFA0
 NoTrim BTRFB0
 NoTrim BTRFC0
 
+
 NoTrim SMOKA0
+
+texture HBTFA0, 3, 3{
+	Patch HBTFA0,0,0
+}
+NoTrim HBTFA0
 
