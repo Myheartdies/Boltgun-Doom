@@ -17,13 +17,15 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 	States
 	{
 	Ready:
-		TNT1 A 0;
+		TNT1 A 0 A_StopSound(CHAN_WEAPON);
 		VKT1 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
+		TNT1 A 0 A_StopSound(CHAN_WEAPON);
 		VKT1 A 1 A_Lower(18);
 		Loop;
 	Select:
+		TNT1 A 0 A_StopSound(CHAN_WEAPON);
 		VKT1 A 1 A_Raise(18);
 		Loop;
 	Reload:	
@@ -33,7 +35,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 		VKT1 I 3 Bright FireVolkite;
 // 		VKT1 JK 3 FireVolkite;
 		VKT2 A 0 {A_ReFire();}
-		VKT2 A 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
+		VKT2 F 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
 		Goto Ready;
 	Flash:
 // 		PLSF A 4 Bright A_Light1;
