@@ -7,7 +7,14 @@ class Contempt :ArmorBonus Replaces ArmorBonus
 	States
 	{
 	Spawn:
-		BONA A 6 ;
+		BONA A 10;
+		BONA B 8;
+		BONA C 6;
+		BONA D 8;
+		BONA E 10;
+		BONA D 8;
+		BONA C 6;
+		BONA B 8;
 		Loop;
 	}
 
