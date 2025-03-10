@@ -18,7 +18,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 	{
 	Ready:
 		TNT1 A 0;
-		VKT1 A 1 A_WeaponReady;
+		VKT1 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
 		VKT1 A 1 A_Lower(18);
@@ -26,8 +26,11 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 	Select:
 		VKT1 A 1 A_Raise(18);
 		Loop;
+	Reload:	
+		VKT2 ABCDEFGHIJKLMNOP 3;
+		Goto Ready;
 	Fire:
-		VKT1 I 3 FireVolkite;
+		VKT1 I 3 Bright FireVolkite;
 // 		VKT1 JK 3 FireVolkite;
 		VKT2 A 0 {A_ReFire();}
 		VKT2 A 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
@@ -61,7 +64,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			}
 			
 		}
-		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,1.3,ATTN_NONE);
+		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,0.5,ATTN_NONE);
 		
 		SpawnPlayerMissile ("VolkiteBall");
 	}
