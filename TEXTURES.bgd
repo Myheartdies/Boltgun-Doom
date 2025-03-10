@@ -13,4 +13,5 @@ texture HBTFA0, 3, 3{
 	Patch HBTFA0,0,0
 }
 NoTrim HBTFA0
-
+NoTrim HBTFB0
+NoTrim HBTFC0
