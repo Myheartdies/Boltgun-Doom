@@ -1,0 +1,1 @@
+#include "scripts/decorations/DeadSternguard.zs"

@@ -1,5 +1,7 @@
 version "4.11"
 
+#include "scripts/Decorations.zs"
+
 #include "scripts/HereticMortals.zs"
 #include "scripts/HereticAstartes.zs"
 #include "scripts/ChaosDaemons.zs"
