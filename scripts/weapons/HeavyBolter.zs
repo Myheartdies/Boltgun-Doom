@@ -31,11 +31,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Loop;
 	Deselect:
 		TNT1 A 0 A_StopSound(CHAN_5);
-		HBTR A 1 {A_Lower(8); CasingLayerExit();}
+		HBTR A 1 {A_Lower(12); CasingLayerExit();}
 		Wait;
 	Select:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_winddown",CHAN_AUTO,0,0.7,ATTN_NONE);
-		HBTR A 1 {A_Raise(8); CasingLayerReady();}
+		HBTR A 1 {A_Raise(12); CasingLayerReady();}
 		Wait;
     Casing:
 // 		BTRF AAAAAAAAAA 4;
@@ -119,7 +119,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		TNT1 A 0 A_TakeInventory("isFired",255);
 		Goto Winddown3;
 	MuzzleFlash:
-		HBTF A 1 Bright A_Light1;
+// 		HBTF A 1 Bright A_Light1;
+		HBTF C 1 Bright A_Light1;
 		Goto LightDone;
 	Spawn:
 		MGUN A -1;
@@ -179,10 +180,10 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
-		A_OverlayScale(-2, 0.15 + random(-3,3)/50, 0.15 + random(-3,3)/50);
-		A_OverlayOffset(-2, 160 + random(-30,30), 210 + random(-10,10));
+		A_OverlayScale(-2, 0.12 + random(-3,3)/50, 0.12 + random(-3,3)/50);
+		A_OverlayOffset(-2, 170 + random(-10,10), 220 + random(-10,10));
 		A_OverlayRotate(-2, 90 + random(-3,3), WOF_ADD );
-		A_OverlayAlpha(-2, 0.95);
+		A_OverlayAlpha(-2, 0.7);
     }
 	
 
@@ -216,7 +217,7 @@ class HeavyBolterProjectile: BolterProjectile{
     States
 	{
 	Spawn:
-		BOLT A 1 Bright TrailParticle(10, 60, 15, 6, 4);
+		BOLT A 1 Bright TrailParticle(10, 50, 20, 6, 4);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:

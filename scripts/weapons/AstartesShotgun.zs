@@ -15,7 +15,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Weapon.SelectionOrder 1300;
 		Weapon.AmmoUse 1;
 // 		Weapon.AmmoGive 8;
-		Weapon.KickBack 300;
+		Weapon.KickBack 200;
 // 		Weapon.AmmoType "Shell";
 		Inventory.PickupMessage "$GOTSHOTGUN";
 		+WEAPON.AMMO_OPTIONAL
@@ -60,6 +60,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 1);
 		Goto Reload;
 		
+// 		TNT1 A 0 smoke_puff();
 		TNT1 A 0 A_ZoomFactor(0.99);
 		TNT1 A 0 A_SetPitch(pitch - 1.15);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
@@ -71,6 +72,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 A_WeaponOffset(13, 20, WOF_ADD);
 		TNT1 A 0 CompensateOffset(-13, -20);
+		
 		STGN B 1;
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
 		TNT1 A 0 A_ZoomFactor(0.995);
@@ -165,6 +167,18 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		SHOT A -1;
 		Stop;
 	}
+	action void smoke_puff(){
+		Vector3 facing = TrailedProjectile.facingToVector(invoker.owner.angle, invoker.owner.pitch, 30);
+
+		A_SpawnParticleEx("a1a1a1",TexMan.CheckForTexture("SMKAE0"),STYLE_Shaded,/*SPF_RELANG|*/SPF_RELVEL|SPF_RELANG|SPF_ROLL|SPF_LOCAL_ANIM , 18
+		, 60, 0
+// 		,30,15,40
+		,facing.x+facing.y*0.35, facing.y-facing.x*0.35, facing.z +50
+		,0,frandom(1,1.8),0, 0,0,0.2
+		, 0.8,-0.025,0.05
+		, Random(0,12)*30);
+	}
+	
 	action void FireScoutShotgun(){
 		if (player == null)
 		{
@@ -185,7 +199,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		double pitch = BulletSlope ();
 
 
-		A_FireBullets (6.5, 2, 6, /*7*/ 0, "BulletPuff",0,0 ,"ShotgunProjectile",15,8);
+		A_FireBullets (6, 2, 6, /*7*/ 0, "BulletPuff",0,0 ,"ShotgunProjectile",15,8);
 // 			A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
 // 			GunShot (false, "BulletPuff", pitch);
 
@@ -195,6 +209,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		A_OverlayOffset(-2, 250 + random(-5,5), 40 + random(-5,5));
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
 		A_OverlayAlpha(-2, 0.95);
+		smoke_puff();
 	}
 	
 	override void Tick(void){
@@ -227,7 +242,7 @@ class ShotgunProjectile: FastProjectile {
 	States
 	{
 	Spawn:
-		TNT1 A 1 Bright ShotgunParticle(18, 10, 4);
+		TNT1 A 1 Bright ShotgunParticle(15, 10, 5);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
@@ -260,19 +275,19 @@ class ShotgunProjectile: FastProjectile {
 
 		
 // 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744
-		A_SpawnParticle("fba744",SPF_FULLBRIGHT, baseTTL ,mainSmokeSize, 0
-		, 0+frandom(-1,1),0+frandom(-1,1),0+frandom(-1,1)
+		A_SpawnParticle("fed882",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
+		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, baseAlpha,-1,-0.1);
+		, baseAlpha,-1,-0.2);
 		
 		for ( int div = 1; div <= subdivide; div++ )  // sid is the sector ID
 		{
 			
 // 			Spawn center fire trail
-			A_SpawnParticle("fba744",SPF_FULLBRIGHT,baseTTL,mainSmokeSize - 0.1* div/subdivide, 0
-			, -facing.x*div+frandom(-1,1),-facing.y*div+frandom(-1,1),-facing.z*div+frandom(-1,1)
+			A_SpawnParticle("fba744",SPF_FULLBRIGHT,baseTTL,mainSmokeSize - 0.2* div/subdivide, 0
+			, -facing.x*div+frandom(-0.5,0.5),-facing.y*div+frandom(-0.5,0.5),-facing.z*div+frandom(-0.5,0.5)
 			, 0,0,0, 0,0,0
-			, baseAlpha - div*interval, fadeAlpha,-0.1);
+			, baseAlpha - div*interval, fadeAlpha,-0.2);
 			
 			
 		}

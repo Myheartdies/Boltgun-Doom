@@ -123,7 +123,7 @@ class TrailedProjectile: FastProjectile {
 		
 	
 		int length = vel.length()/subdivide;
-		facing = facingToVector(angle,pitch, length);
+		facing = facingToVector(angle, pitch, length);
 		
 		
 // 		Spawn center smoke trail
@@ -139,10 +139,10 @@ class TrailedProjectile: FastProjectile {
 		SpawnSmokePuff(baseTTL);
 		
 // 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744
-		A_SpawnParticle("fba744",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
-		, 0+frandom(-1,1),0+frandom(-1,1),0+frandom(-1,1)
+		A_SpawnParticle("fed882",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
+		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, baseAlpha,-1,-0.04);
+		, baseAlpha,-1,-0.1);
 		
 		for ( int div = 1; div <= subdivide; div++ )  // sid is the sector ID
 		{
