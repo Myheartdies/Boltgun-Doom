@@ -36,6 +36,16 @@ sternguard/pain7 STNPAIN7
 sternguard/pain8 STNPAIN8
 sternguard/pain9 STNPAIN9
 
+
+$playeralias sternguard gender *grunt sternguard/landing
+sternguard/landing_heavy STNLNDH1
+
+$playeralias sternguard gender *land sternguard/landing
+sternguard/landing STNLNDL1
+$volume sternguard/landing 1
+
+
+
 // ========================================================================
 // For bolter
 // ========================================================================
