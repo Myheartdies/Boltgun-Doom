@@ -1,4 +1,4 @@
-class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
+class VolkiteCaliver : DoomWeapon //Replaces PlasmaRifle
 {
 	Default
 	{
