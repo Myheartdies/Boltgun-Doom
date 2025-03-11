@@ -248,6 +248,28 @@ weapons/volkite_fire VKTEFR01
 
 
 
+// ========================================================================
+// For missile launcher
+// ========================================================================
+
+// Firing
+$random weapons/missile_launcher_fire {weapons/missile_launcher_fire1 weapons/missile_launcher_fire2 
+weapons/missile_launcher_fire3 weapons/missile_launcher_fire4 weapons/missile_launcher_fire5}
+weapons/missile_launcher_fire1 MSLLFRE0
+weapons/missile_launcher_fire2 MSLLFRE1
+weapons/missile_launcher_fire3 MSLLFRE2
+weapons/missile_launcher_fire4 MSLLFRE3
+weapons/missile_launcher_fire5 MSLLFRE4
+
+// Explosion
+$random weapons/missile_launcher_explosion {weapons/missile_launcher_explosion1 weapons/missile_launcher_explosion2 
+weapons/missile_launcher_explosion3}
+weapons/missile_launcher_explosion1 MSLLEXP0
+weapons/missile_launcher_explosion2 MSLLEXP1
+weapons/missile_launcher_explosion3 MSLLEXP2
+
+
+
 
 
 // ========================================================================
