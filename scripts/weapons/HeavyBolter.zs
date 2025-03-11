@@ -20,6 +20,9 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
 		Inventory.PickupMessage "$GOTCHAINGUN";
+		Weapon.BobSpeed 1.5;
+		Weapon.BobRangeX 0.2;
+		Weapon.BobRangeY 1;	
 		Obituary "$OB_MPCHAINGUN";
 		Tag "$TAG_CHAINGUN";
 	}

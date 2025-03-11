@@ -194,6 +194,8 @@ class Bolter : ShellEjectingWeapon
 		}
 		if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
 		else A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
+// 		else A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
+// 		A_FireRailgun();
 		if(isLowAmmo)
 			A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
 		A_StartSound ("weapons/bolter_fire", CHAN_AUTO, 0, 1.05);
@@ -227,7 +229,7 @@ class BolterProjectile: TrailedProjectile{
 	{
 		Radius 3;
 		Height 4;
-		Speed 140;
+		Speed 150;
 		Scale 0.65;
 		Damage 11;
 		DeathSound "weapons/bolter_impact";
@@ -236,7 +238,7 @@ class BolterProjectile: TrailedProjectile{
 	States
 	{
 	Spawn:
-		BOLT A 1 Bright bolterParticle(16, 90, 15, 4, 3);
+		BOLT A 1 Bright bolterParticle(16, 80, 15, 4, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:

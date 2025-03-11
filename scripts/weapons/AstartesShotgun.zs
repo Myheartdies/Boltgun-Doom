@@ -169,13 +169,13 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	}
 	action void smoke_puff(){
 		Vector3 facing = TrailedProjectile.facingToVector(invoker.owner.angle, invoker.owner.pitch, 30);
-
-		A_SpawnParticleEx("a1a1a1",TexMan.CheckForTexture("SMKAE0"),STYLE_Shaded,/*SPF_RELANG|*/SPF_RELVEL|SPF_RELANG|SPF_ROLL|SPF_LOCAL_ANIM , 18
+// SMKAE0
+		A_SpawnParticleEx("a1a1a1",TexMan.CheckForTexture("SMKAE0"),STYLE_Shaded,/*SPF_RELANG|*/SPF_RELVEL|SPF_RELANG|SPF_ROLL|SPF_LOCAL_ANIM , 20
 		, 60, 0
 // 		,30,15,40
 		,facing.x+facing.y*0.35, facing.y-facing.x*0.35, facing.z +50
-		,0,frandom(1,1.8),0, 0,0,0.2
-		, 0.8,-0.025,0.05
+		,0,frandom(0.6,1.2),0, 0,0,0.1
+		, 0.9,-0.025,0.05
 		, Random(0,12)*30);
 	}
 	
