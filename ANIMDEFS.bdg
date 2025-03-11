@@ -107,3 +107,8 @@ texture SMKAE0
     pic SMKBP0 tics 1
     pic SMKBQ0 tics 1
     pic SMKBR0 tics 1
+	
+
+//Missile Launcher explosion ring
+texture MSEXA0 range MSEXZ0 tics 1
+
