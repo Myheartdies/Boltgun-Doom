@@ -2,3 +2,98 @@ brightmap sprite VKT1I0
 {
 	map "brightmaps/weapon/volkite_shine_white.png"
 }
+pointlight BOLT
+{
+    color 0.5 0.2 0.0
+    size 70
+	attenuate 1
+}
+
+object BolterProjectile
+{
+	frame BOLTA {light BOLT}
+    frame BTREB { light BOLT_X1 }
+	frame BTREC { light BOLT_X1}
+	frame BTRED { light BOLT_X1}
+	frame BTREE { light BOLT_X1 }
+	frame BTREF { light BOLT_X1 }
+	frame BTREG{ light BOLT_X1}
+	frame BTREH{ light BOLT_X2 }
+	frame BTREI{ light BOLT_X2 }
+	frame BTREJ{ light BOLT_X2 }
+}
+
+object HeavyBolterProjectile
+{
+	frame BOLTA {light BOLT}
+    frame HTREB { light BOLT_X1 }
+	frame HTREC { light BOLT_X1}
+	frame HTRED { light BOLT_X1}
+	frame HTREE { light BOLT_X1 }
+	frame HTREF { light BOLT_X1 }
+	frame HTREG{ light BOLT_X1}
+	frame HTREH{ light BOLT_X2 }
+	frame HTREI{ light BOLT_X2 }
+	frame HTREJ{ light BOLT_X2 }
+}
+
+object FragMissile
+{
+    frame MISLA { light ROCKET    }
+
+    frame TNT1A { light ROCKET_X2 }
+//     frame MISLC { light ROCKET_X2 }
+    frame TNT1B { light ROCKET_X3 }
+}
+
+pointlight ROCKET
+{
+    color 1.0 0.7 0.0
+    size 84
+	attenuate 1
+}
+
+flickerlight BOLT_X1
+{
+    color 1.0 0.7 0.5
+    size 75
+    secondarySize 60
+    chance 0.3
+	attenuate 1
+}
+
+flickerlight BOLT_X2
+{
+    color 0.3 0.1 0.1
+    size 90
+    secondarySize 70
+    chance 0.3
+	attenuate 1
+}
+
+flickerlight ROCKET_X1
+{
+    color 1.0 0.7 0.5
+    size 120
+    secondarySize 110
+    chance 0.3
+	attenuate 1
+}
+
+flickerlight ROCKET_X2
+{
+    color 1.0 0.8 0.6
+    size 150
+    secondarySize 132
+    chance 0.3
+	attenuate 1
+}
+
+flickerlight ROCKET_X3
+{
+    color 0.3 0.1 0.1
+    size 144
+    secondarySize 156
+    chance 0.3
+	attenuate 1
+}

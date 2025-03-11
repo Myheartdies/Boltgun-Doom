@@ -268,6 +268,8 @@ weapons/missile_launcher_explosion1 MSLLEXP0
 weapons/missile_launcher_explosion2 MSLLEXP1
 weapons/missile_launcher_explosion3 MSLLEXP2
 
+// Loading new rocket
+weapons/missile_launcher_reload MSLLRLD0
 
 
 
