@@ -18,7 +18,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Player.WeaponSlot 5, "MissileLauncher";
 		Player.WeaponSlot 6, "VolkiteCaliver","PlasmaRifle";
 		Player.SoundClass "sternguard";
-		Damagefactor "ExplosionSelfDamage", 0.15;
+		Damagefactor "ExplosionSelfDamage", 0.18;
 		Player.ViewHeight 52;
 // 		PainSound "sternguard/pain";
 		

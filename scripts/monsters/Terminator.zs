@@ -18,6 +18,7 @@ class Terminator : Fatso Replaces Fatso
 		DeathSound  "TERM/death";
 		DropItem "Clip";
 		DamageFactor "SmallExplosion", 0.1;
+		DamageFactor "StrongExplosion", 0.6;
 	}
 	States
 	{

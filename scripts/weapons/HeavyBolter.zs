@@ -224,7 +224,7 @@ class HeavyBolterProjectile: BolterProjectile{
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		HTRE A 2 Bright A_Explode(6 * random(4,8), 50, 0, True, 30/*, damagetype="SmallExplosion"*/);
+		HTRE A 2 Bright A_Explode(6 * random(4,8), 50, 0, True, 30, damagetype:"StrongExplosion");
 		HTRE BCDEFGHIJKL 2 Bright;
 		HTRE MNOP 2;
 // 		Goto LightDone;

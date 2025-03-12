@@ -80,11 +80,16 @@ class FragMissile : Rocket
 		MISL A 1 Bright;
 		Loop;
 	Death:
-		MSEX A 1 Bright A_Explode(170,150,XF_HURTSOURCE,True, 100,0,0,"bulletpuff",damagetype = "ExplosionSelfDamage");
+		MSEX A 1 Bright {
+		A_Explode(170,150,XF_HURTSOURCE,True, 100,0,0,"bulletpuff",damagetype = "ExplosionSelfDamage");
+		A_QuakeEx(0,1.2,2, 20, 0, 2000,flags:QF_SCALEDOWN|QF_SHAKEONLY);
+		}
 		MSEX B 0 Bright missileExplosion();
 		TNT1 A 6 ;
-		TNT1 A 24 {firering("",256,0);
-		firering("orange", 420, 0,0.5);}
+		TNT1 A 24 {
+			firering("",270,0);
+			firering("orange", 460, 0,0.5);
+			}
 		TNT1 B 15 ;
 // 		MISL D 4 Bright;
 		Stop;
@@ -95,7 +100,7 @@ class FragMissile : Rocket
 	}
 
 	action void missileExplosion(){
-		spawnCenterExplosion(150);
+		spawnCenterExplosion(180);
 // 		firering("",256,0);
 // 		firering("orange", 420, 0,0.5);
 		for (int i = 0; i < 20; i++){
@@ -122,7 +127,7 @@ class FragMissile : Rocket
 		float offsety = length * cos(angle2) * cos(angle2);
 		float offsetz = length * sin(angle2);
 		invoker.A_SpawnParticleEx("", TexMan.CheckForTexture("EXFAA0")
-		,0,SPF_FULLBRIGHT|SPF_LOCAL_ANIM|SPF_RELVEL|SPF_RELACCEL|SPF_RELANG  |SPF_ROLL  , 63
+		,0,SPF_FULLBRIGHT|SPF_LOCAL_ANIM|SPF_RELVEL|SPF_RELACCEL|SPF_RELANG  |SPF_ROLL  , 60
 		, baseSize, 0
 // 		,random(-30,30), random(-30,30), random(-30,30)
 // 		,offsety, offsetx, offsetz
@@ -131,7 +136,7 @@ class FragMissile : Rocket
 // 		,0,0,0,0,0,0
 		,-offsety,offsetx,offsetz, offsety/80,-offsetx/80,-offsetz/80
 // 		, 0,0,0, offsety, offsetx, offsetz
-		, 0.8, -1, 8
+		, 0.8, -0.002, 8
 		,random(0,12)*30
 		);
 	}
