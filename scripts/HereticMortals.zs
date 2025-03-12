@@ -3,6 +3,8 @@
 #include "scripts/monsters/CultistShock.zs"
 #include "scripts/monsters/PLASMA.zs"
 
+#include "scripts/monsters/CultistHeavy.zs"
+
 class SergeantReplacer : RandomSpawner Replaces ShotgunGuy
 {
     Default

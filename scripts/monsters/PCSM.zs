@@ -59,9 +59,11 @@ class LegionaryPlasma : ChaosMarine Replaces HellKnight
 		PSMA G 3;
 		PSMA H 3;
 		PSMA I 4 Bright MarineMissile();
-// 		PSMA J 3 A_FaceTarget;
-// 		PSMA G 4 Bright;
-// 		PSMA H 8 Bright MarineMissile();
+		
+		PSMA J 2 A_FaceTarget;
+		PSMA G 3 Bright;
+		PSMA H 8 Bright MarineMissile();
+
 		PSMA I 3 Bright;
 		PSMA J 3;
 		PSMA K 8;
@@ -73,9 +75,10 @@ class LegionaryPlasma : ChaosMarine Replaces HellKnight
 		PSMB IJK 2 A_FaceTarget;
 		PSMA GH 3 A_FaceTarget;
 		PSMA H 3 Bright MarineMissile();
-		PSMA JG 2 A_FaceTarget;
-		PSMA H 3 Bright MarineMissile();
-		PSMA I 8 Bright;
+// 		PSMA JG 2 A_FaceTarget;
+// 		PSMA H 3 Bright MarineMissile();
+// 		PSMA I 8 Bright;
+		PSMA I 6 Bright;
 		PSMA JK 3;
 		Goto See;
 	TurboMissile:

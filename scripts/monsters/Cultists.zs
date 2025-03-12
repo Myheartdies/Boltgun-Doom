@@ -29,7 +29,7 @@ class Cultist1 : ZombieMan
 		Loop;
 	Missile:
 		CLT1 E 10 A_FaceTarget;
-		CLT1 F 8 A_PosAttack;
+		CLT1 F 8 CultistMissile;
 		CLT1 E 8;
 		Goto See;
 	Pain:
@@ -55,6 +55,24 @@ class Cultist1 : ZombieMan
 		CLT1 KJI 5;
 		Goto See;
 	}
+	
+	action void CultistMissile(){
+		if (target)
+		{
+// 			A_PosAttack();
+			A_FaceTarget();
+// 			double ang = angle;
+// 			double slope = AimLineAttack(ang, MISSILERANGE);
+// 			A_StartSound("grunt/attack", CHAN_WEAPON);
+// 			int damage = Random[PosAttack](1, 5) * 3;
+			A_CustomBulletAttack(25
+			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
+		}
+		
+// 		A_StartSound("weapons/pistol",flags:CHAN_WEAPON);
+// 		A_SpawnProjectile("Tracer");
+// 		A_CustomBulletAttack(22.5, 0, 3,0, pufftype :"BulletPuff", 0, flags:CBAF_NORANDOM);
+	}
 }
 class Cultist2 : Cultist1
 {
@@ -68,7 +86,7 @@ class Cultist2 : Cultist1
 		Loop;
 	Missile:
 		CLT2 E 10 A_FaceTarget;
-		CLT2 F 8 A_PosAttack;
+		CLT2 F 8 CultistMissile;
 		CLT2 E 8;
 		Goto See;
 	Pain:
@@ -108,7 +126,7 @@ class Cultist3 : Cultist1
 		Loop;
 	Missile:
 		CLT3 E 10 A_FaceTarget;
-		CLT3 F 8 A_PosAttack;
+		CLT3 F 8 CultistMissile;
 		CLT3 E 8;
 		Goto See;
 	Pain:
@@ -150,7 +168,7 @@ class Cultist4 : Cultist1
 		Loop;
 	Missile:
 		CLT4 E 10 A_FaceTarget;
-		CLT4 F 8 A_PosAttack;
+		CLT4 F 8 CultistMissile;//A_PosAttack;
 		CLT4 E 8;
 		Goto See;
 	Pain:
@@ -176,4 +194,36 @@ class Cultist4 : Cultist1
 		CLT4 KJI 5;
 		Goto See;
 	}
+}
+
+class Tracer : FastProjectile
+{
+	Default
+	{
+		Scale 0.4;
+		Radius 1;
+		Height 1;
+		Speed 60;
+		FastSpeed 120;
+//    Damage 3;
+		DamageFunction 3*random(1,5);
+		Projectile;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		+NOEXTREMEDEATH
+		RenderStyle "Add";
+		Alpha 1;
+		alpha 0.9;
+// 		SeeSound "weapons/pistol";
+// 		DeathSound "imp/shotx";
+ }
+	States
+	{
+	Spawn:
+		TRAC A 1 BRIGHT A_SpawnParticle("fed882",SPF_FULLBRIGHT,5,6, sizestep:1);
+		Loop;
+	Death:
+		TNT1 A 0 BRIGHT Spawn("BulletPuff");
+		Stop;
+ }
 }

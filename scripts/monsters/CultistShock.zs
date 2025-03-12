@@ -30,7 +30,7 @@ class CultistShock: ShotgunGuy
 		Loop;
 	Missile:
 		CLTS E 10 A_FaceTarget;
-		CLTS F 5 BRIGHT A_SposAttackUseAtkSound;
+		CLTS F 5 BRIGHT ShotgunnerMissile;//A_SposAttackUseAtkSound;
 		CLTS MN 3 BRIGHT;
 		CLTS OPQ 3;
 		Goto See;
@@ -56,5 +56,21 @@ class CultistShock: ShotgunGuy
 		CLTS L 5;
 		CLTS KJIH 5;
 		Goto See;
+	}
+	
+	action void ShotgunnerMissile(){
+		A_StartSound("shotguy/attac",flags:CHAN_WEAPON);
+		A_CustomBulletAttack(30
+		, 0, 3,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM,missile:"ShotgunTracer");
+// 		A_CustomBulletAttack(22.5, 0, 3,0, pufftype :"BulletPuff", 0, flags:CBAF_NORANDOM);
+// 		A_SpawnProjectile("Tracer");
+	}
+}
+
+class ShotgunTracer: Tracer{
+	Default
+	{
+		Scale 0.3;
+// 		DamageFunction 3 * random(1,3);
 	}
 }

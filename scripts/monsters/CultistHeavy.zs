@@ -1,4 +1,4 @@
-class CultistHeavy : ChaingunGuy  
+class CultistHeavy : ChaingunGuy Replaces ChaingunGuy
 {
 	Default
 	{
@@ -23,26 +23,26 @@ class CultistHeavy : ChaingunGuy
 	States
 	{
 	Spawn:
-		CPOS AB 10 A_Look;
+		CLTH AB 10 A_Look;
 		Loop;
 	See:
-		CPOS AABBCCDD 3 A_Chase;
+		CLTH AABBCCDD 3 A_Chase;
 		Loop;
 	Missile:
-		CPOS E 10 A_FaceTarget;
-		CPOS FE 4 BRIGHT A_CPosAttack;
-		CPOS F 1 A_CPosRefire;
+		CLTH E 10 A_FaceTarget;
+		CLTH FE 4 BRIGHT CultistHeavyMissile;
+		CLTH F 1 A_CPOSRefire;
 		Goto Missile+1;
 	Pain:
-		CPOS G 3;
-		CPOS G 3 A_Pain;
+		CLTH G 3;
+		CLTH G 3 A_Pain;
 		Goto See;
 	Death:
-		CPOS H 5;
-		CPOS I 5 A_Scream;
-		CPOS J 5 A_NoBlocking;
-		CPOS KLM 5;
-		CPOS N -1;
+		CLTH H 5;
+		CLTH I 5 A_Scream;
+		CLTH J 5 A_NoBlocking;
+		CLTH KLM 5;
+		CLTH N -1;
 		Stop;
 	XDeath:
 		OVKS A 5 A_NoBlocking;
@@ -51,6 +51,15 @@ class CultistHeavy : ChaingunGuy
 		OVKS DEFGHI 3;
 		OVKS J -1;
 		Stop;
+	}
+	
+	action void CultistHeavyMissile(){
+		if (target)
+		{
+			A_FaceTarget();
+			A_CustomBulletAttack(22.5
+			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
+		}
 	}
  	
 }
