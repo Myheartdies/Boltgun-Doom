@@ -21,7 +21,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 		PainChance 60;
 		MeleeRange 55;
 		MeleeThreshold 100;
-		MinMissileChance 170;
+		MinMissileChance 150;
 		Tag "$FN_CAPN";
 	}
 	States
@@ -116,11 +116,11 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 		TNT1 A 0 A_GiveInventory("Rage", 2);
 		CPNA M 6 {A_FaceTarget(); DirectedThrust(8);}
 		CPNA N 4 A_CustomMeleeAttack(random(4, 10) * 7, "TCSM/melee");
-		CPNA N 0 A_MonsterRefire(0, "MeleeFollowThrough");	
-		TNT1 A 0 A_JumpIfTargetOutsideMeleeRange("MeleeFollowThrough");
-		Goto Melee + 1;
+// 		CPNA N 0 A_MonsterRefire(0, "MeleeFollowThrough");
+// 		TNT1 A 0 A_JumpIfTargetOutsideMeleeRange("MeleeFollowThrough");
+// 		Goto Melee + 1;
 	MeleeFollowThrough:
-		CPNA O 15 A_CustomMeleeAttack(random(2, 6) * 5, "TCSM/melee");
+		CPNA O 10 A_CustomMeleeAttack(random(2, 6) * 5, "TCSM/melee");
 		CPNA P 5; 
 		Goto See;
 	Missile:

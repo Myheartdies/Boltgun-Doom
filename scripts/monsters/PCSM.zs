@@ -22,7 +22,7 @@ class LegionaryPlasma : ChaosMarine Replaces HellKnight
 		MeleeRange 60;
 		MeleeThreshold 95;
 // 		+DropOff
-		MinMissileChance 170;
+		MinMissileChance 150;
 		Tag "$FN_PCSM";
 	}
 	States

@@ -273,9 +273,9 @@ class ShotgunProjectile: FastProjectile {
 		int length = vel.length()/subdivide;
 		facing = facingToVector(angle,pitch, length);
 
-		
-// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744
-		A_SpawnParticle("fed882",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
+		 
+// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744 fed882
+		A_SpawnParticle("fba744",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
 		, baseAlpha,-1,-0.2);

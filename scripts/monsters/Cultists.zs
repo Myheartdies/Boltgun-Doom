@@ -220,7 +220,7 @@ class Tracer : FastProjectile
 	States
 	{
 	Spawn:
-		TRAC A 1 BRIGHT A_SpawnParticle("fed882",SPF_FULLBRIGHT,5,6, sizestep:1);
+		TRAC A 1 BRIGHT A_SpawnParticle("fed882",SPF_FULLBRIGHT,5,5, sizestep:1);
 		Loop;
 	Death:
 		TNT1 A 0 BRIGHT Spawn("BulletPuff");
