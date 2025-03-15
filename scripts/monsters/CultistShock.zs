@@ -6,7 +6,7 @@ class CultistShock: ShotgunGuy
 		Radius 20;
 		Height 56;
 		Mass 100;
-		Speed 8;
+		Speed 10;
 		PainChance 170;
 		Monster;
 		+FLOORCLIP

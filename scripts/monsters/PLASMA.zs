@@ -3,7 +3,21 @@ class PlasmaRenegade : DoomImp  /*Replaces DoomImp*/
 
 	Default
 	{
+		Health 70;
+		Radius 20;
+		Height 56;
+		Mass 100;
 		Speed 6;
+		PainChance 200;
+		Monster;
+		+FLOORCLIP
+		SeeSound "imp/sight";
+		PainSound "imp/pain";
+		DeathSound "imp/death";
+		ActiveSound "imp/active";
+		HitObituary "$OB_IMPHIT";
+		Obituary "$OB_IMP";
+		Tag "$FN_IMP";
 		Scale 0.50;
 		DropItem "Cell";
 		DropItem "Shotgun";
