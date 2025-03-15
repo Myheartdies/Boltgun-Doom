@@ -2,6 +2,7 @@ GameInfo
 {
 	AddEventHandlers = "NashMoveHandler"
 	AddEventHandlers = "ParryMe"
+	addEventHandlers = "SternguardFootStepHandler"
 }
 DoomEdnums
 {

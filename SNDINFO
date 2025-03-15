@@ -69,7 +69,52 @@ sternguard/death5 STNDETH4
 sternguard/death6 STNDETH5
 sternguard/death7 STNDETH6
 
-$volume *death 0.45
+$volume *death 0.5
+
+
+// Footsteps
+
+// Base
+$random sternguard/steps_base_low {sternguard/steps_base_low1 sternguard/steps_base_low2 
+sternguard/steps_base_low3 sternguard/steps_base_low4 sternguard/steps_base_low5}
+sternguard/steps_base_low1 STNSTPL0
+sternguard/steps_base_low2 STNSTPL1
+sternguard/steps_base_low3 STNSTPL2
+sternguard/steps_base_low4 STNSTPL3
+sternguard/steps_base_low5 STNSTPL4
+
+$random sternguard/steps_base {sternguard/steps_base1 sternguard/steps_base2 
+sternguard/steps_base3 sternguard/steps_base4 sternguard/steps_base5 sternguard/steps_base6 
+sternguard/steps_base7 sternguard/steps_base8 sternguard/steps_base9 sternguard/steps_base10}
+sternguard/steps_base1 STNSTPB0
+sternguard/steps_base2 STNSTPB1
+sternguard/steps_base3 STNSTPB2
+sternguard/steps_base4 STNSTPB3
+sternguard/steps_base5 STNSTPB4
+sternguard/steps_base6 STNSTPB5
+sternguard/steps_base7 STNSTPB6
+sternguard/steps_base8 STNSTPB7
+sternguard/steps_base9 STNSTPB8
+sternguard/steps_base10 STNSTPB9
+
+// Metal
+$random sternguard/steps_metal {sternguard/steps_metal1 sternguard/steps_metal2 
+sternguard/steps_metal3 sternguard/steps_metal4 sternguard/steps_metal5}
+sternguard/steps_metal1 STNSTPM0
+sternguard/steps_metal2 STNSTPM1
+sternguard/steps_metal3 STNSTPM2
+sternguard/steps_metal4 STNSTPM3
+sternguard/steps_metal5 STNSTPM4
+
+// Jumping
+$playeralias sternguard gender *jump sternguard/jump
+$volume *jump 0.45
+$random sternguard/jump {sternguard/jump1 sternguard/jump2 sternguard/jump3 sternguard/jump4 sternguard/jump5}
+sternguard/jump1 STNJUMP0
+sternguard/jump2 STNJUMP1
+sternguard/jump3 STNJUMP2
+sternguard/jump4 STNJUMP3
+sternguard/jump5 STNJUMP4
 
 
 // ========================================================================
