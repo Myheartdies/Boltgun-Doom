@@ -1,24 +1,24 @@
 class ShellEjectingWeapon : DoomWeapon
 {
 // 	For animating casing ejection overlay
-	Array<float> casingTimeElapsed; //Time elapsed after a casing has ejected in ticks 
-	Array<float> ejectSpeed_x; //The inital x speed of casing
-	Array<float> ejectSpeed_y; //The inital y speed of casing
-	int maxCasingCount;
-	float extraOffset_x; 	//How much offset does the spawn position deviate from bolter's ejection position, positive is right negative is left
-	float extraOffset_y;	//positive is down negative is up
-	int casingIdx;
+	protected Array<float> casingTimeElapsed; //Time elapsed after a casing has ejected in ticks 
+	protected Array<float> ejectSpeed_x; //The inital x speed of casing
+	protected Array<float> ejectSpeed_y; //The inital y speed of casing
+	protected int maxCasingCount;
+	protected float extraOffset_x; 	//How much offset does the spawn position deviate from bolter's ejection position, positive is right negative is left
+	protected float extraOffset_y;	//positive is down negative is up
+	protected int casingIdx;
 	
 // 	For playing casing drop sound
-	Array<int> soundDelays; // The queue for delayed sound
-	String casingDropSound;
-	int currentIdx; //The slot for the oldest delayed sound
-	int insertIdx; //The idx of the slot the new delayed sound is inserted
-	int queueLength;
-	float dropSoundVolume;
+	protected Array<int> soundDelays; // The queue for delayed sound
+	protected String casingDropSound;
+	protected int currentIdx; //The slot for the oldest delayed sound
+	protected int insertIdx; //The idx of the slot the new delayed sound is inserted
+	protected int queueLength;
+	protected float dropSoundVolume;
 	
-	float offsetCompensationx;
-	float offsetCompensationy;
+	protected float offsetCompensationx;
+	protected float offsetCompensationy;
 	
 	
 	bool shot;
