@@ -24,6 +24,8 @@ $playeralias sternguard gender *pain75 *pain100
 $playeralias sternguard gender *pain50 *pain100
 $playeralias sternguard gender *pain25 *pain100
 
+
+// pain sound
 $random sternguard/pain {sternguard/pain1 sternguard/pain2 sternguard/pain3 sternguard/pain4 
 sternguard/pain5 sternguard/pain6 sternguard/pain7 sternguard/pain8 sternguard/pain9}
 sternguard/pain1 STNPAIN1
@@ -36,14 +38,38 @@ sternguard/pain7 STNPAIN7
 sternguard/pain8 STNPAIN8
 sternguard/pain9 STNPAIN9
 
-
+// landing
 $playeralias sternguard gender *grunt sternguard/landing
 sternguard/landing_heavy STNLNDH1
+$volume *land 0.3
 
 $playeralias sternguard gender *land sternguard/landing
 sternguard/landing STNLNDL1
-$volume sternguard/landing 1
+$volume *land 0.25
 
+// use fail
+$playeralias sternguard gender *usefail sternguard/mumble
+$random sternguard/mumble {sternguard/mumble1 sternguard/mumble2}
+sternguard/mumble1 STNMUMB0
+sternguard/mumble2 STNMUMB1
+
+$volume *usefail 0.4
+
+
+// Death sound
+$playeralias sternguard gender *death sternguard/death
+$playeralias sternguard gender *xdeath sternguard/death
+$random sternguard/death {sternguard/death1 sternguard/death2 sternguard/death3 
+sternguard/death4 sternguard/death5 sternguard/death6 sternguard/death7}
+sternguard/death1 STNDETH0
+sternguard/death2 STNDETH1
+sternguard/death3 STNDETH2
+sternguard/death4 STNDETH3
+sternguard/death5 STNDETH4
+sternguard/death6 STNDETH5
+sternguard/death7 STNDETH6
+
+$volume *death 0.45
 
 
 // ========================================================================
