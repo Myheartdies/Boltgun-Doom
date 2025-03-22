@@ -1,2 +1,5 @@
 
-footstep modified from zfootstep by  DenisBelmondo, https://forum.zdoom.org/viewtopic.php?t=60401
+Footstep logic based on zfootstep by  DenisBelmondo
+Nashmove by Nash Muhandes
+ParryMe by 
+Sprites and audio of all weapons and enemies from Warhammer40000 Boltgun developed by Auroch Digital, Focus Entertainment
