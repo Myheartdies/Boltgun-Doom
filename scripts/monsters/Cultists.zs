@@ -10,6 +10,7 @@ class Cultist1 : ZombieMan
 		Scale 0.58;
 		Monster;
 		+FLOORCLIP
+		DamageFactor "Bolt", 2;
 		SeeSound "grunt/sight";
 		AttackSound "grunt/attack";
 		PainSound "grunt/pain";
@@ -65,6 +66,7 @@ class Cultist1 : ZombieMan
 // 			double slope = AimLineAttack(ang, MISSILERANGE);
 // 			A_StartSound("grunt/attack", CHAN_WEAPON);
 // 			int damage = Random[PosAttack](1, 5) * 3;
+// 			A_SpawnProjectile("Tracer");
 			A_CustomBulletAttack(25
 			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
 		}
@@ -205,6 +207,7 @@ class Tracer : FastProjectile
 		Height 1;
 		Speed 60;
 		FastSpeed 120;
+		+FORCEXYBILLBOARD
 //    Damage 3;
 		DamageFunction 3*random(1,5);
 		Projectile;

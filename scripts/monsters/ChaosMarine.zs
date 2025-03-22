@@ -3,7 +3,7 @@ class ChaosMarine : HellKnight
 	Default
 	{
 		Mass 600;
-		DamageFactor "SmallExplosion", 0.2;
+		DamageFactor "SmallExplosion", 0.3; //
 		DamageFactor "StrongExplosion", 0.65;
 	}
 // 	Chase but with footstep

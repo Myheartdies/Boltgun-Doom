@@ -313,9 +313,14 @@ ParryMe/ready sounds/ParryMe/MeleeFoley.ogg
 // ========================================================================
 // For volkite caliver
 // ========================================================================
+
+weapons/volkite_startfiring VKTESTFR
+
 weapons/volkite_fire VKTEFR01
 
+weapons/volkite_cooling VKTECL01
 
+weapons/volkite_reload VKTERLD1
 
 
 

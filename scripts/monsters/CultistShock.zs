@@ -10,6 +10,7 @@ class CultistShock: ShotgunGuy
 		PainChance 170;
 		Monster;
 		+FLOORCLIP
+		DamageFactor "Bolt", 2;
 		SeeSound "shotguy/sight";
 		AttackSound "shotguy/attack";
 		PainSound "shotguy/pain";
@@ -60,7 +61,7 @@ class CultistShock: ShotgunGuy
 	
 	action void ShotgunnerMissile(){
 		A_StartSound("shotguy/attac",flags:CHAN_WEAPON);
-		A_CustomBulletAttack(30
+		A_CustomBulletAttack(25
 		, 0, 3,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM,missile:"ShotgunTracer");
 // 		A_CustomBulletAttack(22.5, 0, 3,0, pufftype :"BulletPuff", 0, flags:CBAF_NORANDOM);
 // 		A_SpawnProjectile("Tracer");

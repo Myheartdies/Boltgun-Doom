@@ -10,6 +10,7 @@ class CultistHeavy : ChaingunGuy Replaces ChaingunGuy
 		PainChance 170;
 		Monster;
 		+FLOORCLIP
+		DamageFactor "Bolt", 2;
 		SeeSound "chainguy/sight";
 		PainSound "chainguy/pain";
 		DeathSound "chainguy/death";

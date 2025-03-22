@@ -29,13 +29,23 @@ class VolkiteCaliver : DoomWeapon //Replaces PlasmaRifle
 		VKT1 A 1 A_Raise(18);
 		Loop;
 	Reload:	
+		TNT1 A 0 A_Startsound("weapons/volkite_reload",CHAN_AUTO,attenuation:ATTN_NONE);
 		VKT2 ABCDEFGHIJKLMNOP 3;
 		Goto Ready;
 	Fire:
+// 		VKT1 JKL 2;
+		TNT1 A 0 A_Startsound("weapons/volkite_startfiring",CHAN_AUTO,attenuation:ATTN_NONE);
+		VKT1 LMN 2 Bright;
+	Firing:
 		VKT1 I 3 Bright FireVolkite;
 // 		VKT1 JK 3 FireVolkite;
-		VKT2 A 0 {A_ReFire();}
-		VKT2 F 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
+		VKT2 A 0 {A_ReFire("Firing");}
+		VKT2 A 4 {
+			A_ReFire();
+			A_StopSound(CHAN_WEAPON);
+			A_Startsound("weapons/volkite_cooling",CHAN_AUTO,attenuation:ATTN_NONE);
+			}
+// 		VKT2 F 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
 		Goto Ready;
 	Flash:
 // 		PLSF A 4 Bright A_Light1;
@@ -75,13 +85,13 @@ class VolkiteCaliver : DoomWeapon //Replaces PlasmaRifle
 
 
 
-class VolkiteBall : Actor
+class VolkiteBall : FastProjectile
 {
 	Default
 	{
 		Radius 13;
 		Height 8;
-		Speed 25;
+		Speed 60;
 		Damage 5;
 		Projectile;
 		+RANDOMIZE

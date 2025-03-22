@@ -22,6 +22,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 		MeleeRange 55;
 		MeleeThreshold 100;
 		MinMissileChance 150;
+		DropItem "ClipBox";
 		Tag "$FN_CAPN";
 	}
 	States

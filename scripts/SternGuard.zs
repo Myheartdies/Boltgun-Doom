@@ -28,9 +28,9 @@ Class SternGuard : Doomplayer replaces Doomplayer
 class SternguardFootStepHandler : EventHandler
 {
 	const MAX_SPEED = 16.666666;
-	const stoppingDelay = 80; //The min distance from last step when stopping for it to consider the need to take one more step to stop 
+	const stoppingDelay = 60; //The min distance from last step when stopping for it to consider the need to take one more step to stop 
 	private Array<double> wait;
-	const STEP_SIZE = 156;
+	const STEP_SIZE = 150;
 	const walkspeed = 10;
 	const sprintspeed = 16;
 	float lastx;
@@ -59,12 +59,10 @@ class SternguardFootStepHandler : EventHandler
 								0.0, MAX_SPEED);
 					lastx = pl.pos.x;
 					lasty = pl.pos.y;
-					Console.printf("%d", speed);
-					// you can probably find out that this means that a sound is
-					// only played when the player is moving > 2.0 speed
-					wait[i] -= (speed - walkspeed)/4 + walkspeed;
+// 					Console.printf("%d", speed);
+					wait[i] -= (speed - walkspeed)/2.7 + walkspeed;
 					
-// 					To handle the case of landing after a jump
+// 					To handle the case of landing sound after a jump
 					if (wasMidAir[i]){
 						playFootStepSound(pl);
 						wasMidAir[i] = False;
@@ -104,8 +102,8 @@ class SternguardFootStepHandler : EventHandler
 		super.worldTick();
 	}
 	void playFootStepSound(PlayerPawn pl){
-		pl.A_StartSound("sternguard/steps_base_low", CHAN_BODY,CHANF_OVERLAP, 0.1,ATTN_NONE);
-		pl.A_StartSound("sternguard/steps_base", CHAN_BODY,CHANF_OVERLAP, 0.1,ATTN_NONE);
+		pl.A_StartSound("sternguard/steps_base_low", CHAN_BODY,CHANF_OVERLAP, 0.15,ATTN_NONE);
+		pl.A_StartSound("sternguard/steps_base", CHAN_BODY,CHANF_OVERLAP, 0.15,ATTN_NONE);
 	}
 	
 	override void playerEntered(PlayerEvent e)

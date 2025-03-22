@@ -231,7 +231,8 @@ class BolterProjectile: TrailedProjectile{
 		Height 4;
 		Speed 150;
 		Scale 0.65;
-		Damage 10;
+// 		Damage 7;
+		DamageFunction random(2,7)*random(2,8);
 		DeathSound "weapons/bolter_impact";
 	}
 	

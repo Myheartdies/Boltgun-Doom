@@ -16,8 +16,8 @@ class Terminator : Fatso Replaces Fatso
 		ActiveSound "TERM/active";
 		PainSound "TERM/pain";
 		DeathSound  "TERM/death";
-		DropItem "Clip";
-		DamageFactor "SmallExplosion", 0.1;
+		DropItem "ClipBox";
+		DamageFactor "SmallExplosion", 0.2; //used to be 0.1 when bolter damage was 11
 		DamageFactor "StrongExplosion", 0.6;
 	}
 	States

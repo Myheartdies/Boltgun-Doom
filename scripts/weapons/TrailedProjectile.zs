@@ -1,3 +1,5 @@
+
+// Profile just contains the most commonly reused information for particles, so no speed, acceleration, offsets
 struct Trailprofile{
 	float baseAlpha;
 	float fadeAlpha;
@@ -12,9 +14,6 @@ struct Trailprofile{
 	bool randomposition;
 	bool moving;
 	int slowdownspeed;
-	
-	double xrange1, xrange2, yrange1, yrange2,zrange1, zrange2;
-// 	double xrange1, xrange2, yrange1, yrange2,zrange1, zrange2;
 	double startalphaf; double fadestepf; 
 	double sizestep;
 	double startroll; 
@@ -22,7 +21,7 @@ struct Trailprofile{
 }
 
 class TrailedProjectile: FastProjectile {
-	Vector3 facing;
+	private Vector3 facing;
 	Trailprofile smokeProfile;
 	Trailprofile fireProfile;
 	double speedx;
@@ -31,6 +30,27 @@ class TrailedProjectile: FastProjectile {
 	double lastx;
 	double lasty;
 	double lastz;
+	Color col;
+	FSpawnParticleParams smokePuffParams;
+	override void BeginPlay(){
+// 		A_SpawnParticleEx("white",TexMan.CheckForTexture("SMOKA0"),STYLE_Shaded,SPF_ROLL, baseTTL *0.5+60
+// 		, 9 + frandom(-1,2), 0
+// 		,-facing.x*div + frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
+// 		,speedx,speedy,speedz, -speedx/1500,-speedy/1500,-speedz/1500
+// 		, 0.6,-1,-0.01
+// 		, Random(0,12)*30);
+// 		col = (255,255,255);
+		smokePuffParams.color1 = "white";
+		smokePuffParams.texture = TexMan.CheckForTexture("SMOKA0");
+		smokePuffParams.flags = SPF_ROLL;
+		smokePuffParams.style = STYLE_Shaded;
+		smokePuffParams.lifetime = 60;
+		smokePuffParams.size = 9;
+		smokePuffParams.sizestep = -0.01;
+		smokePuffParams.startalpha = 0.6;
+		smokePuffParams.fadestep = -1;
+		super.BeginPlay();
+	}
 	Default
 	{
 		Radius 6;
@@ -48,7 +68,7 @@ class TrailedProjectile: FastProjectile {
 	States
 	{
 	Spawn:
-		BOLT A 1 Bright TrailParticle(16, 90, 15, 4, 3);
+		BOLT A 1 Bright TrailParticle(16, 90, 15, 5, 4);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
@@ -57,6 +77,13 @@ class TrailedProjectile: FastProjectile {
 		BTRE MNOPQ 2;
 // 		Goto LightDone;
 		Stop;
+	}
+	
+	void modify(
+		float offsetx1, float offsetx2, float offsety1, float offsety2, float offsetz1, float offsetz2,
+		float velx1, float velx2, float vely1, float vely2, float velz1, float velz2
+		){
+		
 	}
 	
 // 	convert the facing to a vector
@@ -86,16 +113,39 @@ class TrailedProjectile: FastProjectile {
 
 // 	SMOKA0 round_smoke_1
 	
+	void SpawnTrailedParticle(int subdivide){
+		SpawnHeadParticle();
+		for ( int div = 1; div <= subdivide; div++ ){
+			SpawnSubdividedParticle(div);
+		}
+	}
+	void SpawnHeadParticle(){
+		
+	}
+	void SpawnSubdividedParticle(int div){
+		
+	}
 	void SpawnSmokePuff(float baseTTL, int div = 0){
 		speedx = frandom(-0.15,0.15);
 		speedy = frandom(0.15,0.15);
 		speedz = frandom(0,0.15);
-		A_SpawnParticleEx("white",TexMan.CheckForTexture("SMOKA0"),STYLE_Shaded,SPF_ROLL, baseTTL *0.5+60
-		, 9 + frandom(-1,2), 0
-		,-facing.x*div + frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
-		,speedx,speedy,speedz, -speedx/1500,-speedy/1500,-speedz/1500
-		, 0.6,-1,-0.01
-		, Random(0,12)*30);
+// 		A_SpawnParticleEx("white",TexMan.CheckForTexture("SMOKA0"),STYLE_Shaded,SPF_ROLL, baseTTL *0.5+60
+// 		, 9 + frandom(-1,2), 0
+// 		,-facing.x*div + frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
+// 		,speedx,speedy,speedz, -speedx/1500,-speedy/1500,-speedz/1500
+// 		, 0.6,-1,-0.01
+// 		, Random(0,12)*30);
+		Vector3 position = (
+			pos.x-facing.x*div + frandom(-0.3,0.3),
+			pos.y-facing.y*div + frandom(-0.3,0.3),
+			pos.z-facing.z*div + frandom(-0.3,0.3));
+		Vector3 speed = (speedx, speedy, speedz);
+		Vector3 acceleration = (-speedx/1500,-speedy/1500,-speedz/1500);
+		smokePuffParams.pos = position;
+		smokePuffParams.vel = speed;
+		smokePuffParams.accel = acceleration;
+		smokePuffParams.startroll = random(0,12) * 30;
+		level.SpawnParticle(smokePuffParams);
 	}
 	
 // 	Spawn trail for one profile
@@ -105,7 +155,7 @@ class TrailedProjectile: FastProjectile {
 	{
 		
 	}
-
+	
 	
 	void TrailParticle(int subdivide
 		, float baseTTL = 120,float baseTTL_trail=10
@@ -127,7 +177,7 @@ class TrailedProjectile: FastProjectile {
 		
 		
 // 		Spawn center smoke trail
-		A_SpawnParticle/*Ex*/("7f7f7f",/*null,STYLE_Add,*/ 0,baseTTL,mainSmokeSize+frandom(-0.5,0.5), 0
+		A_SpawnParticle/*Ex*/("7f7f7f", 0,baseTTL,mainSmokeSize+frandom(-0.5,0.5), 0
 		, 0,0,0
 		, 0,0,0, 0,0,0
 		, baseAlpha,-1,-0.04);
@@ -138,8 +188,8 @@ class TrailedProjectile: FastProjectile {
 // 		Spawn  smoke puff
 		SpawnSmokePuff(baseTTL);
 		
-// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744
-		A_SpawnParticle("fed882",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
+// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744  bright#fed882
+		A_SpawnParticle("fba744",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
 		, baseAlpha,-1,-0.1);

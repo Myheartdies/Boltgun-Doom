@@ -10,6 +10,7 @@ class Flamer1 : DoomImp
 		PainChance 200;
 		Monster;
 		Scale 0.4;
+// 		DamageFactor "SmallExplosion", 0.6;
 		+FLOORCLIP
 // 		+FLOAT +NOGRAVITY
 		SeeSound "flamer/sight";

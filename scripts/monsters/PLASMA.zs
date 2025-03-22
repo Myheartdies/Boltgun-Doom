@@ -11,6 +11,7 @@ class PlasmaRenegade : DoomImp  /*Replaces DoomImp*/
 		PainChance 200;
 		Monster;
 		+FLOORCLIP
+		DamageFactor "Bolt", 2;
 		SeeSound "imp/sight";
 		PainSound "imp/pain";
 		DeathSound "imp/death";

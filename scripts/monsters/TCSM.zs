@@ -22,7 +22,7 @@ class Legionary : ChaosMarine Replaces Revenant
 		MeleeThreshold 130;
 // 		+DropOff
 		MinMissileChance 150;
-		DropItem "Clip";
+		DropItem "ClipBox";
 		Tag "$FN_CSM";
 	}
 	States

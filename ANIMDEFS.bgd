@@ -76,23 +76,23 @@ texture SMKAE0
 //     pic SMKAC0 tics 1
 //     pic SMKAD0 tics 1
     pic SMKAE0 tics 1
-//     pic SMKAF0 tics 1
+    pic SMKAF0 tics 1
     pic SMKAG0 tics 1
-//     pic SMKAH0 tics 1
+    pic SMKAH0 tics 1
     pic SMKAI0 tics 1
-//     pic SMKAJ0 tics 1
+    pic SMKAJ0 tics 1
     pic SMKAK0 tics 1
-//     pic SMKAL0 tics 1
+    pic SMKAL0 tics 1
     pic SMKAM0 tics 1
-//     pic SMKAN0 tics 1
+    pic SMKAN0 tics 1
     pic SMKAO0 tics 1
-//     pic SMKAP0 tics 1
+    pic SMKAP0 tics 1
     pic SMKAQ0 tics 1
-//     pic SMKAR0 tics 1
+    pic SMKAR0 tics 1
     pic SMKBA0 tics 1
-//     pic SMKBB0 tics 1
+    pic SMKBB0 tics 1
     pic SMKBC0 tics 1
-//     pic SMKBD0 tics 1
+    pic SMKBD0 tics 1
     pic SMKBE0 tics 1
     pic SMKBF0 tics 1
     pic SMKBG0 tics 1

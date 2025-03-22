@@ -12,7 +12,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 	Default
 	{
 		Weapon.SelectionOrder 700;
-		Weapon.AmmoUse 2;
+		Weapon.AmmoUse 3;
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "Clip";
 //         +WEAPON.AMMO_OPTIONAL
