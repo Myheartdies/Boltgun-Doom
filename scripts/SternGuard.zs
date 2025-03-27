@@ -5,8 +5,9 @@ Class SternGuard : Doomplayer replaces Doomplayer
 	Default
 	{
 // 		Height 67; //firing offset will be 8 for this, 15 for normal height
-// 		Height 60;
+// 		Height 80;
 		Mass 400;
+		Player.AttackZOffset 23;
 		Player.Startitem "Bolter";
 		Player.StartItem "Clip", 50;
 		Player.StartItem "BolterMag", 18;
@@ -16,7 +17,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Player.WeaponSlot 3, "AstartesShotgun", "SuperShotgun";
 		Player.WeaponSlot 4, "HeavyBolter";
 		Player.WeaponSlot 5, "MissileLauncher";
-		Player.WeaponSlot 6, "VolkiteCaliver","PlasmaRifle";
+		Player.WeaponSlot 6, "VolkiteCaliver";//,"PlasmaRifle";
 		Player.SoundClass "sternguard";
 		Damagefactor "ExplosionSelfDamage", 0.18;
 		Player.ViewHeight 52;
