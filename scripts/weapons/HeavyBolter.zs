@@ -169,11 +169,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			accurate = true;
 		}
 		// if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 10,10 );
+		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,10 );
 // 		A_FireProjectile("HeavyBolterProjectile", 0, false, 15, 10);
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
-		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON , CHANF_OVERLAP, 1);
+		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON,CHANF_OVERLAP,1);
         A_Light2();
         // 		Eject casing
 		EjectCasing("Casing");

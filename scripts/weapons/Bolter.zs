@@ -192,8 +192,8 @@ class Bolter : ShellEjectingWeapon
 		{
 			accurate = true;
 		}
-		if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		else A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
+		if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
+		else A_FireBullets (1.2, 1.2, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
 // 		else A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
 // 		A_FireRailgun();
 		if(isLowAmmo)
@@ -209,7 +209,7 @@ class Bolter : ShellEjectingWeapon
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
 		A_OverlayScale(-2, 0.3 + random(-3,3)/100, 0.3 + random(-3,3)/100);
-		A_OverlayOffset(-2, 250 + random(-5,5), 60 + random(-5,5));
+		A_OverlayOffset(-2, 250 + random(-5,5), 50 + random(-5,5));
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
 		A_OverlayAlpha(-2, 0.95);
 		
@@ -232,7 +232,7 @@ class BolterProjectile: TrailedProjectile{
 		Speed 150;
 		Scale 0.65;
 // 		Damage 7;
-		DamageFunction random(2,7)*random(2,8);
+		DamageFunction random(3,10)*random(3,10);
 		DeathSound "weapons/bolter_impact";
 	}
 	
