@@ -106,6 +106,7 @@ class Legionary : ChaosMarine Replaces Revenant
 		TCSM Q -1;
 		Stop;
 	XDeath:
+		OVKS J 1;
 		TCSM M  6 ;
 		TCSM N  6 A_StartSound("TCSM/death");
 		TCSM O  6;

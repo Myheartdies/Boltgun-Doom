@@ -51,13 +51,20 @@ class Flamer1 : DoomImp
 		FLM1 O -1;
 		Stop;
 	XDeath:
+		OVKS J 1;
 		FLM1 K 5 A_StartSound("flamer/death");
-		FLM1 L 5;
+		FLM1 L 5 A_NoBlocking;
 		FLM1 M 5;
-		FLM1 N 5 A_NoBlocking;
-		FLM1 OOO 5;
-		TROO U -1;
+		FLM1 N 5;
+		FLM2 OOO 5;
+		OVKS J -1;
 		Stop;
+// 		OVKS A 5 A_NoBlocking;
+// 		OVKS B 5 A_XScream;
+// 		OVKS C 5 A_NoBlocking;
+// 		OVKS DEFGHI 3;
+// 		OVKS J -1;
+// 		Stop;
 	Raise:
 		TROO ML 8;
 		TROO KJI 6;
