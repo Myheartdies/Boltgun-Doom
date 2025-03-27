@@ -18,6 +18,58 @@ version "4.11"
 // #include "scripts/monsters/plush_elemental.zs"
 
 // #include "scripts/groundSoul.zs"
+#include "ZScript/laser_base.zsc"
+ 
+ class PulseLaser : BEAMZ_LaserBeam
+ {
+	Default
+	{
+		BEAMZ_LaserBeam.LaserColor "Red";
+	}
+	
+	override void BeamTick()
+	{
+		alpha = sin(GetAge() * 60) + 0.5;
+		aimAtCrosshair();
+	}
+ }
+ 
+ 
+ class TestBeam : Inventory
+ {
+	BEAMZ_LaserBeam beam;
+	
+	override void DoEffect()
+	{
+		uint btns = Owner.player.cmd.buttons;
+		uint obtns = Owner.player.oldbuttons;
+	
+		// Create Laser
+		if(!beam) 
+		{
+			beam = beam.Create(Owner, 5, 0, -2, 0, 2, type:"PulseLaser");
+			beam.SetEnabled(true);
+		}
+		
+		// Toggle laser
+		if( btns & BT_RELOAD && !(obtns & BT_RELOAD) ) 
+			beam.SetEnabled(!beam.enabled);
+		
+		// Update laser if tracking target
+		if(beam.isTracking())
+		{
+			Actor aim = Owner.AimTarget();
+			if(aim) beam.targetPos = (aim.pos.xy, aim.pos.z + aim.height * 0.5);
+		}
+		
+		// Toggle tracking
+		if( btns & BT_ALTATTACK && !(obtns & BT_ALTATTACK) )
+			beam.trackingPos = !beam.trackingPos;
+	}
+ }
+ 
+
+
 
 
 class NashMoveHandler : EventHandler

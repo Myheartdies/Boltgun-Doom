@@ -3,3 +3,5 @@ Footstep logic based on zfootstep by  DenisBelmondo
 Nashmove by Nash Muhandes
 ParryMe by 
 Sprites and audio of all weapons and enemies from Warhammer40000 Boltgun developed by Auroch Digital, Focus Entertainment
+
+GZBeamz by Lewisk3 https://github.com/Lewisk3/GZBeamz

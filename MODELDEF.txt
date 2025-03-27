@@ -1,0 +1,31 @@
+Model "BEAMZ_LaserBeam"
+{
+	Path "models/"
+	Model 0 "beam.md3"
+	Skin 0 "beam.png"
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	
+	FrameIndex MODL A 0 0
+}
+Model "PulseLaser"
+{
+	Path "models/"
+	Model 0 "beam_cyl.md3"
+	Skin 0 "beam_cyl.png"
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	
+	FrameIndex MODL A 0 0
+}
+
+Model "VolkiteBeam"
+{
+	Path "models/"
+	Model 0 "beam.md3"
+	Skin 0 "beam.png"
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	
+	FrameIndex MODL A 0 0
+}

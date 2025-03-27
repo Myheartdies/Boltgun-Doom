@@ -1,0 +1,14 @@
+#include "zcommon.acs"
+script "DarkenScreen" (void)
+{
+    // Fade to black (50% transparency)
+    FadeTo(0, 0, 0, 0.25, 0.5);
+// 	print(s:"turning down brightness");
+}
+
+script "BrightenScreen" (void)
+{
+    // Fade to black (50% transparency)
+    FadeTo(0, 0, 0, 0.0, 1.5);
+// 	print(s:"turning up brightness");
+}
