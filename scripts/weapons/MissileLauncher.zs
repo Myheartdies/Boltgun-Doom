@@ -36,7 +36,7 @@ class MissileLauncher : RocketLauncher Replaces RocketLauncher
 	Reload:
 		MSLL EFGH 4;
 		MSLL I 3 A_StartSound("weapons/missile_launcher_reload", CHAN_AUTO);
-		MSLL JKL 3;
+		MSLL JKL 3 A_WeaponReady(WRF_NOFIRE);
 		MSLL MNO 4 {A_ReFire("Fire");A_WeaponReady();}
 		Goto Ready;
 	Flash:

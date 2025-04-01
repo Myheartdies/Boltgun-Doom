@@ -3,10 +3,8 @@ class Bolter : ShellEjectingWeapon
 
 
 	override void BeginPlay(){
-		dropSoundVolume = 0.3;
 		queueLength = 12;
 		maxCasingCount = 5;
-		casingDropSound = "weapons/bolter_casing";
 		super.BeginPlay();
 	}
 	Default
@@ -30,11 +28,18 @@ class Bolter : ShellEjectingWeapon
 		Weapon.AmmoGive2 20;
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1.1;
+		ShellEjectingWeapon.MaxCasingCount 5;
+		ShellEjectingWeapon.CasingDropSound "weapons/bolter_casing";
+		ShellEjectingWeapon.DropSoundVolume 0.3;
 	}
 	States
 	{
 	Ready:
-		BOTR A 4 {A_WeaponReady(WRF_ALLOWRELOAD);CasingLayerReady();}
+		BOTR A 4 {
+			A_WeaponReady(WRF_ALLOWRELOAD);
+			CasingLayerReady();
+// 			A_JumpIfInventory("clipEjected", 1, "ReloadingPartialReinsert");
+		}
 		Loop;
 	Deselect:
 // 		BOTR A 1 Offset(0, 34);
@@ -66,22 +71,23 @@ class Bolter : ShellEjectingWeapon
 		BOTR A 2;
 		TNT1 A 0 {A_WeaponOffset(-3, 5, WOF_ADD); CompensateOffset(3,-5);}
 		
+// 		Fire with low ammo click if ammo is less than 8
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 8, 3);
-		BOTR B 1 Bright FireBolter(True);
+		BOTR B 1 Bright {FireBolter(True); AllowQuickSwitch();}
 		TNT1 A 0 A_Jump(256,2);
-		BOTR B 1 Bright FireBolter;
+		BOTR B 1 Bright {FireBolter(); AllowQuickSwitch();}
 		
 		
 		TNT1 A 0 A_ZoomFactor(0.996);
 		TNT1 A 0 A_OverlayScale(1,1.03,1.03);
 		TNT1 A 0 {A_WeaponOffset(2, -2.5, WOF_ADD); CompensateOffset(-2,2.5); }
-		BOTR B 1 Bright A_SetPitch(pitch + 0.3);
+		BOTR B 1 Bright {A_SetPitch(pitch + 0.3); AllowQuickSwitch();}
 		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
 		BOTR C 1 Bright;
 		TNT1 A 0 A_OverlayScale(1,1,1);
-		BOTR C 1 Bright A_ZoomFactor(1.00);
+		BOTR C 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
 		TNT1 A 0 {A_WeaponOffset(1, -2.5, WOF_ADD); CompensateOffset(-1,2.5); }
-		BOTR C 1 A_SetPitch(pitch + 0.2) ;
+		BOTR C 1 {A_SetPitch(pitch + 0.2); AllowQuickSwitch();}
 		
 
 		BOTR D 2 A_ReFire;
@@ -111,13 +117,19 @@ class Bolter : ShellEjectingWeapon
 		CASN FG 2 Bright;
 		CASN HIJKLMNOPABCDEFG 2;
 		Goto LightDone;
-
+	
+	StagedReloadInsert:
+// 		TNT1 A 0 A_JumpIfInventory("isFullReload", 1, "ReloadingFullReinsert");
+		Goto ReloadingPartialReinsert;
+	
 	AltFire:
 // 		BOTR A 2;
 // 		BOTR B 3 Bright A_ThrowGrenade("Grenade", 10, 15, 4);
 // 		BOTR C 3 Bright;
 // 		BOTR D 2 A_ReFire;
 // 		Goto Ready;
+	
+		
 	
 // 	Reloading : if empty mag, Fire -> reload -> ReloadCheck
 // 	ReloadCheck: If Full mag, to Ready, otherwise, if have reserve goto Reload Prepare
@@ -142,19 +154,29 @@ class Bolter : ShellEjectingWeapon
 // 		Play full reload sound if it is a full reload
 		TNT1 A 0 A_JumpIfInventory("isFullReload",1, "ReloadingFull");
 		Goto ReloadingPartial;
-	ReloadingPartial:	
+	ReloadingPartial:
+	ReloadingPartialEject:	
 		BOTR G 4 A_Startsound("weapons/bolter_reload_partial");
 		BOTR H 4;
-		BOTR I 5; 
-		BOTR J 5;
-		BOTR KL 3;
+	ReloadingPartialReinsert:
+		TNT1 A 0 A_GiveInventory("clipEjected", 1);
+		BOTR IJ 5; //AllowQuickSwitch; 
+		BOTR KL 3; //AllowQuickSwitch;
+		TNT1 A 0 A_TakeInventory("clipEjected", 256);
 		Goto ReloadLogic;
+	
 	ReloadingFull:
+	ReloadingFullEject:
 		BOTR G 2 A_Startsound("weapons/bolter_reload_full");
-		BOTR HIJKL 3;
-		BOTR PQRST 2;
+		BOTR H 3;
+	ReloadingFullReinsert:
+		TNT1 A 0 A_GiveInventory("clipEjected", 1);
+		BOTR IJKL 3; //AllowQuickSwitch;
+		BOTR PQRST 2; //AllowQuickSwitch;
 		TNT1 A 0 A_TakeInventory("isFullReload", 256);
+		TNT1 A 0 A_TakeInventory("clipEjected", 256);
 		Goto ReloadLogic;
+	
 	ReloadLogic:
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 0, "ReloadOver");
         TNT1 A 0 A_JumpIfInventory("Clip",2, 1);
@@ -169,6 +191,10 @@ class Bolter : ShellEjectingWeapon
  	Spawn:
 		PIST A -1;
 		Stop;
+	}
+	
+	action void AllowQuickSwitch(){
+		 A_WeaponReady(WRF_NOFIRE|WRF_ALLOWRELOAD);
 	}
 	
 	action void FireBolter(bool isLowAmmo = False){
@@ -233,6 +259,7 @@ class BolterProjectile: TrailedProjectile{
 		Scale 0.65;
 // 		Damage 7;
 		DamageFunction random(3,10)*random(3,10);
+		+FORCEXYBILLBOARD
 		DeathSound "weapons/bolter_impact";
 	}
 	
@@ -269,11 +296,21 @@ class BolterMag : Ammo
 		Ammo.BackpackMaxAmount 0;
 	}
 }
+class clipEjected: Inventory{
+	Default{
+		Inventory.Amount 0;
+		Inventory.MaxAmount 1;
+		+Inventory.Undroppable
+		+Inventory.Untossable
+	}
+}
 class isFullReload : Inventory
 {
 	Default{
 		Inventory.Amount 0;
 		Inventory.MaxAmount 1;
+		+Inventory.Undroppable
+		+Inventory.Untossable
 	}
 }
 

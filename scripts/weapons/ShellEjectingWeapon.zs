@@ -20,21 +20,17 @@ class ShellEjectingWeapon : DoomWeapon
 	protected float offsetCompensationx;
 	protected float offsetCompensationy;
 	
-	
+	Property MaxCasingCount : maxCasingCount;
+	Property CasingDropSound : casingDropSound;
+	Property DropSoundVolume : dropSoundVolume;
 	bool shot;
 	bool isHeld;
 	
 
 	override void BeginPlay(){
 // 		Initialize base value
-		if (casingDropSound=="") 
-			casingDropSound = "TCSM/melee";
-		if (maxCasingCount == 0) 
-			maxCasingCount = 6;
 		if (queueLength == 0) 
 			queueLength = 20;
-		if (dropSoundVolume == 0)
-			dropSoundVolume = 0.5;
 // 		Initialize variable for casing animation and sound
 		for (int i=0; i< maxCasingCount; i++){
 			casingTimeElapsed.push(0);
@@ -56,6 +52,10 @@ class ShellEjectingWeapon : DoomWeapon
 	}
 	Default
 	{	
+		ShellEjectingWeapon.MaxCasingCount 6;
+		ShellEjectingWeapon.CasingDropSound "TCSM/melee";
+		ShellEjectingWeapon.DropSoundVolume 0.5;
+		
 	}
 	States
 	{
@@ -79,6 +79,9 @@ class ShellEjectingWeapon : DoomWeapon
 		PIST A -1;
 		Stop;
 	}
+
+	
+	
 // 	====================================================
 // 	Call these two actions at the frame of casing eject to initialize a casing ejection
 // 	====================================================

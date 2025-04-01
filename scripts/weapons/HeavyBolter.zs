@@ -1,10 +1,7 @@
 class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 {
     override void BeginPlay(){
-		dropSoundVolume = 0.5;
 		queueLength = 10;
-		maxCasingCount = 20;
-		casingDropSound = "weapons/heavybolter_casing";
         extraOffset_x = -120;
         extraOffset_y = 0;
 		super.BeginPlay();
@@ -23,6 +20,9 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Weapon.BobSpeed 1.5;
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1;	
+		ShellEjectingWeapon.MaxCasingCount 10;
+		ShellEjectingWeapon.CasingDropSound "weapons/heavybolter_casing";
+		ShellEjectingWeapon.DropSoundVolume 0.5;
 		Obituary "$OB_MPCHAINGUN";
 		Tag "$TAG_CHAINGUN";
 	}
@@ -169,7 +169,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			accurate = true;
 		}
 		// if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,10 );
+		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,5 );
 // 		A_FireProjectile("HeavyBolterProjectile", 0, false, 15, 10);
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);

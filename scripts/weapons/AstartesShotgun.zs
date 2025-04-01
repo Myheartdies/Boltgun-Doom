@@ -2,10 +2,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 {
 	int reloadInput;
 	override void BeginPlay(){
-		dropSoundVolume = 1.1;
 		queueLength = 10;
-		maxCasingCount = 2;
-		casingDropSound = "weapon/scout_shotgun_casing";
 		
 		reloadInput = 0;
 		super.BeginPlay();
@@ -30,6 +27,9 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Weapon.BobSpeed 2;
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1.1;
+		ShellEjectingWeapon.MaxCasingCount 2;
+		ShellEjectingWeapon.CasingDropSound "weapon/scout_shotgun_casing";
+		ShellEjectingWeapon.DropSoundVolume 1.0;
 		Obituary "$OB_MPSHOTGUN";
 		Tag "$TAG_AST_SHOTGUN";
 	}
@@ -79,7 +79,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(0, -15);
-		STGN B 1 Bright {FireScoutShotgun(); }
+		STGN B 1 Bright { FireScoutShotgun(); }
 		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
 		TNT1 A 0 CompensateOffset(12, 23);
 		TNT1 A 0 A_ZoomFactor(0.997);
