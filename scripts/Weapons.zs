@@ -5,3 +5,4 @@
 #include "scripts/weapons/Volkite.zs"
 #include "scripts/weapons/MissileLauncher.zs"
 #include "scripts/weapons/TrailedProjectile.zs"
+#include "scripts/weapons/Melta.zs"

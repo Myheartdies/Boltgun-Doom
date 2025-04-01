@@ -14,7 +14,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Player.StartItem "ShellInTube", 8;
 		Player.Startitem "Fist";
 		Player.WeaponSlot 2, "Bolter";
-		Player.WeaponSlot 3, "AstartesShotgun", "SuperShotgun";
+		Player.WeaponSlot 3, "AstartesShotgun", "SuperShotgun", "MeltaGun";
 		Player.WeaponSlot 4, "HeavyBolter";
 		Player.WeaponSlot 5, "MissileLauncher";
 		Player.WeaponSlot 6, "VolkiteCaliver";//,"PlasmaRifle";

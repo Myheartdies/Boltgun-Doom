@@ -111,6 +111,7 @@ class Flamer2 : Flamer1
 		FLM2 O -1;
 		Stop;
 	XDeath:
+		OVKS J 1;
 		FLM2 K 5 A_StartSound("flamer/death");
 		FLM2 L 5;
 		FLM2 M 5;
@@ -162,6 +163,7 @@ class Flamer3 : Flamer1
 		FLM3 O -1;
 		Stop;
 	XDeath:
+		OVKS J 1;
 		FLM3 K 5 A_StartSound("flamer/death");
 		FLM3 L 5;
 		FLM3 M 5;

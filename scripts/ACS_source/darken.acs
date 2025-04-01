@@ -2,7 +2,7 @@
 script "DarkenScreen" (void)
 {
     // Fade to black (50% transparency)
-    FadeTo(0, 0, 0, 0.25, 0.5);
+    FadeTo(15, 8, 0, 0.3, 0.5);
 // 	print(s:"turning down brightness");
 }
 
