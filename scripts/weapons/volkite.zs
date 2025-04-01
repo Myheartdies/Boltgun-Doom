@@ -1,10 +1,13 @@
 class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 {
 	BEAMZ_LaserBeam beam;
+	BEAMZ_LaserBeam beamCore;
 	bool isFiring;
 	int recoilOffsetx;
 	int recoilOffsety;
-	PointLightFlickerRandom selfLight;
+	VolkiteSelfLight selfLight;
+	VolkiteSelfLight selfLight2;
+	VolkiteSelfLight selfLight3;
 	Default
 	{
 		Weapon.SelectionOrder 100;
@@ -40,7 +43,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 	Select:
 		TNT1 A 0 A_StopSound(CHAN_WEAPON);
 		VKT1 A 1 A_Raise(18);
-		Loop;
+		Wait;
 	Reload:	
 		TNT1 A 0 A_Startsound("weapons/volkite_reload",CHAN_AUTO,attenuation:ATTN_NONE);
 		VKT2 ABCDEFGFHIJKLNNOP 3;
@@ -48,7 +51,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 	Fire:
 // 		VKT1 JKL 2;
 		TNT1 A 0 A_Startsound("weapons/volkite_charging",CHAN_WEAPON,CHANF_OVERLAP,attenuation:ATTN_NONE,startTime:0.75);
-		VKT1 LM 1 Bright;
+		VKT1 LM 2 Bright;
 		VKT1 N 2 Bright;
 		TNT1 A 0 {
 			A_ZoomFactor(1.02); 
@@ -56,12 +59,13 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			A_Quake(1, 3, 0, 50, "");
 		}
 		TNT1 A 0 A_Startsound("weapons/volkite_startfiring",CHAN_AUTO,attenuation:ATTN_NONE);
-		TNT1 A 0 TurnDownBrightness;
+// 		TNT1 A 0 TurnDownBrightness;
 		TNT1 A 0 ;
 	Firing:
 		VKT1 I 1 Bright {
 			FireVolkite();
-			A_ZoomFactor(1.036);
+			A_ZoomFactor(1.038);
+			TurnDownBrightness();
 			A_OverlayScale(1, 1.0585, 1.0585);
 		}
 		
@@ -70,9 +74,9 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			A_OverlayScale(1, 1.06, 1.06);
 			
 		}
-		TNT1 A 0 A_Quake(0.2, 4, 0, 50, "");
+		TNT1 A 0 A_Quake(0.4, 4, 0, 50, "");
 // 		VKT1 JK 3 FireVolkite;
-		VKT2 A 0 {A_ReFire("Firing");}
+		VKT2 A 1 {A_ReFire("Firing");}
 		VKT2 A 4 {
 			A_ReFire();
 			A_StopSound(CHAN_WEAPON);
@@ -85,8 +89,6 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 // 		VKT2 F 20 {A_ReFire();A_StopSound(CHAN_WEAPON);}
 		Goto Ready;
 	Flash:
-// 		PLSF A 4 Bright A_Light1;
-// 		Goto LightDone;
 // 		PLSF B 4 Bright A_Light1;
 		Goto LightDone;
 	Spawn:
@@ -120,33 +122,92 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			}
 		}
 		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,0.5,ATTN_NONE);
-		if (!invoker.beam)
+		if (!invoker.beam){
 			invoker.beam = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4,type:"VolkiteBeam");
+// 			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4,type:"VolkiteBeam");
+			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4);
+			invoker.beamCore.shade = "e29834";
+			invoker.beamCore.Scale.x = 1.2;
+			invoker.beamCore.Alpha = 0.8;
 			VolkiteBeam(invoker.beam).parent = invoker;
-		if (!invoker.selfLight)
-			invoker.selfLight = PointLightFlickerRandom(spawn("PointLightFlickerRandom",invoker.owner.pos));
-		VolkiteBeam(invoker.beam).BeamStart();//setEnabled(True);
-		
-// 		VolkiteBeam(invoker.beam).adjustedAimAtCrosshair();
+		}
+		if (!invoker.selfLight){
+			invoker.selfLight = VolkiteSelfLight(Spawn("VolkiteSelfLight", invoker.owner.pos));
+			invoker.selfLight.source = invoker.owner;
+			invoker.selfLight2 = VolkiteSelfLight(Spawn("VolkiteSelfLight", invoker.owner.pos));
+			invoker.selfLight2.source = invoker.owner;
+			invoker.selfLight3 = VolkiteSelfLight(Spawn("VolkiteSelfLight", invoker.owner.pos));
+			invoker.selfLight3.source = invoker.owner;
+		}
+		if (!invoker.isFiring){
+			if(invoker.beam)
+				VolkiteBeam(invoker.beam).BeamStart();//setEnabled(True);
+			if(invoker.beamCore)
+				invoker.beamCore.setEnabled(True);
+			invoker.selfLight.turnOnLight();
+			invoker.selfLight2.turnOnLight();
+			invoker.selfLight3.turnOnLight();
+		}
+
 		
 		LineAttack(invoker.owner.angle, 8192, invoker.owner.pitch, 5 *random(1,8),"Hitscan","VolkitePuff");
 		invoker.isFiring = True;
-// 		A_FireBullets(0,0,0,13);
-// 		SpawnPlayerMissile ("VolkiteBall");
 	}
 	
 	action void BeamExit(){
-		VolkiteBeam(invoker.beam).BeamEnd();//setEnabled(False); 
+		if (invoker.beam)
+			VolkiteBeam(invoker.beam).BeamEnd();//setEnabled(False); 
+		if (invoker.beamCore)
+			invoker.beamCore.setEnabled(False);
+		if (invoker.selfLight){
+			invoker.selfLight.turnOffLight();
+			invoker.selfLight2.turnOffLight();
+			invoker.selfLight3.turnOffLight();
+		}
 		invoker.isFiring = False;
 	}
 	// 	immediately turn off the beam
 	action void BeamForceStop(){
 		if (invoker.beam)
 			invoker.beam.setEnabled(False);
+		if (invoker.beamCore)
+			invoker.beamCore.setEnabled(False);
+		if (invoker.selfLight){
+			invoker.selfLight.turnOffLight();
+			invoker.selfLight2.turnOffLight();
+			invoker.selfLight3.turnOffLight();
+		}
 		invoker.isFiring = False;
 	}
 }
 
+
+class VolkiteSelfLight: Actor{
+	Actor source;
+	States
+	{
+	Spawn:
+	MainLoop:
+		TNT1 A 4;
+		Loop;
+	Nolight:
+		EMPT A 4;
+		Loop;
+	Death:
+		TNT1 A 1;
+		Stop;
+	}
+	override void Tick(){
+		SetOrigin((source.pos.x, source.pos.y, source.pos.z + 20), true);
+		super.tick();
+	}
+	action void turnOffLight(){
+		invoker.SetStateLabel("NoLight");
+	}
+	action void turnOnLight(){
+		invoker.SetStateLabel("MainLoop");
+	}
+}
 class VolkiteBeam: BEAMZ_LaserBeam{
 // 	SoundPlayer impactsound;
 	float sizeMultiplier;
@@ -197,34 +258,35 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 	}
 	
 	override void BeamTick(){
-// 		sizeIndex = (sizeIndex +1 )%
-// 		parent.hitZoomFactor = 1.04;
+
 // 		Two tick of bright yellow
 		trackPSprite = False;
-		aimAtCrossHair();
+// 		aimAtCrossHair();
 		if (counter % 6 < 3)
 			shade = "e29834";
-// 		one tick of red hue
+// 		One tick of red hue
 		if (counter % 6 == 3)
 			shade = "e25c34";
-// 		three ticks of orange
+// 		Three ticks of orange
 		else
 			shade = "e27a34";
 		float shrinkMultiplier = 0.6;
 // 		if beam is turning off, make the beam smaller and smaller until it reaches a threshold and disappear
 		if (beamEnding){
-			Scale.x = Clamp(Scale.x*shrinkMultiplier, 0.1, 3);
+			Scale.x = Clamp(Scale.x * shrinkMultiplier, 0.1, 3);
 			if (Scale.x <= 0.1){
 				beamEnding = False;
 				setEnabled(False);
 			}
 		}
+// 		pulse the beam between scale minScale and maxScale
 		else{
 			if (counter> 2 * pulseInterval) 
 				counter = 0;
 			Scale.x = minScale + (pulseInterval - abs(pulseInterval - counter)) *(maxScale-minScale)/pulseInterval;
 			counter+= random(-1,4);
-			Alpha = frandom(0.8,1.0);
+			Alpha = frandom(0.7,1.0);
+// 			Alpha = frandom(0.1,0.1);
 		}
 		
 	}
@@ -239,9 +301,10 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 		params.sizestep = -0.3;
 		params.startalpha = 1;
 		params.fadestep = -0.01;
-
+		
 		if (hitActor){
 			double angle = source.AngleTo(hitActor);
+// 			A_Quake(0.2, 4, 0, 50, "");
 			hitActor.Thrust(0.1, angle);
 		}
 // 		TODO: change the particles to a puff instead
@@ -257,9 +320,7 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 	}
 
 }
-// class SelfLight :Actor{
-	
-// }
+
 class VolkitePuff: Actor{
 	Default
 	{
@@ -286,31 +347,3 @@ class VolkitePuff: Actor{
 	}
 }
 
-class VolkiteBall : FastProjectile
-{
-	Default
-	{
-		Radius 13;
-		Height 8;
-		Speed 200;
-		Damage 5;
-		Projectile;
-		+RANDOMIZE
-		+ZDOOMTRANS
-		RenderStyle "Add";
-		Alpha 0.75;
-// 		SeeSound "weapons/plasmaf";
-		DeathSound "weapons/plasmax";
-		Obituary "$OB_MPPLASMARIFLE";
-		+EXTREMEDEATH
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 6;
-		Loop;
-	Death:
-		PLSE ABCDE 4 Bright;
-		Stop;
-	}
-}
