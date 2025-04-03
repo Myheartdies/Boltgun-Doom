@@ -57,6 +57,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			A_ZoomFactor(1.02); 
 			A_OverlayScale(1, 1.02,1.02);
 			A_Quake(1, 3, 0, 50, "");
+// 			A_WeaponOffset(-0.3,-0.3, WOF_ADD);
 		}
 		TNT1 A 0 A_Startsound("weapons/volkite_startfiring",CHAN_AUTO,attenuation:ATTN_NONE);
 // 		TNT1 A 0 TurnDownBrightness;
@@ -66,15 +67,20 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 			FireVolkite();
 			A_ZoomFactor(1.038);
 			TurnDownBrightness();
-			A_OverlayScale(1, 1.0585, 1.0585);
+			A_OverlayScale(1, 1.058, 1.058);
+// 			A_WeaponOffset(0.9, 0.3, WOF_ADD);
 		}
 		
-		VKT1 I 2 Bright{ 
+		VKT1 I 1 Bright{ 
 			A_ZoomFactor(1.04);
 			A_OverlayScale(1, 1.06, 1.06);
+// 			A_WeaponOffset(-0.6, 0.6, WOF_ADD);
+		}
+		VKT1 I 1 Bright; //A_WeaponOffset( -0.3, -0.9,WOF_ADD);
+		TNT1 A 0 {
+			A_Quake(0.4, 4, 0, 50, "");
 			
 		}
-		TNT1 A 0 A_Quake(0.4, 4, 0, 50, "");
 // 		VKT1 JK 3 FireVolkite;
 		VKT2 A 1 {A_ReFire("Firing");}
 		VKT2 A 4 {
@@ -124,8 +130,9 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,0.5,ATTN_NONE);
 		if (!invoker.beam){
 			invoker.beam = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4,type:"VolkiteBeam");
-// 			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4,type:"VolkiteBeam");
-			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4);
+			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4,type:"VolkiteBeam");
+// 			invoker.beamCore = BEAMZ_LaserBeam.Create(invoker.owner,20,8,-4, type:"VolkiteBeamCore");
+			invoker.beamCore.aimWithWeapon = false;
 			invoker.beamCore.shade = "e29834";
 			invoker.beamCore.Scale.x = 1.2;
 			invoker.beamCore.Alpha = 0.8;
@@ -208,6 +215,20 @@ class VolkiteSelfLight: Actor{
 		invoker.SetStateLabel("MainLoop");
 	}
 }
+
+// 			invoker.beamCore.aimWithWeapon = false;
+// 			invoker.beamCore.shade = "e29834";
+// 			invoker.beamCore.Scale.x = 1.2;
+// 			invoker.beamCore.Alpha = 0.8;
+class VolkiteBeamCore: BEAMZ_LaserBeam{
+	Default{
+		BEAMZ_LaserBeam.AimFromWeapon false;
+		BEAMZ_LaserBeam.LaserColor "e29834";
+		Scale 1.2;
+		Alpha 0.8;
+	}
+}
+
 class VolkiteBeam: BEAMZ_LaserBeam{
 // 	SoundPlayer impactsound;
 	float sizeMultiplier;
@@ -226,6 +247,7 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 		Scale 2.4;
 		BEAMZ_LaserBeam.LaserColor "e27a34";
 		BEAMZ_LaserBeam.ContinuousImpact true; 
+		BEAMZ_LaserBeam.AimFromWeapon false;	
 		VolkiteBeam.MinSize 2.6;
 		VolkiteBeam.MaxSize 3.2;
 		VolkiteBeam.PulseInterval 18;
@@ -267,6 +289,7 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 // 		One tick of red hue
 		if (counter % 6 == 3)
 			shade = "e25c34";
+// 			shade = "red";
 // 		Three ticks of orange
 		else
 			shade = "e27a34";
@@ -285,7 +308,7 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 				counter = 0;
 			Scale.x = minScale + (pulseInterval - abs(pulseInterval - counter)) *(maxScale-minScale)/pulseInterval;
 			counter+= random(-1,4);
-			Alpha = frandom(0.7,1.0);
+			Alpha = frandom(0.9,1.0);
 // 			Alpha = frandom(0.1,0.1);
 		}
 		
