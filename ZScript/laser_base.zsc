@@ -40,7 +40,8 @@ class BEAMZ_LaserBeam : Actor
 		BEAMZ_LaserBeam.ContinuousImpact false; 	// If true, calls the OnImpact function every tick the laser is enabled, instead of just once after the laser is fired.
 	}
 	
-	static BEAMZ_LaserBeam Create(Actor source, double fw, double lr, double ud, double angleOffs = 0, double pitchOffs = 0, double maxDist = 2048, class<BEAMZ_LaserBeam> type = "BEAMZ_LaserBeam")
+	static BEAMZ_LaserBeam Create(Actor source, double fw, double lr, double ud, double angleOffs = 0
+	, double pitchOffs = 0, double maxDist = 2048, class<BEAMZ_LaserBeam> type = "BEAMZ_LaserBeam")
 	{
 		let laser = BEAMZ_LaserBeam(Spawn(type, source.pos));
 		if(laser) 

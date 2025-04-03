@@ -23,6 +23,7 @@ class ShellEjectingWeapon : DoomWeapon
 	Property MaxCasingCount : maxCasingCount;
 	Property CasingDropSound : casingDropSound;
 	Property DropSoundVolume : dropSoundVolume;
+	Property CasingSoundQueueLength : queueLength;
 	bool shot;
 	bool isHeld;
 	

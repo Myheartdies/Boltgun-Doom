@@ -3,15 +3,13 @@ version "4.11"
 #include "scripts/Decorations.zs"
 #include "scripts/Items.zs"
 
-#include "scripts/HereticMortals.zs"
-#include "scripts/HereticAstartes.zs"
-#include "scripts/ChaosDaemons.zs"
+#include "scripts/Monsters.zs"
+
 
 #include "scripts/Alias.zs"
 #include "scripts/ParryMe.zs"
 #include "scripts/Weapons.zs"
 
-#include "scripts/BolterPuff.zs"
 #include "scripts/SternGuard.zs"
 
 // #include "scripts/monsters/dokiplush.zs"

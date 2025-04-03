@@ -124,8 +124,8 @@ flickerlight VOKTSHINE
 {
     color 1.0 0.9 0.8
 // 	color 0.0 0.0 0.0
-    size 110
-    secondarySize 80
+    size 150
+    secondarySize 120
     chance 0.3
 	attenuate 1
 }

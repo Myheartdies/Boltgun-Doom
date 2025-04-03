@@ -49,7 +49,8 @@ class MissileLauncher : RocketLauncher Replaces RocketLauncher
 		Stop;
 	}
 	action void FireFragMissile(){
-		A_FireProjectile("FragMissile");
+// 		A_FireProjectile("FragMissile");
+		A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"FragMissile", 0,7 );
 		A_StartSound ("weapons/missile_launcher_fire", CHAN_AUTO, 0, 1.05,ATTN_NONE);
 	}
 }
@@ -60,7 +61,7 @@ class FragMissile : Rocket
 	Default
 	{
 // 		Scale 1.5;
-		Radius 11;
+		Radius 8;
 		Height 8;
 		Speed 40;
 // 		Damage 25;
@@ -77,7 +78,10 @@ class FragMissile : Rocket
 	States
 	{
 	Spawn:
-		MISL A 1 Bright;
+		MISL A 1 Bright {
+			missileTrail();
+			A_Quake(0.4, 2, 0, 50);
+		}
 		Loop;
 	Death:
 		MSEX A 1 Bright {
@@ -98,7 +102,13 @@ class FragMissile : Rocket
 		MISL D 10 A_BrainExplode;
 		Stop;
 	}
-
+	action void missileTrail(){
+// 		Fire trail
+		A_SpawnParticle("fba744",SPF_FULLBRIGHT, 20 , 12 , 0
+		, 0+frandom(-0.5,0.5), 0+frandom(-0.5,0.5), 4+frandom(-0.5,0.5)
+		, 0,0,0, 0,0,0
+		, 1,-1,-0.3);
+	}
 	action void missileExplosion(){
 		spawnCenterExplosion(180);
 // 		firering("",256,0);

@@ -60,13 +60,7 @@ class Cultist1 : ZombieMan
 	action void CultistMissile(){
 		if (target)
 		{
-// 			A_PosAttack();
 			A_FaceTarget();
-// 			double ang = angle;
-// 			double slope = AimLineAttack(ang, MISSILERANGE);
-// 			A_StartSound("grunt/attack", CHAN_WEAPON);
-// 			int damage = Random[PosAttack](1, 5) * 3;
-// 			A_SpawnProjectile("Tracer");
 			A_CustomBulletAttack(25
 			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
 		}

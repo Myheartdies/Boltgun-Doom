@@ -8,9 +8,9 @@ class MeltaGun : DoomWeapon
 		Weapon.AmmoUse 2;
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType "Shell";
-		Inventory.PickupMessage "$GOTSHOTGUN2";
+		Inventory.Pickupmessage "Time to melt something";
 		Obituary "$OB_MPSSHOTGUN";
-		Tag "$TAG_SUPERSHOTGUN";
+		Tag "$TAG_MELTAGUN";
 	}
 	States
 	{
@@ -25,16 +25,20 @@ class MeltaGun : DoomWeapon
 		Loop;
 	Fire:
 		MELT A 2;
-		MELT C 2 A_FireShotgun2;
+		MELT C 2 Bright A_FireMelta;
 		MELT DEF 2;
-		MELT GH 5;
-		MELT I 5 A_CheckReload;
-		MELT J 5;
-		MELT K 5 A_OpenShotgun2;
-		MELT L 5 A_LoadShotgun2;
-		MELT M 6 A_CloseShotgun2;
-// 		MELT N 6 A_CloseShotgun2;
-		MELT A 5 A_ReFire;
+		MELT G 3;
+		MELT H 3{
+			A_CheckReload();
+			MeltaReloadSound();
+		}
+		MELT I 4 ;
+		MELT J 4;
+		MELT K 4 ;
+		MELT L 4 ;
+		MELT M 4 ;
+		MELT N 6;
+		MELT A 4 A_ReFire;
 		Goto Ready;
 	// unused states
 		SHT2 B 7;
@@ -51,14 +55,14 @@ class MeltaGun : DoomWeapon
 
 
 
-	action void A_FireShotgun2()
+	action void A_FireMelta()
 	{
 		if (player == null)
 		{
 			return;
 		}
 
-		A_StartSound ("weapons/sshotf", CHAN_WEAPON);
+		A_StartSound ("weapons/meltagun_fire", CHAN_WEAPON);
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
@@ -86,20 +90,12 @@ class MeltaGun : DoomWeapon
 		}
 	}
 
+	
+	action void MeltaReloadSound() 
+	{ 
+		A_Startsound("weapons/meltagun_reload", CHAN_AUTO
+		, volume:0.9, attenuation:ATTN_NONE, pitch:0.78, startTime:0.2);
+// 		A_StartSound("weapons/meltagun_reload", CHAN_WEAPON);
+	}
 
-	action void A_OpenShotgun2() 
-	{ 
-		A_StartSound("weapons/sshoto", CHAN_WEAPON); 
-	}
-	
-	action void A_LoadShotgun2() 
-	{ 
-		A_StartSound("weapons/sshotl", CHAN_WEAPON); 
-	}
-	
-	action void A_CloseShotgun2() 
-	{ 
-		A_StartSound("weapons/sshotc", CHAN_WEAPON);
-		A_Refire();
-	}
 }

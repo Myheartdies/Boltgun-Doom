@@ -1,4 +1,4 @@
-
+#include "scripts/TrailedProjectile.zs"
 #include "scripts/monsters/ChaosMarine.zs"
 #include "scripts/monsters/TCSM.zs"
 #include "scripts/monsters/PCSM.zs"
