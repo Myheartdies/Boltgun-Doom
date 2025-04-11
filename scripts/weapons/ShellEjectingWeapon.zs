@@ -1,4 +1,4 @@
-class ShellEjectingWeapon : DoomWeapon
+class ShellEjectingWeapon : SternguardWeapon
 {
 // 	For animating casing ejection overlay
 	protected Array<float> casingTimeElapsed; //Time elapsed after a casing has ejected in ticks 

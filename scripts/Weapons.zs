@@ -4,5 +4,7 @@
 #include "scripts/weapons/HeavyBolter.zs"
 #include "scripts/weapons/Volkite.zs"
 #include "scripts/weapons/MissileLauncher.zs"
-#include "scripts/TrailedProjectile.zs"
 #include "scripts/weapons/Melta.zs"
+#include "scripts/weapons/SternguardWeapon.zs"
+
+#include "scripts/TrailedProjectile.zs"

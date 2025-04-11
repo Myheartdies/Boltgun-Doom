@@ -1,4 +1,4 @@
-class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
+class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 {
 	BEAMZ_LaserBeam beam;
 	BEAMZ_LaserBeam beamCore;
@@ -49,7 +49,7 @@ class VolkiteCaliver : DoomWeapon Replaces PlasmaRifle
 		VKT2 ABCDEFGFHIJKLNNOP 3;
 		Goto Ready;
 	Fire:
-// 		VKT1 JKL 2;
+		TNT1 A 0 OverlayReAdjust;
 		TNT1 A 0 A_Startsound("weapons/volkite_charging",CHAN_WEAPON,CHANF_OVERLAP,attenuation:ATTN_NONE,startTime:0.75);
 		VKT1 LM 2 Bright;
 		VKT1 N 2 Bright;

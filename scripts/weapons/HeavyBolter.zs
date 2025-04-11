@@ -12,8 +12,6 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Weapon.AmmoUse 3;
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "Clip";
-//         +WEAPON.AMMO_OPTIONAL
-// 		+WEAPON.ALT_AMMO_OPTIONAL
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
 		Inventory.PickupMessage "$GOTCHAINGUN";
@@ -59,6 +57,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Goto LightDone;
     
 	Fire:
+	TNT1 A 0 OverlayReAdjust;
     Windup1:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_windup",CHAN_AUTO,0,0.6,ATTN_NONE);
         HBTR A 4;

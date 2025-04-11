@@ -56,6 +56,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		Wait;
 	Fire:
+		TNT1 A 0 OverlayReadjust;
 // 		Go to reload if out of ammo
 		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 1);
 		Goto Reload;
@@ -128,6 +129,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Goto LightDone;
 		
 	Reload:
+	TNT1 A 0 OverlayReAdjust;
 	ReloadCheck:
 // 		If mag is full or no reserves, don't even do anything
 		TNT1 A 0 A_JumpIfInventory("ShellInTube", 0, "Ready");

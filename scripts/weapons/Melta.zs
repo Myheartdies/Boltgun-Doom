@@ -1,4 +1,4 @@
-class MeltaGun : DoomWeapon
+class MeltaGun : SternguardWeapon
 {
 	Default
 	{
@@ -24,6 +24,7 @@ class MeltaGun : DoomWeapon
 		MELT A 1 A_Raise(18);
 		Loop;
 	Fire:
+		TNT1 A 0 OverlayReadjust;
 		MELT A 2;
 		MELT C 2 Bright A_FireMelta;
 		MELT DEF 2;

@@ -42,9 +42,6 @@ class Bolter : ShellEjectingWeapon
 		}
 		Loop;
 	Deselect:
-// 		BOTR A 1 Offset(0, 34);
-// 		BOTR A 1 Offset(0, 60);
-// 		BOTR A 1 Offset(0, 80);
 		BOTR A 1{
 			A_Lower(15);
 			CasingLayerExit();
@@ -60,6 +57,7 @@ class Bolter : ShellEjectingWeapon
 		}
 		Wait;
 	Fire:
+		TNT1 A 0 OverlayReAdjust;
 // 		Go to reload if out of ammo
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, 2);
 		TNT1 A 0 A_GiveInventory("isFullReload", 1);
@@ -79,10 +77,10 @@ class Bolter : ShellEjectingWeapon
 		
 		
 		TNT1 A 0 A_ZoomFactor(0.996);
-		TNT1 A 0 A_OverlayScale(1,1.03,1.03);
+		TNT1 A 0 A_OverlayScale(1,1.1,1.1);
 		TNT1 A 0 {A_WeaponOffset(2, -2.5, WOF_ADD); CompensateOffset(-2,2.5); }
 		BOTR B 1 Bright {A_SetPitch(pitch + 0.3); AllowQuickSwitch();}
-		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
+		TNT1 A 0 A_OverlayScale(1,1.08,1.08);
 		BOTR C 1 Bright;
 		TNT1 A 0 A_OverlayScale(1,1,1);
 		BOTR C 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
@@ -122,12 +120,6 @@ class Bolter : ShellEjectingWeapon
 // 		TNT1 A 0 A_JumpIfInventory("isFullReload", 1, "ReloadingFullReinsert");
 		Goto ReloadingPartialReinsert;
 	
-	AltFire:
-// 		BOTR A 2;
-// 		BOTR B 3 Bright A_ThrowGrenade("Grenade", 10, 15, 4);
-// 		BOTR C 3 Bright;
-// 		BOTR D 2 A_ReFire;
-// 		Goto Ready;
 	
 		
 	
@@ -141,6 +133,7 @@ class Bolter : ShellEjectingWeapon
 // 	ReloadOver: Animation
 	
 	Reload:
+		TNT1 A 0 OverlayReAdjust;
 		Goto ReloadCheck;
 	ReloadCheck:
 // 		If mag full go back to ready

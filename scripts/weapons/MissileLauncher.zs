@@ -1,4 +1,4 @@
-class MissileLauncher : RocketLauncher Replaces RocketLauncher
+class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 {
 	Default
 	{
@@ -14,6 +14,8 @@ class MissileLauncher : RocketLauncher Replaces RocketLauncher
 		Weapon.BobSpeed 1.8;
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1.0;	
+		SternguardWeapon.TauntOffsetX 80;
+		SternguardWeapon.TauntOffsetY 30;
 	}
 	States
 	{
@@ -27,10 +29,12 @@ class MissileLauncher : RocketLauncher Replaces RocketLauncher
 		MSLL A 1 A_Raise(15);
 		Loop;
 	Fire:
+// 		TNT1 A 0 OverlayReAdjust;
 		MSLL B 3 Bright{A_GunFlash();A_Light2();}
 		MSLL C 3 Bright FireFragMissile();
-		MSLL C 3 Bright;
-        MSLL D 3 A_Light0;
+		MSLL C 3 Bright ;
+        MSLL D 3 {A_Light0();}
+		TNT1 A 0 A_CheckReload;
 // 		MSLL D 0 A_ReFire;
 		Goto Reload;
 	Reload:
@@ -50,7 +54,7 @@ class MissileLauncher : RocketLauncher Replaces RocketLauncher
 	}
 	action void FireFragMissile(){
 // 		A_FireProjectile("FragMissile");
-		A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"FragMissile", 0,7 );
+		A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM|FBF_USEAMMO,0,"FragMissile", 0,7 );
 		A_StartSound ("weapons/missile_launcher_fire", CHAN_AUTO, 0, 1.05,ATTN_NONE);
 	}
 }
