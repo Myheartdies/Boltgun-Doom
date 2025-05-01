@@ -15,7 +15,7 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		Weapon.BobRangeX 0.2;
 		Weapon.BobRangeY 1.0;	
 		SternguardWeapon.TauntOffsetX 80;
-		SternguardWeapon.TauntOffsetY 30;
+		SternguardWeapon.TauntOffsetY 45;
 	}
 	States
 	{
