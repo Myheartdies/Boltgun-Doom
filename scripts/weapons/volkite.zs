@@ -84,7 +84,7 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 // 		VKT1 JK 3 FireVolkite;
 		VKT2 A 1 {A_ReFire("Firing");}
 		VKT2 A 4 {
-			A_ReFire();
+			A_ReFire("Firing");
 			A_StopSound(CHAN_WEAPON);
 			A_Startsound("weapons/volkite_cooling",CHAN_AUTO,attenuation:ATTN_NONE);
 			BeamExit();
@@ -121,11 +121,11 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
 				return;
 			
-			State flash = weap.FindState('Flash');
-			if (flash != null)
-			{
-				player.SetSafeFlash(weap, flash, random[FirePlasma](0, 1));
-			}
+// 			State flash = weap.FindState('Flash');
+// 			if (flash != null)
+// 			{
+// 				player.SetSafeFlash(weap, flash, random[FirePlasma](0, 1));
+// 			}
 		}
 		A_Startsound("weapons/volkite_fire",CHAN_WEAPON,CHANF_LOOPING,0.5,ATTN_NONE);
 		if (!invoker.beam){
