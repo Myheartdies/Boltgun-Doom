@@ -1,7 +1,6 @@
 // Undirected taunts
-
 $random sternguard/taunt_undirected {
-    sternguard/taunt_undirected1 
+//     sternguard/taunt_undirected1
     sternguard/taunt_undirected2 
     sternguard/taunt_undirected3 
     sternguard/taunt_undirected4 
@@ -159,8 +158,10 @@ sternguard/taunt_undirected77 TAUNTG77
 
 
 // Directed taunt
-// directed taunts
-
+// Taunt foley
+sternguard/taunt_directed_foley1 TNTPNT01 
+sternguard/taunt_directed_foley2 TNTPNT02 
+sternguard/taunt_directed_foley3 TNTPNT03 
 $random sternguard/taunt_directed {
     sternguard/taunt_directed1 
     sternguard/taunt_directed2 
