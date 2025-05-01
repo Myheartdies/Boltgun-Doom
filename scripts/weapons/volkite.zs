@@ -319,11 +319,11 @@ class VolkiteBeam: BEAMZ_LaserBeam{
 		params.color1 = "fac64d";
 		params.pos = hitPos;
 		params.flags = SPF_FULLBRIGHT;
-		params.size = 10;
+		params.size = 6;
 		params.lifetime = 15;
 		params.sizestep = -0.3;
 		params.startalpha = 1;
-		params.fadestep = -0.01;
+		params.fadestep = -0.005;
 		
 		if (hitActor){
 			double angle = source.AngleTo(hitActor);
