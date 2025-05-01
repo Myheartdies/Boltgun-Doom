@@ -48,6 +48,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		Wait;
 	Select:
+		TNT1 A 0 A_StartSound("weapons/scout_shotgun_select", starttime:0.2);
 		STGN A 1 A_WeaponOffset(0,32);
 		STGN A 1 {
 			A_Raise(18);
@@ -80,8 +81,10 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(0, -15);
+		TNT1 A 0 A_Quake(0.6,3,0,20);
 		STGN B 1 Bright { FireScoutShotgun(); }
 		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
+		
 		TNT1 A 0 CompensateOffset(12, 23);
 		TNT1 A 0 A_ZoomFactor(0.997);
 		TNT1 A 0 A_SetPitch(pitch + 0.4);
@@ -202,7 +205,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		double pitch = BulletSlope ();
 
 
-		A_FireBullets (6, 2, 6, /*7*/ 0, "BulletPuff",0,0 ,"ShotgunProjectile",0,8);
+		A_FireBullets (6, 2, 6, /*7*/ 0, "BulletPuff",FPF_AIMATANGLE ,0 ,"ShotgunProjectile",0,8);
 // 			A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
 // 			GunShot (false, "BulletPuff", pitch);
 
@@ -227,12 +230,14 @@ class ShotgunProjectile: FastProjectile {
 	double speedx;
 	double speedy;
 	double speedz;
+	bool particleDrawn;
 	Default
 	{
 		Radius 2;
 		Height 2;
 		Speed 150;
 		Scale 0.8;
+		+PUFFONACTORS
 // 		Damage 7;
 		DamageFunction 7 * random(1,3);
 		Projectile;
@@ -249,7 +254,10 @@ class ShotgunProjectile: FastProjectile {
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		TNT1 A 1 A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
+		TNT1 A 1 {
+		A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
+		ShotgunParticleTailCompensation(15, 10, 5);
+		}
 // 		Goto LightDone;
 		Stop;
 	}
@@ -264,16 +272,21 @@ class ShotgunProjectile: FastProjectile {
 
 	void ShotgunParticle(int subdivide
 		, float baseTTL = 120
-		, float mainSmokeSize = 4)
+		, float mainSmokeSize = 4, float speedOverride = 0)
 	{
 // 		a.color1 = "white";
 // 		float baseTTL = 120;
+		particleDrawn = True;
 		float baseAlpha = 0.6; //Starting alpha value
 		float fadeAlpha = baseAlpha/baseTTL; //Value of alpha decrease each tick
 		float interval = fadeAlpha/subdivide; //The difference in alpha  of particle for each division within a tick
 		
-	
-		int length = vel.length()/subdivide;
+		int length;
+		if (speedOverride != 0)
+			length = speedOverride/subdivide;
+		else
+			length = vel.length()/subdivide;
+// 		length = vel.length()/subdivide;
 		facing = facingToVector(angle,pitch, length);
 
 		 
@@ -295,6 +308,18 @@ class ShotgunProjectile: FastProjectile {
 			
 		}
 		
+	}
+	
+
+	
+	
+	void ShotgunParticleTailCompensation(int subdivide
+		, float baseTTL = 120,float baseTTL_trail=10
+		, float mainSmokeSize = 4, float subSmokeSize=3)
+	{
+	
+		if (!particleDrawn) 
+			ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed*0.66);
 	}
 }
 

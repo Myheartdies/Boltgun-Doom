@@ -55,6 +55,7 @@ class Bolter : ShellEjectingWeapon
 			A_ClearOverlays(-1-invoker.maxCasingCount, -2);
 			CasingLayerReady();
 		}
+		TNT1 A 0 A_Raise(100);
 		Wait;
 	Fire:
 		TNT1 A 0 OverlayReAdjust;
@@ -66,15 +67,16 @@ class Bolter : ShellEjectingWeapon
 		TNT1 A 0 A_ZoomFactor(0.994);
 		TNT1 A 0 A_SetPitch(pitch - 0.5);
 		TNT1 A 0 A_OverlayScale(1, 1.06,1.06);
-		BOTR A 2;
+		BOTR A 2 ;
 		TNT1 A 0 {A_WeaponOffset(-3, 5, WOF_ADD); CompensateOffset(3,-5);}
+		
 		
 // 		Fire with low ammo click if ammo is less than 8
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 8, 3);
 		BOTR B 1 Bright {FireBolter(True); AllowQuickSwitch();}
 		TNT1 A 0 A_Jump(256,2);
 		BOTR B 1 Bright {FireBolter(); AllowQuickSwitch();}
-		
+		TNT1 A 0 A_QuakeEx(0.5,0.5,0.5, 2 , 0, 20,QF_SCALEDOWN|QF_SHAKEONLY,damage:0);
 		
 		TNT1 A 0 A_ZoomFactor(0.996);
 		TNT1 A 0 A_OverlayScale(1,1.1,1.1);
@@ -212,7 +214,7 @@ class Bolter : ShellEjectingWeapon
 			accurate = true;
 		}
 		if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
-		else A_FireBullets (1.2, 1.2, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
+		else A_FireBullets (1, 1, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
 // 		else A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
 // 		A_FireRailgun();
 		if(isLowAmmo)
@@ -244,11 +246,12 @@ class Bolter : ShellEjectingWeapon
 }
 
 class BolterProjectile: TrailedProjectile{
+	bool particleDrawn;
 	Default
 	{
 		Radius 3;
 		Height 4;
-		Speed 150;
+		Speed 200;
 		Scale 0.65;
 // 		Damage 7;
 		DamageFunction random(3,10)*random(3,10);
@@ -259,22 +262,35 @@ class BolterProjectile: TrailedProjectile{
 	States
 	{
 	Spawn:
-		BOLT A 1 Bright bolterParticle(16, 80, 15, 4, 3);
+		BOLT A 1 Bright bolterParticle(22, 80, 15, 4, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		BTRE A 2 Bright A_Explode(6 * random(4,7), 40, 0, damagetype="SmallExplosion");
+		BTRE A 2 Bright {
+			A_Explode(6 * random(4,7), 40, 0, damagetype="SmallExplosion");
+			bolterParticleTailCompensation(22, 80, 15, 4, 3);
+		}
 		BTRE BCDEFGHIJKL 2 Bright;
 		BTRE MNOPQ 2;
 // 		Goto LightDone;
 		Stop;
 	}
 	
-	void bolterParticle(int subdivide
+	action void bolterParticle(int subdivide
 		, float baseTTL = 120,float baseTTL_trail=10
 		, float mainSmokeSize = 4, float subSmokeSize=3)
 	{
-		TrailParticle(subdivide, baseTTL, baseTTL_trail, mainSmokeSize, subSmokeSize);
+		invoker.particleDrawn = True;
+		invoker.TrailParticle(subdivide, baseTTL, baseTTL_trail, mainSmokeSize, subSmokeSize);
+	}
+	
+	
+	action void bolterParticleTailCompensation(int subdivide
+		, float baseTTL = 120,float baseTTL_trail=10
+		, float mainSmokeSize = 4, float subSmokeSize=3)
+	{
+		if (!invoker.particleDrawn)
+			invoker.TrailParticle(subdivide, baseTTL/2, baseTTL_trail/2, mainSmokeSize, subSmokeSize, speedOverride:speed*0.66);
 	}
 	
 }

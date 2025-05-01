@@ -99,7 +99,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		TNT1 A 0 OverlayRecoil(15,55);
         HBTR G 1 A_Light1;
 		// HBTR H 3 A_FireCGun;
-        TNT1 A 0 A_Quake(0.5,4,0,50,"");
+        TNT1 A 0 A_Quake(0.7, 6, 0,50,"");
         HBTR H 1 Bright FireHeavyBolter;
         TNT1 A 0 A_Recoil(0.8);
         
@@ -123,6 +123,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 	MuzzleFlash:
 // 		HBTF A 1 Bright A_Light1;
 		HBTF C 1 Bright A_Light1;
+		HBTF C 1 Bright {
+			A_Light1();
+			A_OverlayAlpha(-2, 0.1);
+			A_OverlayOffset(-2,random(-20,-3),random(-5,5),WOF_ADD);
+		}
 		Goto LightDone;
 	Spawn:
 		MGUN A -1;
@@ -168,7 +173,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			accurate = true;
 		}
 		// if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		A_FireBullets (3, 3, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,5 );
+		A_FireBullets (2.4, 2.4, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,5 );
 // 		A_FireProjectile("HeavyBolterProjectile", 0, false, 15, 10);
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
@@ -209,7 +214,7 @@ class HeavyBolterProjectile: BolterProjectile{
 	{
 		Radius 4;
 		Height 4;
-		Speed 100;
+		Speed 150;
 		Scale 0.8;
 // 		Damage 15;
 		DamageFunction 8 * random(4, 14);
@@ -229,4 +234,11 @@ class HeavyBolterProjectile: BolterProjectile{
 // 		Goto LightDone;
 		Stop;
 	}
+// 	void bolterParticleTailCompensation(int subdivide
+// 		, float baseTTL = 120,float baseTTL_trail=10
+// 		, float mainSmokeSize = 4, float subSmokeSize=3)
+// 	{
+// 		if (!particleDrawn)
+// 			TrailParticle(subdivide, baseTTL/2, baseTTL_trail/2, mainSmokeSize, subSmokeSize, speedOverride:speed*0.66);
+// 	}
 }
