@@ -161,7 +161,7 @@ class ShellEjectingWeapon : SternguardWeapon
 // 				, WOF_ADD
 // 				);
 			owner.A_OverlayOffset(i + 2
-				, GetModifiedSpeed(ejectSpeed_x[i],frandom(0.3,0.5),casingTimeElapsed[i],-0.5) + offsetCompensationX
+				, GetModifiedSpeed(ejectSpeed_x[i],frandom(0.3,0.5),casingTimeElapsed[i],-0.2) + offsetCompensationX
 				, ejectSpeed_y[i]+ casingTimeElapsed[i] * 0.9 + offsetCompensationY
 				, WOF_ADD
 				);
