@@ -181,6 +181,9 @@ weapons/bolter_mag_drop BOTRMGZN
 // Fire
 weapons/scout_shotgun_fire STGNFRE1 
 
+// Select
+weapons/scout_shotgun_select STGNSWT1
+
 // Impact
 $random weapons/scout_shotgun_impact {
 weapons/scout_shotgun_impact1 weapons/scout_shotgun_impact2 
