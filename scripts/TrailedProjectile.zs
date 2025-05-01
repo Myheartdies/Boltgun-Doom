@@ -159,7 +159,7 @@ class TrailedProjectile: FastProjectile {
 	
 	void TrailParticle(int subdivide
 		, float baseTTL = 120,float baseTTL_trail=10
-		, float mainSmokeSize = 4, float subSmokeSize=3)
+		, float mainSmokeSize = 4, float subSmokeSize=3, float speedOverride = 0)
 	{
 // 		a.color1 = "white";
 // 		float baseTTL = 120;
@@ -171,8 +171,13 @@ class TrailedProjectile: FastProjectile {
 		float fadeAlpha_trail = baseAlpha_trail/baseTTL_trail ;
 		float interval_trail = fadeAlpha_trail/subdivide; 
 		
-	
-		int length = vel.length()/subdivide;
+		
+		int length ;
+// 		Speed override for simulating a trail it would have its speed is different from the actual speed
+		if (speedOverride != 0)
+			length = speedOverride/subdivide;
+		else
+			length = vel.length()/subdivide;
 		facing = facingToVector(angle, pitch, length);
 		
 		
