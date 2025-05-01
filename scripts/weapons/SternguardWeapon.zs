@@ -37,7 +37,6 @@ class SternguardWeapon : DoomWeapon
 		SAWG B 0 A_ReFire;
 		Goto Ready;
 	
-	TauntingDirected:
 	
 	AltFire:
 	TauntingCheck:
@@ -50,7 +49,13 @@ class SternguardWeapon : DoomWeapon
 			A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
 			playUndirectedTaunt();
 		}
-		TUNA ABCDEFGHIJ 4;
+// 		TNT1 A 0 A_SetPitch(pitch - 0.6);
+// 		TNT1 A 0 A_ZoomFactor(0.994);
+		TUNA ABC 3 A_SetPitch(pitch + 0.08);
+// 		TNT1 A 0 A_ZoomFactor(1);
+		TUNA DE 4 A_SetPitch(pitch - 0.12);
+// 		TUNA E 4;
+		TUNA FGHIJ 4;
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY|WRF_ALLOWRELOAD);
 		TNT1 A 0 A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
 		TUNA JJJ 2{
@@ -69,7 +74,21 @@ class SternguardWeapon : DoomWeapon
 			A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
 			playDirectedTaunt();
 		}
-		TUNB AABCDDDDDEFGH 3;
+		TNT1 A 0 A_StartSound("sternguard/taunt_directed_foley2",CHAN_AUTO,volume:0.4);
+		TUNB AA 3 A_SetPitch(pitch + 0.2);
+// 		TNT1 A 0 A_ZoomFactor(1);
+// 		TUNB DDDDDEFGH 3;
+		TUNB BC 3 A_SetPitch(pitch - 0.15);
+		TUNB D 3 {
+// 			A_StartSound("sternguard/taunt_directed_foley1",CHAN_AUTO,0.3);
+			A_SetPitch(pitch - 0.15);
+		}
+		TUNB D 3 A_SetPitch(pitch + 0.05);
+		TUNB DDD 3;
+		TNT1 A 0 A_StartSound("sternguard/taunt_directed_foley1",CHAN_AUTO,volume:0.4);
+		TUNB DEF 3;
+		TNT1 A 0 A_StartSound("sternguard/taunt_directed_foley3",CHAN_AUTO,volume:0.4);
+		TUNB GH 3;
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY|WRF_ALLOWRELOAD);
 		TNT1 A 0 A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
 		TUNB IIIJ 3{
@@ -87,9 +106,12 @@ class SternguardWeapon : DoomWeapon
 		Goto Ready;
 	
 	Chainsword:
-		TNT1 A 0 A_OverlayScale(1, 1, 1);
-		CHNS ABCDEFGHJLNPRT 1;
-		TNT1 A 0 A_OverlayScale(1, 1, 1);
+		TNT1 A 0 {
+// 			A_OverlayScale(0.7, 0.7, 0.7);
+			A_WeaponOffset(-120, 32);
+		}
+		CHNS BCBBDEFGHJLNPRT 1;
+// 		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		TNT1 A 0 A_Jump(256, "Ready");
 		Goto Ready;
 	Spawn:
