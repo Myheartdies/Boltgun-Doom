@@ -1,5 +1,6 @@
-#include "scripts/monsters/Flamers.zs"
-#include "scripts/monsters/ExFlamer.zs"
+#include "scripts/monsters/daemons/Flamers.zs"
+#include "scripts/monsters/daemons/ExFlamer.zs"
+#include "scripts/monsters/daemons/BlueHorror.zs"
 class FlamerSpawner : RandomSpawner Replaces DoomImp
 {
     Default

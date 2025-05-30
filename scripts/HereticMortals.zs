@@ -1,7 +1,7 @@
-#include "scripts/monsters/Cultists.zs"
-#include "scripts/monsters/CultistShock.zs"
-#include "scripts/monsters/PLASMA.zs"
-#include "scripts/monsters/CultistHeavy.zs"
+#include "scripts/monsters/mortals/Cultists.zs"
+#include "scripts/monsters/mortals/CultistShock.zs"
+#include "scripts/monsters/mortals/PLASMA.zs"
+#include "scripts/monsters/mortals/CultistHeavy.zs"
 
 class SergeantReplacer : RandomSpawner Replaces ShotgunGuy
 {

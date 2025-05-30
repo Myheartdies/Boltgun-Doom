@@ -10,6 +10,7 @@ class CultistShock: ShotgunGuy
 		PainChance 170;
 		Monster;
 		+FLOORCLIP
+		+DOHARMSPECIES
 		DamageFactor "Bolt", 2;
 		SeeSound "shotguy/sight";
 		AttackSound "shotguy/attack";

@@ -1,4 +1,4 @@
-class Terminator : Fatso Replaces Fatso
+class Terminator : ChaosMarine Replaces Fatso
 {
 	Default
 	{
@@ -7,6 +7,9 @@ class Terminator : Fatso Replaces Fatso
 		Height 64;
 		Mass 1000;
 		PainChance 30;
+		Monster;
+		+FLOORCLIP
+		+BOSSDEATH
 		Speed 7;
 		Scale 0.51;
 		SeeSound "TERM/sight";
@@ -18,7 +21,9 @@ class Terminator : Fatso Replaces Fatso
 		DeathSound  "TERM/death";
 		DropItem "ClipBox";
 		DamageFactor "SmallExplosion", 0.2; //used to be 0.1 when bolter damage was 11
-		DamageFactor "StrongExplosion", 0.6;
+		DamageFactor "StrongExplosion", 0.5;
+		Obituary "Killed by terminator";
+		Tag "$FN_TERM";
 	}
 	States
 	{

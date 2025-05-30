@@ -10,6 +10,7 @@ class Cultist1 : ZombieMan
 		Scale 0.58;
 		Monster;
 		+FLOORCLIP
+		+DOHARMSPECIES
 		DamageFactor "Bolt", 2;
 		SeeSound "grunt/sight";
 		AttackSound "grunt/attack";

@@ -149,7 +149,6 @@ class Flamer3 : Flamer1
 		FLM3 HF 8 A_FaceTarget;
 		FLM3 F 2 Bright A_FaceTarget;
 		FLM3 G 6 FlamerMissile ;
-// 		FLM3 G 8 FlamerMissile ;
 		Goto See;
 	Pain:
 		FLM3 J 2;
@@ -187,7 +186,8 @@ class FlamerBall: DoomImpBall{
 	{
 		SeeSound "flamer/attack";
 // 		Damage 5;
-// 		Speed 17;
+		Speed 12
+		;
 // 		FastSpeed 25;
 	}
 }

@@ -1,4 +1,4 @@
-class Legionary : ChaosMarine Replaces Revenant
+class Legionary : ChaosMarine //Replaces Revenant
 {
 //  6 movement frame ABCDEF  , foot step happens at state B and E
 //  4 ranged attack frame reduce to 3 GHI
@@ -49,11 +49,11 @@ class Legionary : ChaosMarine Replaces Revenant
 		TNT1 A 0  A_JumpIfCloser(180, "Advance");
 		TCSM AA 3 A_Chase;
 		TCSM B 2 TacticalStep("TCSM/steps");
-		TCSM CCDD 3 A_Chase; 
+		TCSM CCCDDD 2 A_Chase; 
 // 		TCSM DD 3 A_Chase("Melee","Charge");
 		TCSM E 2 TacticalStep("TCSM/steps");
 // 		TCSM FF 3 A_Chase("Melee","Charge") ;
-		TCSM FF 3 A_Chase;
+		TCSM FFF 2 A_Chase;
 		Loop;
 // 	Advance:
 // 		TCSM AA 2 A_Chase;
@@ -78,7 +78,7 @@ class Legionary : ChaosMarine Replaces Revenant
 		TCSM J 2 ; 
 		Goto See;
 	Missile:
-		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
+		TNT1 A 0  A_JumpIf(random(0,4) > 3, "Charge");
 		TCSM G 8 {A_FaceTarget();A_StartSound("TCSM/active");}
 		TCSM H 3 Bright;
 		TCSM H 3 Bright MarineMissile;
@@ -162,15 +162,6 @@ class Legionary : ChaosMarine Replaces Revenant
 	
 }
 
-// class MarineBall: DoomImpBall{
-// 	Default
-// 	{
-
-// 		Damage 4;
-// 		Speed 17;
-// 		FastSpeed 25;
-// 	}
-// }
 
 class MarineBall: BolterProjectile{
 	Default
@@ -189,7 +180,7 @@ class MarineBall: BolterProjectile{
 	States
 	{
 	Spawn:
-		BAL1 A 1 Bright bolterParticle(3,25,5,6,5);
+		BAL1 A 1 Bright bolterParticle(3,15,5,6,5);
 		Loop;
 	Death:
 		BTRE A 2 Bright ;

@@ -1,4 +1,4 @@
-class LegionaryPlasma : ChaosMarine Replaces HellKnight
+class LegionaryPlasma : ChaosMarine
 {	
 // 	PSMA:
 //  	6 movement frame ABCDEF  , foot step happens at state B and E
@@ -102,7 +102,7 @@ class LegionaryPlasma : ChaosMarine Replaces HellKnight
 		
 	Pain:
 		PSMA P  2;
-		PSMA Q  3 A_Pain;
+		PSMA Q  1 A_Pain;
 		Goto See;
 // 		TNT1 A 0 special_stagger;
 	Death:
