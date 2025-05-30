@@ -21,12 +21,16 @@ class MeltaGun : SternguardWeapon
 		MELT A 1 A_Lower(18);
 		Loop;
 	Select:
+		MELT A 1 A_WeaponOffset(0,32);
 		MELT A 1 A_Raise(18);
-		Loop;
+		Wait;
 	Fire:
 		TNT1 A 0 OverlayReadjust;
 		MELT A 2;
-		MELT C 2 Bright A_FireMelta;
+		MELT C 2 Bright {
+			A_FireMelta();
+			A_Quake(1.3,4,0,30);
+		}
 		MELT DEF 2;
 		MELT G 3;
 		MELT H 3{

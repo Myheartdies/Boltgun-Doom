@@ -9,7 +9,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 	Default
 	{
 		Weapon.SelectionOrder 700;
-		Weapon.AmmoUse 3;
+		Weapon.AmmoUse 2;
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "Clip";
 		Weapon.WeaponScaleX 0.6; 
@@ -27,7 +27,10 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 	States
 	{
 	Ready:
-		TNT1 A 0 A_StopSound(CHAN_5);
+		TNT1 A 0 {
+			A_StopSound(CHAN_5);
+			A_SetCrosshair(23);
+		}
 		HBTR A 4 A_WeaponReady;
 		Loop;
 	Deselect:
@@ -36,10 +39,17 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Wait;
 	Select:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_winddown",CHAN_AUTO,0,0.7,ATTN_NONE);
-		HBTR A 1 {A_Raise(12); CasingLayerReady();}
+		HBTR A 1 {
+			A_Raise(12); 
+			CasingLayerReady();
+		}
+		HBTR A 1 {
+			A_Raise(12); 
+			A_WeaponReady(WRF_NOBOB);
+			CasingLayerReady();
+		}
 		Wait;
     Casing:
-// 		BTRF AAAAAAAAAA 4;
 		TNT1 A 0 A_jump(80, "Casing1");
 		TNT1 A 0 A_jump(120,"Casing2");
 		TNT1 A 0 A_jump(255, "Casing3");
@@ -79,26 +89,25 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         Goto Winddown1;
     Windup3:
 
-        HBTR E 1 A_ReFire("Firing");
+        HBTR E 1 A_ReFire("StartFiring");
     Winddown3:
 		TNT1 A 0 A_StopSound(CHAN_5);
         HBTR E 3 A_ReFire("Firing");
         HBTR D 1 A_ReFire("Windup3");
         Goto Winddown2;
     StartFiring:
-// 		TNT1 A 0 A_Startsound("weapons/heavybolter_mechanical",CHAN_5,CHANF_LOOPING,1,ATTN_NONE);
-// 		TNT1 A 0 A_JumpIfInventory("isFired",2,2);
+// 		TNT1 A 0 A_Startsound("weapons/heavybolter_mechanical",CHAN_5,CHANF_LOOPING|CHANF_NOSTOP,0.8,ATTN_NONE);
+// 		TNT1 A 0 A_JumpIfInventory("isFired",2,2); 
 // 	    HBTR E 3;
 // 		Goto Firing;
 	Firing:
-        HBTR G 1;
+        HBTR G 1 A_Light1;
         TNT1 A 0 A_ZoomFactor(0.992);
 		TNT1 A 0 A_SetPitch(pitch - 1.1);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 round_smoke();
 		TNT1 A 0 OverlayRecoil(15,55);
         HBTR G 1 A_Light1;
-		// HBTR H 3 A_FireCGun;
         TNT1 A 0 A_Quake(0.7, 6, 0,50,"");
         HBTR H 1 Bright FireHeavyBolter;
         TNT1 A 0 A_Recoil(0.8);
@@ -119,7 +128,24 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         TNT1 A 0 A_ZoomFactor(1);
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		TNT1 A 0 A_TakeInventory("isFired",255);
+// 		TNT1 A 0 A_StopSound(CHAN_5);
 		Goto Winddown3;
+		
+	MuzzleAura1:
+		AURA AA 1 Bright;
+		Goto LightDone;
+	MuzzleAura2:
+		AURA BB 1 Bright;
+		Goto LightDone;
+	MuzzleAura3:
+		AURA CC 1 Bright;
+		Goto LightDone;
+	MuzzleAura4:
+		AURA DD 1 Bright;
+		Goto LightDone;
+	MuzzleExplosion:
+		HBFE BCG 1 Bright;
+		Goto LightDone;
 	MuzzleFlash:
 // 		HBTF A 1 Bright A_Light1;
 		HBTF C 1 Bright A_Light1;
@@ -173,25 +199,65 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			accurate = true;
 		}
 		// if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-		A_FireBullets (2.4, 2.4, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,5 );
+		A_FireBullets (2.4, 2.4, -1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"HeavyBolterProjectile", 0,7 );
 // 		A_FireProjectile("HeavyBolterProjectile", 0, false, 15, 10);
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
-		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON,CHANF_OVERLAP,1);
+		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON,CHANF_OVERLAP,1,pitch:frandom(0.7,0.83));
         A_Light2();
         // 		Eject casing
 		EjectCasing("Casing");
 		
 // 		Call delayed sound for casing drop
 		AddToSoundQueue(25);
+		DrawMuzzleFlash();
 		
-		A_Overlay(-2, "MuzzleFlash");
-		A_OverlayPivot(-2, 0.5, 0.5);
-		A_OverlayScale(-2, 0.12 + random(-3,3)/50, 0.12 + random(-3,3)/50);
-		A_OverlayOffset(-2, 170 + random(-10,10), 220 + random(-10,10));
-		A_OverlayRotate(-2, 90 + random(-3,3), WOF_ADD );
-		A_OverlayAlpha(-2, 0.7);
     }
+	
+// 	Get a random AuraState
+	StateLabel getAuraState()
+	{
+		switch (random(1,4))
+		{
+			case 1:
+				return "MuzzleAura1";
+			case 2:
+				return "MuzzleAura2";
+			case 3:
+				return "MuzzleAura3";
+			case 4:
+				return "MuzzleAura4";
+		}
+		return "MuzzleAura1";
+	}
+	
+	action void DrawMuzzleFlash(){
+	
+// 		draw muzzle spike
+		A_Overlay(-3, "MuzzleFlash");
+		A_OverlayPivot(-3, 0.5, 0.5);
+		A_OverlayScale(-3, 0.1 + random(-3,3)/50, 0.1 + random(-3,3)/50);
+		A_OverlayOffset(-3, 194 + random(-10,10), 220 + random(-10,10));
+		A_OverlayRotate(-3, 90 + random(-3,3), WOF_ADD );
+		A_OverlayAlpha(-3, 0.8);
+		
+		
+// 		draw aura
+		A_Overlay(-4, invoker.getAuraState());
+		A_OverlayPivot(-4, 0.5, 0.5);
+		A_OverlayScale(-4, 6.5, 6.5);
+		A_OverlayOffset(-4, 224, 10);
+// 		A_OverlayRotate(-4, 90 + random(-40,45), WOF_ADD );
+		A_OverlayAlpha(-4, 1);
+		
+// 		Draw explosion
+		A_Overlay(-2, "MuzzleExplosion");
+		A_OverlayPivot(-2, 0.5, 0.5);
+		A_OverlayScale(-2, 2.8+ random(-3,3)/50, 2.8 + random(-3,3)/50);
+		A_OverlayOffset(-2, 234 + random(-2,2), 1 + random(-2,2));
+		A_OverlayRotate(-2, 90 + random(-40,45), WOF_ADD );
+		A_OverlayAlpha(-2, 0.4);
+	}
 	
 
 
@@ -217,7 +283,8 @@ class HeavyBolterProjectile: BolterProjectile{
 		Speed 150;
 		Scale 0.8;
 // 		Damage 15;
-		DamageFunction 8 * random(4, 14);
+// 		DamageFunction 8 * random(4, 14);
+		DamageFunction random(5,10)*random(4,10);
 		DeathSound "weapons/bolter_impact";
 	}
 

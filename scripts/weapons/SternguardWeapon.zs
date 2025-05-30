@@ -38,7 +38,7 @@ class SternguardWeapon : DoomWeapon
 		Goto Ready;
 	
 	
-	AltFire:
+	
 	TauntingCheck:
 		TNT1 A 0 checkTaunt;
 		TNT1 A 0 A_Jumpifinventory("isDirectedTaunt", 0, "TauntingDirected");
@@ -104,6 +104,18 @@ class SternguardWeapon : DoomWeapon
 		}
 		TNT1 A 0 {A_Jump(256, "Ready"); }
 		Goto Ready;
+	AltFire:
+	ChainswordReverse:
+		TNT1 A 0 {
+// 			A_OverlayScale(0.7, 0.7, 0.7);
+			A_WeaponOffset(-120, 32);
+		}
+// 		CHNS TRPNLJ 1;
+// 		CHNS HGFEB 3;
+		CHNS TPKHEB 2;
+// 		TNT1 A 0 A_OverlayScale(1, 1, 1);
+		TNT1 A 0 A_Jump(256, "Ready");
+		Goto Ready;
 	
 	Chainsword:
 		TNT1 A 0 {
@@ -160,6 +172,32 @@ class SternguardWeapon : DoomWeapon
 
 	}
 }
+
+// A transparent puff that puff on actors to make firebullets work properly
+class ClearPuff : Actor{
+		Default
+	{
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+ALLOWPARTICLES
+		+PUFFONACTORS
+		+RANDOMIZE
+		+ZDOOMTRANS
+		RenderStyle "Translucent";
+		Alpha 0.5;
+		VSpeed 1;
+		Mass 5;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+	Melee:
+		TNT1 A 1;
+		Stop;
+	}
+}
+
 class isDirectedTaunt: Inventory{
 	Default{
 		Inventory.Amount 0;

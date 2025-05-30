@@ -1,7 +1,6 @@
 class Bolter : ShellEjectingWeapon
 {
 
-
 	override void BeginPlay(){
 		queueLength = 12;
 		maxCasingCount = 5;
@@ -31,62 +30,85 @@ class Bolter : ShellEjectingWeapon
 		ShellEjectingWeapon.MaxCasingCount 5;
 		ShellEjectingWeapon.CasingDropSound "weapons/bolter_casing";
 		ShellEjectingWeapon.DropSoundVolume 0.3;
+// 		CrosshairScale 0.5;
 	}
 	States
 	{
 	Ready:
-		BOTR A 4 {
+		BOTR E 4 {
 			A_WeaponReady(WRF_ALLOWRELOAD);
+			A_SetCrosshair(21);
 			CasingLayerReady();
 // 			A_JumpIfInventory("clipEjected", 1, "ReloadingPartialReinsert");
 		}
 		Loop;
 	Deselect:
-		BOTR A 1{
-			A_Lower(15);
+		BOTR E 1{
+			A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
+			A_Lower();
+			A_Lower();
+			A_Lower();
 			CasingLayerExit();
 		}
 		Wait;
 // 		Loop;
 	Select:
-		BOTR A 1 A_WeaponOffset(0,32);
-		BOTR A 1 {
-			A_Raise(18);
+		BOTR E 1 {
+			A_WeaponReady(WRF_NOBOB);
+			A_Raise();
+			A_Raise();
+			A_Raise();
 			A_ClearOverlays(-1-invoker.maxCasingCount, -2);
 			CasingLayerReady();
 		}
-		TNT1 A 0 A_Raise(100);
+		
+// 		TNT1 A 0 A_Raise(100);
 		Wait;
-	Fire:
+
+
+	Fire:		
 		TNT1 A 0 OverlayReAdjust;
 // 		Go to reload if out of ammo
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, 2);
 		TNT1 A 0 A_GiveInventory("isFullReload", 1);
 		Goto Reload;
 		
-		TNT1 A 0 A_ZoomFactor(0.994);
-		TNT1 A 0 A_SetPitch(pitch - 0.5);
-		TNT1 A 0 A_OverlayScale(1, 1.06,1.06);
-		BOTR A 2 ;
-		TNT1 A 0 {A_WeaponOffset(-3, 5, WOF_ADD); CompensateOffset(3,-5);}
-		
+		BOTR A 1 {
+			A_ZoomFactor(0.994);
+			A_SetPitch(pitch - 0.5);
+			A_OverlayScale(1, 1.06,1.06);
+		}
+		BOTR A 1 {
+			A_WeaponOffset(8, 2, WOF_ADD); 
+			CompensateOffset(-6,-2);
+			A_Quake(0.2,2,0,10);
+		}
 		
 // 		Fire with low ammo click if ammo is less than 8
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 8, 3);
-		BOTR B 1 Bright {FireBolter(True); AllowQuickSwitch();}
+		BOTR B 1 Bright {
+			FireBolter(True); 
+			AllowQuickSwitch();
+		}
 		TNT1 A 0 A_Jump(256,2);
-		BOTR B 1 Bright {FireBolter(); AllowQuickSwitch();}
-		TNT1 A 0 A_QuakeEx(0.5,0.5,0.5, 2 , 0, 20,QF_SCALEDOWN|QF_SHAKEONLY,damage:0);
+		BOTR B 1 Bright nodelay {
+			FireBolter(); 
+			AllowQuickSwitch();
+		}
 		
 		TNT1 A 0 A_ZoomFactor(0.996);
-		TNT1 A 0 A_OverlayScale(1,1.1,1.1);
-		TNT1 A 0 {A_WeaponOffset(2, -2.5, WOF_ADD); CompensateOffset(-2,2.5); }
-		BOTR B 1 Bright {A_SetPitch(pitch + 0.3); AllowQuickSwitch();}
-		TNT1 A 0 A_OverlayScale(1,1.08,1.08);
+		TNT1 A 0 A_OverlayScale(1,1.03,1.03);
+// 		TNT1 A 0 {A_WeaponOffset(20, -2.5, WOF_ADD); CompensateOffset(20,2.5); }
+		BOTR B 1 Bright {
+			A_SetPitch(pitch + 0.3);
+			A_WeaponOffset(-8, -2, WOF_ADD);
+			CompensateOffset(6,2);
+			AllowQuickSwitch();}
+		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
 		BOTR C 1 Bright;
 		TNT1 A 0 A_OverlayScale(1,1,1);
 		BOTR C 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
-		TNT1 A 0 {A_WeaponOffset(1, -2.5, WOF_ADD); CompensateOffset(-1,2.5); }
+// 		TNT1 A 0 {A_WeaponOffset(1, -2.5, WOF_ADD); CompensateOffset(-1,2.5); }
 		BOTR C 1 {A_SetPitch(pitch + 0.2); AllowQuickSwitch();}
 		
 
@@ -94,10 +116,14 @@ class Bolter : ShellEjectingWeapon
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, "Ready");
 		BOTR A 0 A_GiveInventory("isFullReload", 1);
 		Goto Ready;
+		
+	// ===============================================================================
+	// ============================||Muzzle Flash||===================================
+	// ===============================================================================
 	MuzzleFlash:
 		TNT1 A 0 A_jump(256, "FireRing");
 	FireRing:
-		BTRF A 2 Bright A_Light(2);
+		BTRF A 1 Bright A_Light(2);
 		BTRF BC 1 Bright A_Light(2);
 		Goto LightDone;
 	Casing:
@@ -213,9 +239,9 @@ class Bolter : ShellEjectingWeapon
 		{
 			accurate = true;
 		}
-		if (accurate) A_FireBullets(0, 0, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
-		else A_FireBullets (1, 1, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 0,10 );
-// 		else A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
+		if (accurate) A_FireBullets(0, 0, 1, 0, "ClearPuff",FBF_NORANDOM,0,"BolterProjectile", -1,12 );
+		else A_FireBullets (0.6, 0.6, 1, 0, "ClearPuff",FBF_NORANDOM,0,"BolterProjectile", -1,12 );
+// 		A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
 // 		A_FireRailgun();
 		if(isLowAmmo)
 			A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
@@ -230,7 +256,7 @@ class Bolter : ShellEjectingWeapon
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
 		A_OverlayScale(-2, 0.3 + random(-3,3)/100, 0.3 + random(-3,3)/100);
-		A_OverlayOffset(-2, 250 + random(-5,5), 50 + random(-5,5));
+		A_OverlayOffset(-2, 278 + random(-5,5), 63 + random(-5,5));
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
 		A_OverlayAlpha(-2, 0.95);
 		
@@ -251,10 +277,10 @@ class BolterProjectile: TrailedProjectile{
 	{
 		Radius 3;
 		Height 4;
-		Speed 200;
+		Speed 250;
 		Scale 0.65;
 // 		Damage 7;
-		DamageFunction random(3,10)*random(3,10);
+		DamageFunction random(4,9)*random(3,10);
 		+FORCEXYBILLBOARD
 		DeathSound "weapons/bolter_impact";
 	}
@@ -262,13 +288,13 @@ class BolterProjectile: TrailedProjectile{
 	States
 	{
 	Spawn:
-		BOLT A 1 Bright bolterParticle(22, 80, 15, 4, 3);
+		BOLT A 1 Bright bolterParticle(25, 60, 10, 4, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
 		BTRE A 2 Bright {
 			A_Explode(6 * random(4,7), 40, 0, damagetype="SmallExplosion");
-			bolterParticleTailCompensation(22, 80, 15, 4, 3);
+			bolterParticleTailCompensation(22, 30, 7, 4, 3);
 		}
 		BTRE BCDEFGHIJKL 2 Bright;
 		BTRE MNOPQ 2;
@@ -290,7 +316,9 @@ class BolterProjectile: TrailedProjectile{
 		, float mainSmokeSize = 4, float subSmokeSize=3)
 	{
 		if (!invoker.particleDrawn)
-			invoker.TrailParticle(subdivide, baseTTL/2, baseTTL_trail/2, mainSmokeSize, subSmokeSize, speedOverride:speed*0.66);
+			invoker.TrailParticle(subdivide, baseTTL/2, baseTTL_trail/2, mainSmokeSize, subSmokeSize, speedOverride:speed);
+		else
+			invoker.TrailParticle(subdivide, baseTTL/2, baseTTL_trail/2, mainSmokeSize, subSmokeSize, speedOverride:speed);
 	}
 	
 }

@@ -28,7 +28,10 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 	{
 	Ready:
 		TNT1 A 0 A_StopSound(CHAN_WEAPON);
-		VKT1 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		VKT1 A 1 {
+			A_WeaponReady(WRF_ALLOWRELOAD);
+			A_SetCrosshair(25);
+		}
 		Loop;
 	Deselect:
 		TNT1 A 0 BeamForceStop;
@@ -42,7 +45,10 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 		Loop;
 	Select:
 		TNT1 A 0 A_StopSound(CHAN_WEAPON);
-		VKT1 A 1 A_Raise(18);
+		VKT1 A 1 {
+			A_Raise(18);
+			A_WeaponReady(WRF_NOBOB);
+		}
 		Wait;
 	Reload:	
 		TNT1 A 0 A_Startsound("weapons/volkite_reload",CHAN_AUTO,attenuation:ATTN_NONE);
@@ -351,6 +357,7 @@ class VolkitePuff: Actor{
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+ALLOWPARTICLES
+		+PUFFONACTORS
 		+RANDOMIZE
 		+ZDOOMTRANS
 		+EXTREMEDEATH

@@ -92,7 +92,7 @@ class ShellEjectingWeapon : SternguardWeapon
 		A_Overlay(invoker.casingIdx, CasingState);
 		A_OverlayPivot(invoker.casingIdx, 0.5, 0.5);
 		A_OverlayScale(invoker.casingIdx, casingScale, casingScale);
-		A_OverlayOffset(invoker.casingIdx, 302 + invoker.extraOffset_x, 30 + invoker.extraOffset_y);
+		A_OverlayOffset(invoker.casingIdx, 326 + invoker.extraOffset_x, 45 + invoker.extraOffset_y);
 		invoker.casingTimeElapsed[invoker.casingIdx - 2] = 0;
 		
 // 		Set base eject speed of the casing
@@ -115,6 +115,11 @@ class ShellEjectingWeapon : SternguardWeapon
 	action void CompensateOffset(int compensationX = 0, int compensationY = 0){
 		invoker.offsetCompensationX = invoker.offsetCompensationX + compensationX;
 		invoker.offsetCompensationY = invoker.offsetCompensationY + compensationY;
+	}
+	
+	action void ResetCompensation(){
+		invoker.offsetCompensationX = 0;
+		invoker.offsetCompensationY = 0;
 	}
 	
 

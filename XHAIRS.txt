@@ -1,0 +1,4 @@
+21 "Crosshairs_Boltgun"
+22 "Crosshairs_Shotgun"
+23 "Crosshairs_HeavyBoltgun"
+25 "Crosshairs_Volkite"

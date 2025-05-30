@@ -23,10 +23,16 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		MSLL A 1 A_WeaponReady;
 		Loop;
 	Deselect:
-		MSLL A 1 A_Lower(15);
+		MSLL A 1 {
+			A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
+			A_Lower(18);
+			}
 		Loop;
 	Select:
-		MSLL A 1 A_Raise(15);
+		MSLL A 1 {
+			A_WeaponReady(WRF_NOBOB);
+			A_Lower(18);
+		}
 		Loop;
 	Fire:
 // 		TNT1 A 0 OverlayReAdjust;
@@ -89,7 +95,7 @@ class FragMissile : Rocket
 		Loop;
 	Death:
 		MSEX A 1 Bright {
-		A_Explode(170,150,XF_HURTSOURCE,True, 100,0,0,"bulletpuff",damagetype = "ExplosionSelfDamage");
+		A_Explode(170,150,XF_HURTSOURCE,True, 75,0,0,"bulletpuff",damagetype = "ExplosionSelfDamage");
 		A_QuakeEx(0,1.2,2, 20, 0, 2000,flags:QF_SCALEDOWN|QF_SHAKEONLY);
 		}
 		MSEX B 0 Bright missileExplosion();
@@ -115,20 +121,43 @@ class FragMissile : Rocket
 	}
 	action void missileExplosion(){
 		spawnCenterExplosion(180);
-// 		firering("",256,0);
+
 // 		firering("orange", 420, 0,0.5);
 		for (int i = 0; i < 20; i++){
 			spawnFragParticle(frandom(15,20));
 		}
+// 		Spawn a ton of particles
+		float angle1;
+		float angle2;
+		float speed;
+		for (int i = 0; i < 400; i++)
+		{
+			angle1 = frandom(0,360);
+			angle2 = frandom(90,185);
+			speed = frandom(4,13);
+			invoker.A_SpawnParticle("grey4", 0, 40, 8
+// 				, velx:frandom(-8,8), vely:frandom(-8,8), velz:frandom(-2,12),
+				, velx: speed * cos(angle2) * sin(angle1), vely: speed * cos(angle2) * cos(angle1), velz: speed * sin(angle2),
+				accelz: -0.2);
+				
+			angle1 = frandom(0,360);
+			angle2 = frandom(90,185);
+			speed = frandom(4,13);
+			invoker.A_SpawnParticle("orange", SPF_FULLBRIGHT, 40, 8
+// 				, velx:frandom(-8,8), vely:frandom(-8,8), velz:frandom(-2,12),
+				, velx: speed * cos(angle2) * sin(angle1), vely: speed * cos(angle2) * cos(angle1), velz: speed * sin(angle2),
+				accelz: -0.2);
+		}
 		
 	}
+	
 	action void spawnCenterExplosion(float baseSize){
 		invoker.A_SpawnParticleEx("", TexMan.CheckForTexture("EXIAA0")
 		,0,SPF_FULLBRIGHT|SPF_LOCAL_ANIM|SPF_RELPOS|SPF_RELANG|SPF_ROLL  , 63
 		, baseSize, 0
-		,0, 0, 0
+		,0, 0, 10
 		,0,0,0, 0,0,0
-		, 0.9, -0.005, 10
+		, 0.9, 0.008, 10
 // 		,random(0,12)*30
 		);
 	}
