@@ -185,3 +185,34 @@ flamer/sight3 FLMRSIT3
 // For  Exalted flamer
 // ========================================================================
 exflamer/death EFLMDTH1
+
+
+
+
+// ========================================================================
+// For Blue Horrors
+// ========================================================================
+$random bluehorror/sight {bluehorror/sight1 bluehorror/sight2 bluehorror/sight3}
+bluehorror/sight1 BLHRSIT1
+bluehorror/sight2 BLHRSIT2
+bluehorror/sight3 BLHRSIT3
+
+$random bluehorror/active {bluehorror/sight1 bluehorror/sight2 bluehorror/sight3}
+$volume bluehorror/active 0.7
+
+
+$random bluehorror/death {bluehorror/death1 bluehorror/death2 bluehorror/death3 }
+bluehorror/death1 BLHRDTH1
+bluehorror/death2 BLHRDTH2
+bluehorror/death3 BLHRDTH3
+$pitchset bluehorror/death1 0.9 1.1
+$pitchset bluehorror/death2 0.9 1.1
+$pitchset bluehorror/death3 0.9 1.1
+
+
+bluehorror/pain BLHRPAIN
+$pitchset bluehorror/pain 0.8 1.05
+
+$random bluehorror/attack {bluehorror/attack1 bluehorror/attack2}
+bluehorror/attack1 BLHRATK1
+bluehorror/attack2 BLHRATK2
