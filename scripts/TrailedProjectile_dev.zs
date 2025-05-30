@@ -82,10 +82,6 @@ class TrailedProjectile: FastProjectile {
 // 	convert the facing to a vector
 	static Vector3 facingToVector(float angle, float pitch, int length){
 		vector3 vec = quat.FromAngles(angle, pitch, 0) * (length, 0, 0);
-// 		vector3 vec;
-// 		vec.x = cos(angle) * sin(-pitch)*length;
-// 		vec.y = sin(angle) * sin(-pitch)*length;
-// 		vec.z = cos(-pitch)*length;
 		return vec;
 	}
 	void spawnSubdividedtrail(color color1,Vector3 facing, float baseAlpha,float inverval, int div, float fadeAlpha){
@@ -141,13 +137,6 @@ class TrailedProjectile: FastProjectile {
 		level.SpawnParticle(smokePuffParams);
 	}
 	
-// 	Spawn trail for one profile
-	void TrailParticle_dev (int subdivide
-		, float baseTTL = 120,float baseTTL_trail=10
-		, float mainSmokeSize = 4, float subSmokeSize=3)
-	{
-		
-	}
 	
 	void TrailParticle(int subdivide
 		, float baseTTL = 120,float baseTTL_trail=10
@@ -174,7 +163,7 @@ class TrailedProjectile: FastProjectile {
 		
 		
 // 		Spawn center smoke trail
-		A_SpawnParticle("7f7f7f", 0,baseTTL,mainSmokeSize+frandom(-0.5,0.5), 0
+		A_SpawnParticle/*Ex*/("7f7f7f", 0,baseTTL,mainSmokeSize+frandom(-0.5,0.5), 0
 		, 0,0,0
 		, 0,0,0, 0,0,0
 		, baseAlpha,-1,-0.04);
@@ -184,19 +173,20 @@ class TrailedProjectile: FastProjectile {
 		lastz = pos.z;
 // 		Spawn  smoke puff
 		SpawnSmokePuff(baseTTL);
+		
 // 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744  bright#fed882 even redder#f1680a
 // 		Not too orange f58428
 		A_SpawnParticle("f58428",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, 1,-1,-0.01);
+		, 1,-1,-0.1);
 		
 		A_SpawnParticle("f58428",SPF_FULLBRIGHT, baseTTL_trail,mainSmokeSize*1.2, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, 1,-1,-0.01);
+		, 1,-1,-0.1);
 		
-		for ( int div = 1; div <= subdivide + 1; div++ )  // sid is the sector ID
+		for ( int div = 1; div <= subdivide; div++ )  // sid is the sector ID
 		{
 			
 // 			Spawn center fire trail
@@ -233,10 +223,7 @@ class TrailedProjectile: FastProjectile {
 				}
 				continue;
 			}
-// 			if(div % (subdivide / 8 <= 0 ? 1: subdivide / 8) ==0){
-// 				SpawnSmokePuff(baseTTL, div);
-// 			}
-			if(random(0,20) > 15){
+			if(div % (subdivide / 6 <= 0 ? 1: subdivide / 6) ==0){
 				SpawnSmokePuff(baseTTL, div);
 			}
 			
