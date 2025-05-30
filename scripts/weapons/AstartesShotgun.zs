@@ -11,9 +11,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	{
 		Weapon.SelectionOrder 1300;
 		Weapon.AmmoUse 1;
-// 		Weapon.AmmoGive 8;
 		Weapon.KickBack 200;
-// 		Weapon.AmmoType "Shell";
 		Inventory.PickupMessage "$GOTSHOTGUN";
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.ALT_AMMO_OPTIONAL
@@ -36,21 +34,26 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	States
 	{
 	Ready:
-		STGN A 4 A_WeaponReady(WRF_ALLOWRELOAD);
+		STGN A 4 {
+			A_WeaponReady(WRF_ALLOWRELOAD);
+			A_SetCrosshair(22);
+		}
 		Loop;
 	Deselect:
 // 		STGN A 1 Offset(0, 34);
 // 		STGN A 1 Offset(0, 60);
 // 		STGN A 1 Offset(0, 80);
 		STGN A 1 {
-			A_Lower(15);
+			A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
+			A_Lower(18);
 			CasingLayerExit();
 		}
-		Wait;
+		Loop;
 	Select:
 		TNT1 A 0 A_StartSound("weapons/scout_shotgun_select", starttime:0.2);
 		STGN A 1 A_WeaponOffset(0,32);
 		STGN A 1 {
+			A_WeaponReady(WRF_NOBOB);
 			A_Raise(18);
 			A_ClearOverlays(-1-invoker.maxCasingCount, -2);
 			CasingLayerReady();
@@ -62,27 +65,26 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 1);
 		Goto Reload;
 		
-// 		TNT1 A 0 smoke_puff();
 		TNT1 A 0 A_ZoomFactor(0.99);
 		TNT1 A 0 A_SetPitch(pitch - 1.15);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 OverlayRecoil(13,25);
 		// TNT1 A 0 A_WeaponOffset(13, 25, WOF_ADD);
 		// TNT1 A 0 CompensateOffset(-13, -25);
-		STGN B 1; //Recoil should dampen entirely after first firing frame
+		STGN B 1 ; //Recoil should dampen entirely after first firing frame
 		TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 A_WeaponOffset(13, 20, WOF_ADD);
 		TNT1 A 0 CompensateOffset(-13, -20);
 		
-		STGN B 1;
+		STGN B 1 ;
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
 		TNT1 A 0 A_ZoomFactor(0.995);
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(0, -15);
-		TNT1 A 0 A_Quake(0.6,3,0,20);
-		STGN B 1 Bright { FireScoutShotgun(); }
+		TNT1 A 0 A_Quake(1,5,0,20);
+		STGN B 1 Bright FireScoutShotgun; 
 		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
 		
 		TNT1 A 0 CompensateOffset(12, 23);
@@ -106,12 +108,17 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		STGN F 2 A_StartSound("weapons/scout_shotgun_pump");
 		STGN GH 3;
 		STGN I 3{
-			EjectCasing("ShotgunCasing",2.5,-12,-10);
-			AddToSoundQueue(28);
+			
 			A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		}
 		STGN J 2  A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		STGN KL 2 A_WeaponReady(WRF_ALLOWRELOAD);
+		STGN K 2 {
+			EjectCasing("ShotgunCasing",2.3,-12,-10);
+			AddToSoundQueue(28);
+			A_WeaponReady(WRF_ALLOWRELOAD);
+		}
+// 		STGN K 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		STGN L 2 A_WeaponReady(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_ReFire("Fire");
 		Goto Ready;
 	ShotgunCasing:
@@ -181,7 +188,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 // 		,30,15,40
 		,facing.x+facing.y*0.35, facing.y-facing.x*0.35, facing.z +50
 		,0,frandom(0.6,1.2),0, 0,0,0.1
-		, 0.9,/*-0.02*/ -1,0.05
+		, 0.8,/*-0.02*/ -1,0.05
 		, Random(0,12)*30);
 	}
 	
@@ -197,18 +204,11 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		{
 			if (!weap.DepleteAmmo (weap.bAltFire, true, -1))
 				return;
-		
-// 			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
 		}
 		player.mo.PlayAttacking2 ();
 
-		double pitch = BulletSlope ();
-
-
-		A_FireBullets (6, 2, 6, /*7*/ 0, "BulletPuff",FPF_AIMATANGLE ,0 ,"ShotgunProjectile",0,8);
-// 			A_FireBullets (1.5, 1.5, 1, /*6 * random(3,13)*/ 0, "",FBF_NORANDOM,0,"BolterProjectile", 15,10 );
-// 			GunShot (false, "BulletPuff", pitch);
-
+		A_FireBullets (6, 3, 10, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+// 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
 		A_OverlayScale(-2, 0.4 + random(-3,3)/100, 0.4 + random(-3,3)/100);
@@ -216,13 +216,33 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
 		A_OverlayAlpha(-2, 0.95);
 		smoke_puff();
+		smoke_puff();
 	}
+	action void alternatShotgunFire(int bulletcount, class<Actor> missile, float spread)
+	{
+		double zoffs = invoker.owner.height*0.5;
+		if(invoker.owner.player) zoffs = invoker.owner.player.viewz - invoker.owner.pos.z;
 	
+		FLineTraceData lt;
+		invoker.owner.LineTrace(invoker.owner.angle, 1000, invoker.owner.pitch, offsetz:zoffs, offsetforward:invoker.owner.radius, data:lt);
+		Vector3 hitposition = lt.HitLocation;
+		Actor proj1,proj2;
+		[proj1,proj2] = A_FireProjectile(missile,invoker.angle,True,10,0,0,invoker.pitch);
+// 		proj2.A_SetPitch(invoker.pitch);
+	}
 	override void Tick(void){
 		
 		CasingAnimationTick();
 		CasingDropSoundTick(dropSoundVolume);
 		super.Tick();
+	}
+}
+
+// Special puff for shotgun with puffonactors to make the spread pattern work properly
+class ShotgunPuff: BulletPuff{
+	Default
+	{
+		+PUFFONACTORS
 	}
 }
 class ShotgunProjectile: FastProjectile {
@@ -235,28 +255,28 @@ class ShotgunProjectile: FastProjectile {
 	{
 		Radius 2;
 		Height 2;
-		Speed 150;
+		Speed 200;
 		Scale 0.8;
 		+PUFFONACTORS
 // 		Damage 7;
-		DamageFunction 7 * random(1,3);
+		DamageFunction 5 * random(1,3);
 		Projectile;
 		+RANDOMIZE
 		+DEHEXPLOSION
 		+ZDOOMTRANS
+		alpha 0.7;
+		scale 0.3;
 // 		DeathSound "weapons/scout_shotgun_impact";
-// 		Obituary "$OB_MPROCKET";
 	}
 	States
 	{
 	Spawn:
-		TNT1 A 1 Bright ShotgunParticle(15, 10, 5);
-// 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
+		TRAC A 1 Bright ShotgunParticle(30, 5, 5);
 		Loop;
 	Death:
 		TNT1 A 1 {
-		A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
-		ShotgunParticleTailCompensation(15, 10, 5);
+			A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
+			ShotgunParticleTailCompensation(30, 8, 5);
 		}
 // 		Goto LightDone;
 		Stop;
@@ -275,7 +295,6 @@ class ShotgunProjectile: FastProjectile {
 		, float mainSmokeSize = 4, float speedOverride = 0)
 	{
 // 		a.color1 = "white";
-// 		float baseTTL = 120;
 		particleDrawn = True;
 		float baseAlpha = 0.6; //Starting alpha value
 		float fadeAlpha = baseAlpha/baseTTL; //Value of alpha decrease each tick
@@ -286,26 +305,22 @@ class ShotgunProjectile: FastProjectile {
 			length = speedOverride/subdivide;
 		else
 			length = vel.length()/subdivide;
-// 		length = vel.length()/subdivide;
+
 		facing = facingToVector(angle,pitch, length);
 
-		 
-// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744 fed882
-		A_SpawnParticle("fba744",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
+// 		Spawn center fire trail yellow - #fac64d  orange - #fc883a average #fba744 fed882 #very orange f1680a
+		A_SpawnParticle("f58428",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, baseAlpha,-1,-0.2);
+		, baseAlpha,-1,0.1);
 		
-		for ( int div = 1; div <= subdivide; div++ )  // sid is the sector ID
+		for ( int div = 1; div <= subdivide; div++ ) 
 		{
-			
 // 			Spawn center fire trail
-			A_SpawnParticle("fba744",SPF_FULLBRIGHT,baseTTL,mainSmokeSize - 0.2* div/subdivide, 0
+			A_SpawnParticle("f58428",SPF_FULLBRIGHT,baseTTL,mainSmokeSize + 0.1* div/subdivide, 0
 			, -facing.x*div+frandom(-0.5,0.5),-facing.y*div+frandom(-0.5,0.5),-facing.z*div+frandom(-0.5,0.5)
 			, 0,0,0, 0,0,0
-			, baseAlpha - div*interval, fadeAlpha,-0.2);
-			
-			
+			, baseAlpha - div*interval, fadeAlpha,0.8);
 		}
 		
 	}
@@ -319,7 +334,7 @@ class ShotgunProjectile: FastProjectile {
 	{
 	
 		if (!particleDrawn) 
-			ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed*0.66);
+			ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed);
 	}
 }
 
