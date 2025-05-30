@@ -7,7 +7,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 // 		Height 67; //firing offset will be 8 for this, 15 for normal height
 // 		Height 80;
 		Mass 400;
-		Player.AttackZOffset 23;
+		Player.AttackZOffset 22;
 		Player.Startitem "Bolter";
 		Player.StartItem "Clip", 50;
 		Player.StartItem "BolterMag", 18;
@@ -19,7 +19,7 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Player.WeaponSlot 5, "MissileLauncher";
 		Player.WeaponSlot 6, "VolkiteCaliver";//,"PlasmaRifle";
 		Player.SoundClass "sternguard";
-		Damagefactor "ExplosionSelfDamage", 0.18;
+		Damagefactor "ExplosionSelfDamage", 0.3;
 		Player.ViewHeight 52;
 // 		PainSound "sternguard/pain";
 		
@@ -104,7 +104,7 @@ class SternguardFootStepHandler : EventHandler
 	}
 	void playFootStepSound(PlayerPawn pl){
 		pl.A_StartSound("sternguard/steps_base_low", CHAN_BODY,CHANF_OVERLAP, 0.15,ATTN_NONE);
-		pl.A_StartSound("sternguard/steps_base", CHAN_BODY,CHANF_OVERLAP, 0.15,ATTN_NONE);
+		pl.A_StartSound("sternguard/steps_base", CHAN_BODY,CHANF_OVERLAP, 0.2,ATTN_NONE);
 	}
 	
 	override void playerEntered(PlayerEvent e)
