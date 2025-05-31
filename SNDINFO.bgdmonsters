@@ -197,8 +197,14 @@ bluehorror/sight1 BLHRSIT1
 bluehorror/sight2 BLHRSIT2
 bluehorror/sight3 BLHRSIT3
 
-$random bluehorror/active {bluehorror/sight1 bluehorror/sight2 bluehorror/sight3}
-$volume bluehorror/active 0.7
+$random bluehorror/active {bluehorror/active1 bluehorror/active2 bluehorror/active3}
+bluehorror/active1 BLHRACT1
+bluehorror/active2 BLHRACT2
+bluehorror/active3 BLHRACT3
+
+$pitchset bluehorror/active1 0.6 0.65
+$pitchset bluehorror/active2 0.6 0.65
+$pitchset bluehorror/active2 0.6 0.65
 
 
 $random bluehorror/death {bluehorror/death1 bluehorror/death2 bluehorror/death3 }
