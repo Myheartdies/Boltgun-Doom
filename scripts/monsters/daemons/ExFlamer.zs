@@ -7,7 +7,8 @@ class ExaltedFlamer : Cacodemon
 		Height 56;
 		Mass 400;
 		Speed 8;
-		PainChance 128;
+		PainChance 100;
+		PainThreshold 15;
 		Monster;
 		Scale 0.44;
 		+FLOAT +NOGRAVITY
@@ -34,7 +35,7 @@ class ExaltedFlamer : Cacodemon
 		Goto See;
 	Pain:
 		EFLM N 3;
-		EFLM O 10 A_Pain;
+		EFLM O 5 A_Pain;
 		Goto See;
 	Death:
 		EFLM P 8 A_Scream;

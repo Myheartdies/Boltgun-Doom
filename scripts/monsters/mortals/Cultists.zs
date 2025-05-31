@@ -3,6 +3,7 @@ class Cultist1 : ZombieMan
 	Default
 	{
 		Health 20;
+		GibHealth 10;
 		Radius 20;
 		Height 56;
 		Speed 8;
@@ -24,8 +25,9 @@ class Cultist1 : ZombieMan
  	States
 	{
 	Spawn:
+		TNT1 A 1 spawnTeammate;
 		CLT1 MN 10 A_Look;
-		Loop;
+		Wait;
 	See:
 		CLT1 AABBCCDD 4 A_Chase;
 		Loop;
@@ -57,12 +59,30 @@ class Cultist1 : ZombieMan
 		CLT1 KJI 5;
 		Goto See;
 	}
+	action void spawnTeammate(){
+		Vector3 position;
+		position.x = invoker.pos.x + 50;
+		position.y = invoker.pos.y;
+		position.z = invoker.pos.z;
+		if (!Spawn("Cultist2",position))
+		{
+			Console.Printf("Failed to spawn Cultist2!");
+		}
+	}
+	override void PostBeginPlay(){
+		super.PostBeginPlay();
+// 		if (!Spawn("Cultist2",pos))
+// 		{
+// 			Console.Printf("Failed to spawn Cultist2!");
+// 		}
+		
+	}
 	
 	action void CultistMissile(){
 		if (target)
 		{
 			A_FaceTarget();
-			A_CustomBulletAttack(25
+			A_CustomBulletAttack(2
 			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
 		}
 		

@@ -12,6 +12,7 @@ class Flamer1 : DoomImp
 		Scale 0.4;
 // 		DamageFactor "SmallExplosion", 0.6;
 		+FLOORCLIP
+		+MISSILEMORE
 // 		+FLOAT +NOGRAVITY
 		SeeSound "flamer/sight";
 		PainSound "flamer/pain";
@@ -186,9 +187,16 @@ class FlamerBall: DoomImpBall{
 	{
 		SeeSound "flamer/attack";
 // 		Damage 5;
-		Speed 12
-		;
+		Speed 10;
 // 		FastSpeed 25;
+	}
+	void flameParticle(){
+// 		A_SpawnParticleEx("",TexMan.CheckForTexture("FLMPA0"),0,SPF_ROLL, 10
+// 		, 9 + frandom(-1,2), 0
+// 		,-facing.x*div + frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
+// 		,speedx,speedy,speedz, -speedx/1500,-speedy/1500,-speedz/1500
+// 		, 0.6,-1,-0.01
+// 		, Random(0,12)*30);
 	}
 }
 

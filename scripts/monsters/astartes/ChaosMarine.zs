@@ -3,6 +3,7 @@ class ChaosMarine : HellKnight
 	Default
 	{
 		Mass 600;
+		PainThreshold 6;
 		DamageFactor "SmallExplosion", 0.3; //
 		DamageFactor "StrongExplosion", 0.65;
 	}

@@ -2,7 +2,7 @@ class CultistShock: ShotgunGuy
 {
 	Default
 	{
-		Health 30;
+		Health 40;
 		Radius 20;
 		Height 56;
 		Mass 100;
@@ -11,6 +11,7 @@ class CultistShock: ShotgunGuy
 		Monster;
 		+FLOORCLIP
 		+DOHARMSPECIES
+		+MISSILEMORE
 		DamageFactor "Bolt", 2;
 		SeeSound "shotguy/sight";
 		AttackSound "shotguy/attack";

@@ -11,14 +11,14 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 	Default
 	{
 		Scale 0.42;
-		Health 1300;
+		Health 1200;
 		Speed 12;
 		SeeSound "CCSM/sight";
 		ActiveSound "CCSM/active";
 		PainSound "CCSM/pain";
 		DeathSound  "CCSM/death";
 		+BOSSDEATH
-		PainChance 60;
+		PainChance 80;
 		MeleeRange 55;
 		MeleeThreshold 100;
 		MinMissileChance 150;
@@ -139,7 +139,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 	Pain:
 // 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
 		CPNA Q  2 A_Pain;
-		CPNA R  2 ;
+		CPNA R  3 ;
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
 // 		TNT1 A 0  A_JumpIfInventory("ParryMe_Stack", 2 ,"Pain");
 		Goto See;

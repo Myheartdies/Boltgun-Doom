@@ -4,10 +4,10 @@ class BlueHorror : Demon replaces Demon
 	{
 		Health 150;
 		PainChance 180;
-		Speed 6;
+		Speed 7;
 		Radius 22;
 		Height 56;
-		Mass 400;
+		Mass 250;
 		Scale 0.6;
 		Monster;
 		+FLOORCLIP
@@ -25,16 +25,17 @@ class BlueHorror : Demon replaces Demon
 		BLHR QRS 10 A_Look;
 		Loop;
 	See:
-		BLHR AABBCCDDEE 1 A_Chase;
-		BLHR FF 2 A_Chase;
+		BLHR AABBCCDD 1 A_Chase;
+		BLHR EEFF 2 A_Chase;
 		Loop;
 	Melee:
-		BLHR G 12 A_FaceTarget;
-		BLHR HI 8 A_SargAttack;
+		BLHR G 8 A_FaceTarget;
+		BLHR H 8 A_CustomMeleeAttack(random(2, 6) * 4, "bluehorror/attack");
+		BLHR I 8 A_SargAttack;
 		Goto See;
 	Pain:
 		BLHR K 2 Fast;
-		BLHR L 2 Fast A_Pain;
+		BLHR L 3 Fast A_Pain;
 		Goto See;
 	Death:
 		BLHR M 8 A_Scream;
@@ -50,4 +51,12 @@ class BlueHorror : Demon replaces Demon
 		Goto See;
 	}
 }
-	
+
+class SpectreBlueHorror :BlueHorror Replaces Spectre{
+	Default
+	{
+		+SHADOW
+		RenderStyle "OptFuzzy";
+		Alpha 0.8;
+	}
+}
