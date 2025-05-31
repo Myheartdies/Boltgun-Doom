@@ -84,37 +84,43 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(0, -15);
 		TNT1 A 0 A_Quake(1,5,0,20);
-		STGN B 1 Bright FireScoutShotgun; 
+		STGN C 1 Bright FireScoutShotgun; 
 		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
 		
 		TNT1 A 0 CompensateOffset(12, 23);
 		TNT1 A 0 A_ZoomFactor(0.997);
 		TNT1 A 0 A_SetPitch(pitch + 0.4);
 		TNT1 A 0 A_OverlayScale(1, 1.1, 1.1);
-		STGN B 1 Bright ;
+		STGN C 1 Bright ;
 		TNT1 A 0 A_WeaponOffset(-8, -22, WOF_ADD);
 		TNT1 A 0 CompensateOffset(8, 22);
 		TNT1 A 0 A_ZoomFactor(1.00);
 		TNT1 A 0 A_SetPitch(pitch + 0.3);
 		TNT1 A 0 A_OverlayScale(1, 1.05, 1.05);
-		STGN C 2 Bright A_SetPitch(pitch + 0.1);
+		STGN C 1 Bright A_SetPitch(pitch + 0.1);
+		STGN D 1;
 		TNT1 A 0 A_WeaponOffset(-6, -15, WOF_ADD);
 		TNT1 A 0 CompensateOffset(6, 15);
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
-		STGN C 1 Bright;
-		STGN DE 1 Bright;
+		STGN D 1 Bright;
+		STGN EE 1 Bright;
 		STGN E 1;
 	Pump:
-		STGN F 2 A_StartSound("weapons/scout_shotgun_pump");
-		STGN GH 3;
+		STGN F 2 {
+			A_StartSound("weapons/scout_shotgun_pump");
+		}
+		STGN G 3{
+			EjectCasing("ShotgunCasing",2.3,-12,-10);
+			AddToSoundQueue(28);
+		}
+		STGN H 3;
 		STGN I 3{
 			
 			A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		}
 		STGN J 2  A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		STGN K 2 {
-			EjectCasing("ShotgunCasing",2.3,-12,-10);
-			AddToSoundQueue(28);
+			
 			A_WeaponReady(WRF_ALLOWRELOAD);
 		}
 // 		STGN K 1 A_WeaponReady(WRF_ALLOWRELOAD);
@@ -320,7 +326,7 @@ class ShotgunProjectile: FastProjectile {
 			A_SpawnParticle("f58428",SPF_FULLBRIGHT,baseTTL,mainSmokeSize + 0.1* div/subdivide, 0
 			, -facing.x*div+frandom(-0.5,0.5),-facing.y*div+frandom(-0.5,0.5),-facing.z*div+frandom(-0.5,0.5)
 			, 0,0,0, 0,0,0
-			, baseAlpha - div*interval, fadeAlpha,0.8);
+			, baseAlpha - div*interval, fadeAlpha,0.1);
 		}
 		
 	}
