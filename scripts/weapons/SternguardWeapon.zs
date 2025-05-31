@@ -11,6 +11,7 @@ class SternguardWeapon : DoomWeapon
 	Property TargetScaleY : targetScaleY;
 	Property TauntOffsetX : tauntOffsetX;
 	Property TauntOffsetY : tauntOffsetY;
+	bool PlayerDied;
 	Default
 	{
 		SternguardWeapon.TargetScaleX 0.8;
@@ -38,7 +39,7 @@ class SternguardWeapon : DoomWeapon
 		Goto Ready;
 	
 	
-	
+	AltFire:
 	TauntingCheck:
 		TNT1 A 0 checkTaunt;
 		TNT1 A 0 A_Jumpifinventory("isDirectedTaunt", 0, "TauntingDirected");
@@ -58,7 +59,7 @@ class SternguardWeapon : DoomWeapon
 		TUNA FGHIJ 4;
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY|WRF_ALLOWRELOAD);
 		TNT1 A 0 A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
-		TUNA JJJ 2{
+		TUNA JKK 2{
 			A_WeaponOffset(4,40,WOF_ADD);
 // 			A_WeaponReady();
 			}
@@ -95,7 +96,7 @@ class SternguardWeapon : DoomWeapon
 			A_WeaponReady(WRF_NOSECONDARY|WRF_ALLOWRELOAD);
 			A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
 		}
-		TUNB JJJ 2{
+		TUNB JJK 2{
 			A_WeaponOffset(4,40,WOF_ADD);
 			}
 		TNT1 A 0 {
@@ -104,7 +105,31 @@ class SternguardWeapon : DoomWeapon
 		}
 		TNT1 A 0 {A_Jump(256, "Ready"); }
 		Goto Ready;
-	AltFire:
+	DeathFrames:
+		TNT1 A 0 {
+			OverlayReAdjust();
+			AdjustScale();
+			A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
+		}
+		TNT1 A 0 {A_Jump(85, "Death1"); } 
+		TNT1 A 0 {A_Jump(128, "Death2"); } 
+		TNT1 A 0 {A_Jump(256, "Death3"); } 
+		Goto Death3;
+	Death1:
+		SGD1 ABCDEFG 6;
+		TNT1 A 20;
+		Wait;
+		
+	Death2:
+		SGD2 ABCDEFGHI 6;
+		TNT1 A 20;
+		Wait;
+	Death3:
+		SGD3 ABCDEFGHI 6;
+		TNT1 A 20;
+		Wait;
+		
+		
 	ChainswordReverse:
 		TNT1 A 0 {
 // 			A_OverlayScale(0.7, 0.7, 0.7);
@@ -130,6 +155,10 @@ class SternguardWeapon : DoomWeapon
 		CSAW A -1;
 		Stop;
 	}
+	
+	
+	
+	
 // 	Check if the taunt will be directed to an enemy or not
 	action void checkTaunt(){
 		double zoffs = invoker.owner.height*0.5;
@@ -148,23 +177,30 @@ class SternguardWeapon : DoomWeapon
 		
 		A_OverlayScale(1, invoker.targetScaleX/invoker.WeaponScaleX
 		, invoker.targetScaleY/invoker.WeaponScaleY);
-// 		A_OverlayPivot(1, 0.5,0.5);
 	}
+	
 	action void playDirectedTaunt(){
 		A_TakeInventory("isDirectedTaunt",256);
 		A_StartSound("sternguard/taunt_directed",CHAN_6); //, attenuation:ATTN_NONE
 	}
-	
 	action void playUndirectedTaunt(){
 		A_StartSound("sternguard/taunt_undirected",CHAN_6); //, attenuation:ATTN_NONE
 	}
-	action void blockActions(){
-		
-	}
+	
 	override void Tick(void){
-// 		Go to taunt if start taunting is on
+
 		super.Tick();
 	}
+	override void doEffect(){
+		let player = owner.player;
+		let psp = owner.player.findpsprite(psp_weapon);
+		if(!playerDied && SternGuard(player.mo).health<=0 && InStateSequence(psp.curstate, ResolveState("Deselect"))){
+			playerDied = true;
+			psp.SetState(ResolveState("DeathFrames"));
+		}
+	}
+	
+	
 // 	Set the weapon overlay to the original offset and scale
 	action void OverlayReAdjust(){
 		A_OverlayScale(1, 1, 1);
