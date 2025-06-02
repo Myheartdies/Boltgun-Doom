@@ -10,9 +10,9 @@ class Flamer1 : DoomImp
 		PainChance 200;
 		Monster;
 		Scale 0.4;
-// 		DamageFactor "SmallExplosion", 0.6;
+		DamageFactor "SmallExplosion", 0.6;
 		+FLOORCLIP
-		+MISSILEMORE
+		MissileChanceMult 0.8;
 // 		+FLOAT +NOGRAVITY
 		SeeSound "flamer/sight";
 		PainSound "flamer/pain";
@@ -37,7 +37,7 @@ class Flamer1 : DoomImp
 		FLM1 H 8 A_FaceTarget;
 		FLM1 F 8 Bright A_FaceTarget;
 		FLM1 F 2 Bright A_FaceTarget;
-		FLM1 G 6 FlamerMissile ;
+		FLM1 G 6 Bright FlamerMissile ;
 // 		FLM1 G 8 FlamerMissile ;
 		Goto See;
 	Pain:
@@ -72,7 +72,7 @@ class Flamer1 : DoomImp
 		Goto See;
 	}
 	void FlamerMissile(){
-		A_SpawnProjectile("FlamerBall", 32, 0);
+		A_SpawnProjectile("FlamerBall", 50, 0);
 // 		A_SpawnProjectile("FlamerBall", 32, 10);
 	}
 }
@@ -95,9 +95,10 @@ class Flamer2 : Flamer1
 		FLM2 HF 8 A_FaceTarget;
 		FLM2 G 6 A_CustomMeleeAttack(3 * random(1, 8), "imp/melee");
 	Missile:
-		FLM2 HF 8 A_FaceTarget;
+		FLM2 H 8 A_FaceTarget;
+		FLM2 F 8 Bright A_FaceTarget;
 		FLM2 F 2 Bright A_FaceTarget;
-		FLM2 G 6 FlamerMissile ;
+		FLM2 G 6 Bright FlamerMissile ;
 // 		FLM2 G 8 FlamerMissile ;
 		Goto See;
 	Pain:
@@ -147,9 +148,10 @@ class Flamer3 : Flamer1
 		FLM3 HF 8 A_FaceTarget;
 		FLM3 G 6 A_CustomMeleeAttack(3 * random(1, 8), "imp/melee");
 	Missile:
-		FLM3 HF 8 A_FaceTarget;
+		FLM3 H 8 A_FaceTarget;
+		FLM3 F 8 Bright A_FaceTarget;
 		FLM3 F 2 Bright A_FaceTarget;
-		FLM3 G 6 FlamerMissile ;
+		FLM3 G 6 Bright FlamerMissile ;
 		Goto See;
 	Pain:
 		FLM3 J 2;
@@ -176,27 +178,43 @@ class Flamer3 : Flamer1
 		TROO KJI 6;
 		Goto See;
 	}
-	void FlamerMissile(){
-		A_SpawnProjectile("FlamerBall", 32, 0);
-// 		A_SpawnProjectile("FlamerBall", 32, 10);
-	}
+
 }
 
 class FlamerBall: DoomImpBall{
+	int Counter; 
 	Default
 	{
 		SeeSound "flamer/attack";
 // 		Damage 5;
 		Speed 10;
+		Scale 1.1;
 // 		FastSpeed 25;
 	}
-	void flameParticle(){
-// 		A_SpawnParticleEx("",TexMan.CheckForTexture("FLMPA0"),0,SPF_ROLL, 10
-// 		, 9 + frandom(-1,2), 0
-// 		,-facing.x*div + frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
-// 		,speedx,speedy,speedz, -speedx/1500,-speedy/1500,-speedz/1500
-// 		, 0.6,-1,-0.01
-// 		, Random(0,12)*30);
+	 States
+	{
+	Spawn:
+		BAL1 AB 2 BRIGHT FlamerBallParticles(2);
+		Loop;
+	Death:
+		BAL1 CDE 6 BRIGHT;
+		Stop;
+	}
+	// 	TexMan.CheckForTexture("FLMPA0")
+	// 	Pale yellow FFEC9F
+	void FlameParticle(){
+		A_SpawnParticleEx("",TexMan.CheckForTexture("FLMPA0"),STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 15
+		, 35, 0
+		,random(-5,5),random(-5,5),random(-5,5)
+		,0,0,0,0,0,0
+		, 0.8,0,-2.2
+		, Random(0,12)*30, Random(-30,30));
+	}
+
+	void FlamerBallParticles(int particle_count){
+		for (int i = 0; i < particle_count; i += 1){
+			FlameParticle();
+		}
 	}
 }
 
