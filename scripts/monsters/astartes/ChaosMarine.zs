@@ -9,7 +9,7 @@ class ChaosMarine : HellKnight
 	}
 // 	Chase but with footstep
 	void MarineStep(string footStep, statelabel melee, statelabel missile,int flags = 0){
-		A_StartSound(footStep);
+		A_StartSound(footStep,volume:0.6);
 		A_Chase(melee, missile, flags);
 	}
 

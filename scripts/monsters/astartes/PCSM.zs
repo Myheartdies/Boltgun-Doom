@@ -12,7 +12,7 @@ class LegionaryPlasma : ChaosMarine
 	Default
 	{
 		Scale 0.32;
-		Health 700;
+		Health 650;
 		Speed 9;
 		SeeSound "PCSM/sight";
 		ActiveSound "TCSM/active";

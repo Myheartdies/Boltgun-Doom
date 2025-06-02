@@ -11,7 +11,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 	Default
 	{
 		Scale 0.51;
-		Health 700;
+		Health 650;
 		Speed 10;
 		SeeSound "TCSM/sight";
 		ActiveSound "TCSM/active";
@@ -114,10 +114,10 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM P  11;
 		TCSM Q -1;
 		Stop;
-// 	Raise:
-// 		TCSM Q 8;
-// 		TCSM PPOONN  8;
-// 		Goto See;
+	Raise:
+		TCSM Q 8;
+		TCSM PPOONN  8;
+		Goto See;
 
  	}
 // 	void ShowStack(){
@@ -174,7 +174,7 @@ class MarineBall: BolterProjectile{
 		DeathSound "weapons/bolter_impact";
 		Species "BaronOfHell";
 		Damage 4;
-		Speed 17;
+		Speed 14;
 		FastSpeed 25;
 	}
 	States

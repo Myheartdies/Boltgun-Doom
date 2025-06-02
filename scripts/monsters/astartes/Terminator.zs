@@ -1,4 +1,4 @@
-class Terminator : ChaosMarine Replaces Fatso
+class Terminator : Fatso Replaces Fatso
 {
 	Default
 	{
@@ -7,6 +7,7 @@ class Terminator : ChaosMarine Replaces Fatso
 		Height 64;
 		Mass 1000;
 		PainChance 30;
+		PainThreshold 12;
 		Monster;
 		+FLOORCLIP
 		+BOSSDEATH
@@ -22,7 +23,7 @@ class Terminator : ChaosMarine Replaces Fatso
 		DropItem "ClipBox";
 		DamageFactor "SmallExplosion", 0.2; //used to be 0.1 when bolter damage was 11
 		DamageFactor "StrongExplosion", 0.5;
-		Obituary "Killed by terminator";
+		Obituary "Terminated";
 		Tag "$FN_TERM";
 	}
 	States
