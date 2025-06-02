@@ -9,18 +9,22 @@ Class SternGuard : Doomplayer replaces Doomplayer
 		Mass 400;
 		Player.AttackZOffset 22;
 		Player.Startitem "Bolter";
+		Player.StartItem "BolterAmmo", 50;
 		Player.StartItem "Clip", 50;
 		Player.StartItem "BolterMag", 18;
 		Player.StartItem "ShellInTube", 8;
 		Player.Startitem "Fist";
 		Player.WeaponSlot 2, "Bolter";
-		Player.WeaponSlot 3, "AstartesShotgun", "SuperShotgun", "MeltaGun";
+		Player.WeaponSlot 3, "AstartesShotgun", "MeltaGun";
 		Player.WeaponSlot 4, "HeavyBolter";
 		Player.WeaponSlot 5, "MissileLauncher";
-		Player.WeaponSlot 6, "VolkiteCaliver";//,"PlasmaRifle";
+		Player.WeaponSlot 6, "VolkiteCaliver","PlasmaGun";//,"PlasmaRifle";
 		Player.SoundClass "sternguard";
 		Damagefactor "ExplosionSelfDamage", 0.3;
 		Player.ViewHeight 52;
+		Player.ViewBob 0.1;
+		Player.ViewBobSpeed 30;
+
 // 		PainSound "sternguard/pain";
 		
 	}
