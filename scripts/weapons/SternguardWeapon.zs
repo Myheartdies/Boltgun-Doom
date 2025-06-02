@@ -18,6 +18,9 @@ class SternguardWeapon : DoomWeapon
 		SternguardWeapon.TargetScaleY 0.8;
 		SternguardWeapon.TauntOffsetX 120;
 		SternguardWeapon.TauntOffsetY 10;
+		Weapon.BobRangeX 0.1;
+		Weapon.BobRangeY 1.15;
+		Weapon.BobSpeed 2;
 	}
 	States
 	{
@@ -186,7 +189,7 @@ class SternguardWeapon : DoomWeapon
 	action void playUndirectedTaunt(){
 		A_StartSound("sternguard/taunt_undirected",CHAN_6); //, attenuation:ATTN_NONE
 	}
-	
+
 	override void Tick(void){
 
 		super.Tick();

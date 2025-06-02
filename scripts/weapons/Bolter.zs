@@ -20,13 +20,12 @@ class Bolter : ShellEjectingWeapon
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
 		Weapon.KickBack 80;
-		Weapon.BobSpeed 2;
+		
 		Weapon.AmmoType1 "BolterMag";
 		Weapon.AmmoType2 "Clip";
 		Weapon.AmmoGive1 6;
 		Weapon.AmmoGive2 20;
-		Weapon.BobRangeX 0.2;
-		Weapon.BobRangeY 1.1;
+		
 		ShellEjectingWeapon.MaxCasingCount 5;
 		ShellEjectingWeapon.CasingDropSound "weapons/bolter_casing";
 		ShellEjectingWeapon.DropSoundVolume 0.3;
@@ -80,7 +79,7 @@ class Bolter : ShellEjectingWeapon
 		}
 		BOTR A 1 {
 			A_WeaponOffset(8, 2, WOF_ADD); 
-			CompensateOffset(-6,-2);
+			CompensateOffset(-8,-2);
 			A_Quake(0.2,2,0,10);
 		}
 		
@@ -102,7 +101,7 @@ class Bolter : ShellEjectingWeapon
 		BOTR B 1 Bright {
 			A_SetPitch(pitch + 0.3);
 			A_WeaponOffset(-8, -2, WOF_ADD);
-			CompensateOffset(6,2);
+			CompensateOffset(8,2);
 			AllowQuickSwitch();}
 		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
 		BOTR C 1 Bright;
@@ -241,8 +240,8 @@ class Bolter : ShellEjectingWeapon
 		}
 		if (accurate) A_FireBullets(0, 0, 1, 0, "ClearPuff",FBF_NORANDOM,0,"BolterProjectile", -1,12 );
 		else A_FireBullets (0.6, 0.6, 1, 0, "ClearPuff",FBF_NORANDOM,0,"BolterProjectile", -1,12 );
-// 		A_FireProjectile ("BolterProjectile",0, false, 15, 20 );
-// 		A_FireRailgun();
+		
+// 		A_FireProjectile ("BolterProjectile",0, false, 15, 20 );`
 		if(isLowAmmo)
 			A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
 		A_StartSound ("weapons/bolter_fire", CHAN_AUTO, 0, 1.05);
@@ -275,12 +274,12 @@ class BolterProjectile: TrailedProjectile{
 	bool particleDrawn;
 	Default
 	{
-		Radius 3;
-		Height 4;
+		Radius 2;
+		Height 2;
 		Speed 250;
 		Scale 0.65;
 // 		Damage 7;
-		DamageFunction random(4,9)*random(3,10);
+		DamageFunction random(5,9)*random(2,10);
 		+FORCEXYBILLBOARD
 		DeathSound "weapons/bolter_impact";
 	}
@@ -341,6 +340,37 @@ class clipEjected: Inventory{
 		+Inventory.Untossable
 	}
 }
+// class HeavyBolterAmmo: Ammo
+class BolterAmmo : Ammo
+{
+	Default
+	{
+		Inventory.Amount 50;
+		Inventory.MaxAmount 150;
+		Ammo.BackpackAmount 10;
+		Ammo.BackpackMaxAmount 220;
+	}
+}
+
+class BolterAmmoPickup : CustomInventory
+{
+	Default
+	{
+		Inventory.PickupMessage "$GOTCLIP";
+		Inventory.Icon "CLIPA0";
+		Tag "$AMMO_CLIP";
+	}
+	States
+	{
+	Pickup:
+        NULL A 0 A_GiveInventory("BolterAmmo",4);
+        Stop;
+	Spawn:
+		CLIP A -1;
+		Loop;
+	}
+}
+
 class isFullReload : Inventory
 {
 	Default{

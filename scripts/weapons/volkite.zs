@@ -80,7 +80,6 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 		VKT1 I 1 Bright{ 
 			A_ZoomFactor(1.04);
 			A_OverlayScale(1, 1.06, 1.06);
-// 			A_WeaponOffset(-0.6, 0.6, WOF_ADD);
 		}
 		VKT1 I 1 Bright; //A_WeaponOffset( -0.3, -0.9,WOF_ADD);
 		TNT1 A 0 {
@@ -163,7 +162,7 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 		}
 
 		
-		LineAttack(invoker.owner.angle, 8192, invoker.owner.pitch, 5 *random(1,8),"Hitscan","VolkitePuff");
+		LineAttack(invoker.owner.angle, 8192, invoker.owner.pitch, 6 *random(1,8),"Hitscan","VolkitePuff");
 		invoker.isFiring = True;
 	}
 	

@@ -1,4 +1,4 @@
-class MeltaGun : SternguardWeapon
+class MeltaGun : SternguardWeapon Replaces SuperShotgun
 {
 	Default
 	{

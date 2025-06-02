@@ -11,9 +11,7 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		+WEAPON.NOAUTOFIRE
 		Inventory.PickupMessage "$GOTLAUNCHER";
 		Tag "$TAG_ROCKETLAUNCHER";
-		Weapon.BobSpeed 1.8;
-		Weapon.BobRangeX 0.2;
-		Weapon.BobRangeY 1.0;	
+		Weapon.BobSpeed 1.8;	
 		SternguardWeapon.TauntOffsetX 80;
 		SternguardWeapon.TauntOffsetY 45;
 	}

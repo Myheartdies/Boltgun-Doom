@@ -173,7 +173,14 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		, Random(0,12)*30);
 	}
 	
-
+// 	action void slowDown(){
+// 		let player = invoker.owner.player;
+// 		Player.SideMove 0.5 0.5;
+// 		Player.ForwardMove 0.5 0.5;
+// 	}
+// 	action void revertSlow(){
+		
+// 	}
 	
 	
     action void FireHeavyBolter(bool isLowAmmo = False){
@@ -188,9 +195,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 				if (!weap.DepleteAmmo (weap.bAltFire, True, -1)){
 					return;
 				}
-	//			player.SetPsprite(PSP_FLASH, weap.FindState('MuzzleFlash'));
 			}
-	//		player.mo.PlayAttacking2 ();
 
 			accurate = !player.refire;
 		}
@@ -236,7 +241,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 // 		draw muzzle spike
 		A_Overlay(-3, "MuzzleFlash");
 		A_OverlayPivot(-3, 0.5, 0.5);
-		A_OverlayScale(-3, 0.1 + random(-3,3)/50, 0.1 + random(-3,3)/50);
+		A_OverlayScale(-3, 0.2 + random(-3,3)/50, 0.2 + random(-3,3)/50);
 		A_OverlayOffset(-3, 194 + random(-10,10), 220 + random(-10,10));
 		A_OverlayRotate(-3, 90 + random(-3,3), WOF_ADD );
 		A_OverlayAlpha(-3, 0.8);
@@ -284,7 +289,7 @@ class HeavyBolterProjectile: BolterProjectile{
 		Scale 0.8;
 // 		Damage 15;
 // 		DamageFunction 8 * random(4, 14);
-		DamageFunction random(5,10)*random(4,10);
+		DamageFunction random(5,9)*random(4,10);
 		DeathSound "weapons/bolter_impact";
 	}
 

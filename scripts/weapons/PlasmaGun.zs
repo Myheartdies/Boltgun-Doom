@@ -1,8 +1,10 @@
-class Shotgun : SternguardWeapon
+class PlasmaGun: SternguardWeapon
 {
 	Default
 	{
 		Weapon.SelectionOrder 1300;
+		Weapon.WeaponScaleX 0.6; 
+		Weapon.WeaponScaleY 0.6; 
 		Weapon.AmmoUse 1;
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType "Shell";
@@ -13,22 +15,20 @@ class Shotgun : SternguardWeapon
 	States
 	{
 	Ready:
-		SHTG A 1 A_WeaponReady;
+		PLSM A 1 A_WeaponReady;
 		Loop;
 	Deselect:
-		SHTG A 1 A_Lower;
+		PLSM A 1 A_Lower;
 		Loop;
 	Select:
-		SHTG A 1 A_Raise;
+		PLSM A 1 A_Raise;
 		Loop;
 	Fire:
-		SHTG A 3;
-		SHTG A 7 A_FireShotgun;
-		SHTG BC 5;
-		SHTG D 4;
-		SHTG CB 5;
-		SHTG A 3;
-		SHTG A 7 A_ReFire;
+		PLSM B 7;
+		PLSM C 7 A_FireShotgun;
+		PLSM C 5;
+		PLSM D 4;
+		PLSM D 7 A_ReFire;
 		Goto Ready;
 	Flash:
 		SHTF A 4 Bright A_Light1;

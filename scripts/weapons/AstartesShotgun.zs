@@ -22,9 +22,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Weapon.AmmoGive2 10;
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
-		Weapon.BobSpeed 2;
-		Weapon.BobRangeX 0.2;
-		Weapon.BobRangeY 1.1;
+		
 		ShellEjectingWeapon.MaxCasingCount 2;
 		ShellEjectingWeapon.CasingDropSound "weapon/scout_shotgun_casing";
 		ShellEjectingWeapon.DropSoundVolume 1.0;
@@ -213,7 +211,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		player.mo.PlayAttacking2 ();
 
-		A_FireBullets (6, 3, 10, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+		A_FireBullets (6, 3, 9, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
 // 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
@@ -277,12 +275,12 @@ class ShotgunProjectile: FastProjectile {
 	States
 	{
 	Spawn:
-		TRAC A 1 Bright ShotgunParticle(30, 5, 5);
+		TRAC A 1 Bright ShotgunParticle(30, 12, 5);
 		Loop;
 	Death:
 		TNT1 A 1 {
 			A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
-			ShotgunParticleTailCompensation(30, 8, 5);
+			ShotgunParticleTailCompensation(30, 12, 5);
 		}
 // 		Goto LightDone;
 		Stop;
@@ -318,7 +316,7 @@ class ShotgunProjectile: FastProjectile {
 		A_SpawnParticle("f58428",SPF_FULLBRIGHT, baseTTL*1.2 ,mainSmokeSize, 0
 		, 0+frandom(-0.5,0.5),0+frandom(-0.5,0.5),0+frandom(-0.5,0.5)
 		, 0,0,0, 0,0,0
-		, baseAlpha,-1,0.1);
+		, baseAlpha,-1,0.2);
 		
 		for ( int div = 1; div <= subdivide; div++ ) 
 		{
@@ -326,7 +324,7 @@ class ShotgunProjectile: FastProjectile {
 			A_SpawnParticle("f58428",SPF_FULLBRIGHT,baseTTL,mainSmokeSize + 0.1* div/subdivide, 0
 			, -facing.x*div+frandom(-0.5,0.5),-facing.y*div+frandom(-0.5,0.5),-facing.z*div+frandom(-0.5,0.5)
 			, 0,0,0, 0,0,0
-			, baseAlpha - div*interval, fadeAlpha,0.1);
+			, baseAlpha - div*interval, fadeAlpha,0.2);
 		}
 		
 	}
@@ -338,7 +336,6 @@ class ShotgunProjectile: FastProjectile {
 		, float baseTTL = 120,float baseTTL_trail=10
 		, float mainSmokeSize = 4, float subSmokeSize=3)
 	{
-	
 		if (!particleDrawn) 
 			ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed);
 	}
@@ -348,8 +345,8 @@ class ShotgunProjectile: FastProjectile {
 class ShellInTube : Ammo
 {
 	Default{
-		Inventory.Amount 10;
-		Inventory.MaxAmount 10;
+		Inventory.Amount 8;
+		Inventory.MaxAmount 8;
 		Ammo.BackpackAmount 0;
 		Ammo.BackpackMaxAmount 0;
 	}
