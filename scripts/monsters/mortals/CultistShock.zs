@@ -34,19 +34,19 @@ class CultistShock: ShotgunGuy
 	Missile:
 		CLTS E 10 A_FaceTarget;
 		CLTS F 5 BRIGHT ShotgunnerMissile;//A_SposAttackUseAtkSound;
-		CLTS MN 3 BRIGHT;
-		CLTS OPQ 3;
+		CLTS GI 3 BRIGHT;
+		CLTS JKL 3;
 		Goto See;
 	Pain:
-		CLTS G 3;
-		CLTS G 3 A_Pain;
+		CLTS M 3;
+		CLTS M 3 A_Pain;
 		Goto See;
 	Death:
-		CLTS H 5;
-		CLTS I 5 A_Scream;
-		CLTS J 5 A_NoBlocking;
-		CLTS K 5;
-		CLTS L -1;
+		CLTS N 5;
+		CLTS O 5 A_Scream;
+		CLTS P 5 A_NoBlocking;
+		CLTS Q 5;
+		CLTS R -1;
 		Stop;
 	XDeath:
 		OVKS A 5 A_NoBlocking;
@@ -56,8 +56,8 @@ class CultistShock: ShotgunGuy
 		OVKS J -1;
 		Stop;
 	Raise:
-		CLTS L 5;
-		CLTS KJIH 5;
+		CLTS R 5;
+		CLTS QPON 5;
 		Goto See;
 	}
 	
