@@ -11,7 +11,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 	Default
 	{
 		Scale 0.42;
-		Health 1200;
+		Health 1100;
 		Speed 12;
 		SeeSound "CCSM/sight";
 		ActiveSound "CCSM/active";

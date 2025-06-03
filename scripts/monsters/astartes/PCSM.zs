@@ -14,6 +14,7 @@ class LegionaryPlasma : ChaosMarine
 		Scale 0.32;
 		Health 650;
 		Speed 9;
+		Height 64;
 		SeeSound "PCSM/sight";
 		ActiveSound "TCSM/active";
 		PainSound "PCSM/pain";
