@@ -5,9 +5,10 @@ class FlamerSpawner : RandomSpawner Replaces DoomImp
 {
     Default
     {
-        DropItem "Flamer1";
-		DropItem "Flamer2";
-		DropItem "Flamer3";
+// 	2/5 possibility to get Flamer1 which shoots spreading flame
+        DropItem "Flamer1", 255, 4;
+		DropItem "Flamer2", 255, 3;
+		DropItem "Flamer3", 255, 3;
     }
 }
 

@@ -1,3 +1,3 @@
-#include "scripts/HereticMortals.zs"
-#include "scripts/HereticAstartes.zs"
-#include "scripts/ChaosDaemons.zs"
+#include "scripts/monsters/HereticMortals.zs"
+#include "scripts/monsters/HereticAstartes.zs"
+#include "scripts/monsters/ChaosDaemons.zs"
