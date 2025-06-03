@@ -1,6 +1,15 @@
-
-
-
+// ========================================================================
+// For cultists
+// ========================================================================
+// Autogun alert
+CLTA/sight CLTASIT1
+$pitchset CLTA/sight 0.96 1.1 
+// shotgun Alert 
+CLTS/sight CLTSSIT1
+$pitchset CLTS/sight 0.95 1.05 
+// chaingun alert
+CLTH/sight CLTHSIT1
+$pitchset CLTH/sight 0.9 0.98 
 // ========================================================================
 // For plasma renegade
 // ========================================================================
@@ -186,8 +195,11 @@ flamer/sight3 FLMRSIT3
 // ========================================================================
 exflamer/death EFLMDTH1
 
+exflamer/sight EFLMSIT1
+// $volume exflamer/sight 1.0
 
-
+exflamer/pain FLMRPAIN
+$pitchset exflamer/pain 0.7 0.8
 
 // ========================================================================
 // For Blue Horrors

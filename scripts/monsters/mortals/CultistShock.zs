@@ -13,7 +13,7 @@ class CultistShock: ShotgunGuy
 		+DOHARMSPECIES
 		+MISSILEMORE
 		DamageFactor "Bolt", 2;
-		SeeSound "shotguy/sight";
+		SeeSound "CLTS/sight";
 		AttackSound "shotguy/attack";
 		PainSound "shotguy/pain";
 		DeathSound "shotguy/death";

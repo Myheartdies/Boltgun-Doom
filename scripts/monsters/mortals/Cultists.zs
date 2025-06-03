@@ -13,7 +13,7 @@ class Cultist1 : ZombieMan
 		+FLOORCLIP
 		+DOHARMSPECIES
 		DamageFactor "Bolt", 2;
-		SeeSound "grunt/sight";
+		SeeSound "CLTA/sight";
 		AttackSound "grunt/attack";
 		PainSound "grunt/pain";
 		DeathSound "grunt/death";

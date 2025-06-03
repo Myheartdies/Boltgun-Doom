@@ -74,5 +74,16 @@ class RenegadePlasmaBall :CacodemonBall{
 	Default
 		{
 			SeeSound "CLTP/attack";
+// 			StencilColor "f1680a";
+// 			RenderStyle "Shaded";
 		}
+	States
+	{
+	Spawn:
+		BAL2 AB 4 BRIGHT;
+		Wait;
+	Death:
+		BAL2 CDE 6 BRIGHT;
+		Stop;
+	}
 }

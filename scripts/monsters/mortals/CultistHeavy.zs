@@ -12,7 +12,7 @@ class CultistHeavy : ChaingunGuy Replaces ChaingunGuy
 		+FLOORCLIP
 		+DOHARMSPECIES
 		DamageFactor "Bolt", 2;
-		SeeSound "chainguy/sight";
+		SeeSound "CLTH/sight";
 		PainSound "chainguy/pain";
 		DeathSound "chainguy/death";
 		ActiveSound "chainguy/active";
