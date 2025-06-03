@@ -12,8 +12,8 @@ class ExaltedFlamer : Cacodemon
 		Monster;
 		Scale 0.44;
 		+FLOAT +NOGRAVITY
-		SeeSound "caco/sight";
-		PainSound "caco/pain";
+		SeeSound "exflamer/sight";
+		PainSound "exflamer/pain";
 		DeathSound "exflamer/death";
 		ActiveSound "caco/active";
 		Obituary "$OB_CACO";
