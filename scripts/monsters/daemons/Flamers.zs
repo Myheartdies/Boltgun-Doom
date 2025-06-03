@@ -10,9 +10,12 @@ class Flamer1 : DoomImp
 		PainChance 200;
 		Monster;
 		Scale 0.4;
-		DamageFactor "SmallExplosion", 0.6;
+		DamageFactor "SmallExplosion", 0.5;
+		DamageFactor "Bolter", 0.8;
+		DamageFactor "StrongExplosion", 0.5;
 		+FLOORCLIP
-		MissileChanceMult 0.8;
+		ReactionTime 4;
+// 		MissileChanceMult 0.9;
 // 		+FLOAT +NOGRAVITY
 		SeeSound "flamer/sight";
 		PainSound "flamer/pain";
@@ -28,7 +31,10 @@ class Flamer1 : DoomImp
 		FLM1 AB 10 A_Look;
 		Loop;
 	See:
-		FLM1 AABBCCDD 3 A_Chase;
+		FLM1 AABBCCDD 3 {
+			A_Chase();
+			
+		}
 		Loop;
 	Melee:
 		FLM1 HF 8 A_FaceTarget;
@@ -36,8 +42,8 @@ class Flamer1 : DoomImp
 	Missile:
 		FLM1 H 8 A_FaceTarget;
 		FLM1 F 8 Bright A_FaceTarget;
-		FLM1 F 2 Bright A_FaceTarget;
-		FLM1 G 6 Bright FlamerMissile ;
+// 		FLM1 F 2 Bright A_FaceTarget;
+		FLM1 G 6 Bright FlamerMissile_Spread ;
 // 		FLM1 G 8 FlamerMissile ;
 		Goto See;
 	Pain:
@@ -72,8 +78,22 @@ class Flamer1 : DoomImp
 		Goto See;
 	}
 	void FlamerMissile(){
-		A_SpawnProjectile("FlamerBall", 50, 0);
-// 		A_SpawnProjectile("FlamerBall", 32, 10);
+// 		int deviation  = random(0,1);
+		A_SpawnProjectile("FlamerBall", 50);
+	}
+	
+	void FlamerMissile_Spread(){
+		int deviation  = random(-2,3);
+		let proj1 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:-6.5, flags:CMF_OFFSETPITCH, pitch:0 + deviation));
+		proj1.SetEarlyDestroy();
+		let proj2 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:6.5, flags:CMF_OFFSETPITCH, pitch:0 - deviation));
+		proj2.SetEarlyDestroy();
+// 		Set the projectile going upwards and downwards to be destroyed early to reduce visual noise, and because they cant hit the
+// 		player anymore anyway
+		let proj3 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 - deviation, flags:CMF_OFFSETPITCH, pitch:-6.5));
+		proj3.SetEarlyDestroy();
+		let proj4 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 + deviation, flags:CMF_OFFSETPITCH, pitch:6.5 ));
+		proj4.SetEarlyDestroy();
 	}
 }
 
@@ -82,6 +102,7 @@ class Flamer2 : Flamer1
 	Default
 	{
 		Scale 0.6;
+		MissileChanceMult 0.9;
 	}
 	States
 	{
@@ -97,7 +118,7 @@ class Flamer2 : Flamer1
 	Missile:
 		FLM2 H 8 A_FaceTarget;
 		FLM2 F 8 Bright A_FaceTarget;
-		FLM2 F 2 Bright A_FaceTarget;
+// 		FLM2 F 2 Bright A_FaceTarget;
 		FLM2 G 6 Bright FlamerMissile ;
 // 		FLM2 G 8 FlamerMissile ;
 		Goto See;
@@ -150,7 +171,7 @@ class Flamer3 : Flamer1
 	Missile:
 		FLM3 H 8 A_FaceTarget;
 		FLM3 F 8 Bright A_FaceTarget;
-		FLM3 F 2 Bright A_FaceTarget;
+// 		FLM3 F 2 Bright A_FaceTarget;
 		FLM3 G 6 Bright FlamerMissile ;
 		Goto See;
 	Pain:
@@ -182,39 +203,74 @@ class Flamer3 : Flamer1
 }
 
 class FlamerBall: DoomImpBall{
-	int Counter; 
+	int Counter;  //internal counter to help for early destruction and what particle to spawn
+	bool EarlyDestroy;
 	Default
 	{
 		SeeSound "flamer/attack";
-// 		Damage 5;
-		Speed 10;
+		Damage 3;
+		Speed 8;
 		Scale 1.1;
+		Alpha 0.3;
+		RenderStyle 'Translucent';
 // 		FastSpeed 25;
 	}
-	 States
+	States
 	{
 	Spawn:
-		BAL1 AB 2 BRIGHT FlamerBallParticles(2);
+		BAL1 A 1 BRIGHT FlamerTrailParticles(1);
+		BAL1 B 2 BRIGHT {
+			FlamerTrailParticles();
+			FlameRing();
+		}
 		Loop;
 	Death:
 		BAL1 CDE 6 BRIGHT;
 		Stop;
 	}
+	
+	void SetEarlyDestroy(){
+		EarlyDestroy = True;
+	}
+	override void Tick(void){
+		if (EarlyDestroy && Counter > 45){
+			destroy();
+		}
+		super.Tick();
+	}
 	// 	TexMan.CheckForTexture("FLMPA0")
 	// 	Pale yellow FFEC9F
 	void FlameParticle(){
-		A_SpawnParticleEx("",TexMan.CheckForTexture("FLMPA0"),STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 15
+		Counter += 1;
+		TextureID txtr;
+		if (Counter % 3 == 1)
+			txtr = TexMan.CheckForTexture("FLMPA0");
+		else
+			txtr = TexMan.CheckForTexture("FLMBA0");
+// 		TextureID txtr = TexMan.CheckForTexture("FLMBA0");
+		A_SpawnParticleEx("",txtr,STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 15
 		, 35, 0
-		,random(-5,5),random(-5,5),random(-5,5)
+// 		,0,0,0
+		,random(-3,3),random(-3,3),random(-3,3)
 		,0,0,0,0,0,0
 		, 0.8,0,-2.2
-		, Random(0,12)*30, Random(-30,30));
+		, Random(0,12)*30, Random(-2,2));
+	}
+	
+	void FlameRing(){
+		A_SpawnParticleEx("",TexMan.CheckForTexture("FMRNA0"),STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 8
+		, 60, 0
+		,0,0,0
+		,0,0,0,0,0,0
+		, 1.0, 0, -5
+		, Random(0,12)*30, 3);
 	}
 
-	void FlamerBallParticles(int particle_count){
+	void FlamerTrailParticles(int particle_count = 1){
 		for (int i = 0; i < particle_count; i += 1){
 			FlameParticle();
 		}
+		FlameRing();
 	}
 }
 
