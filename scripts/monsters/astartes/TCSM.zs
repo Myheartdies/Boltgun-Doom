@@ -13,13 +13,14 @@ class Legionary : ChaosMarine //Replaces Revenant
 		Scale 0.51;
 		Health 650;
 		Speed 10;
+		Height 64;
 		SeeSound "TCSM/sight";
 		ActiveSound "TCSM/active";
 		PainSound "TCSM/pain";
 		DeathSound  "TCSM/death";
 		PainChance 60;
 		MeleeRange 48;
-		MeleeThreshold 130;
+		MeleeThreshold 160;
 // 		+DropOff
 		MinMissileChance 150;
 		DropItem "ClipBox";
@@ -180,7 +181,14 @@ class MarineBall: BolterProjectile{
 	States
 	{
 	Spawn:
-		BAL1 A 1 Bright bolterParticle(3,15,5,6,5);
+		BAL1 A 1 Bright {
+			bolterParticle(2,15,8,12,5);
+// 			FlameRing();
+		}
+		BAL1 A 1 Bright {
+			bolterParticle(2,15,8,12,5);
+			FlameRing();
+		}
 		Loop;
 	Death:
 		BTRE A 2 Bright ;
@@ -188,5 +196,13 @@ class MarineBall: BolterProjectile{
 		BTRE MOQ 2;
 // 		Goto LightDone;
 		Stop;
+	}
+	void FlameRing(){
+		A_SpawnParticleEx("red",TexMan.CheckForTexture("FMRNA0"),STYLE_AddShaded,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 8
+		, 35, 0
+		,0,0,0
+		,0,0,0,0,0,0
+		, 1.0, 0, -2
+		, Random(0,12)*30, Random(-2,2));
 	}
 }
