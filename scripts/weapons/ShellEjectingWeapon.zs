@@ -1,5 +1,7 @@
 class ShellEjectingWeapon : SternguardWeapon
 {
+	int random_shake_x;
+	int random_shake_y;
 // 	For animating casing ejection overlay
 	protected Array<float> casingTimeElapsed; //Time elapsed after a casing has ejected in ticks 
 	protected Array<float> ejectSpeed_x; //The inital x speed of casing
@@ -17,8 +19,6 @@ class ShellEjectingWeapon : SternguardWeapon
 	protected int queueLength;
 	protected float dropSoundVolume;
 	
-	protected float offsetCompensationx;
-	protected float offsetCompensationy;
 	
 	Property MaxCasingCount : maxCasingCount;
 	Property CasingDropSound : casingDropSound;
@@ -45,8 +45,6 @@ class ShellEjectingWeapon : SternguardWeapon
 		currentIdx = 0;
 		insertIdx = 0;
 		casingIdx = 2;
-		offsetCompensationX = 0;
-		offsetCompensationY = 0;
 		shot = False;
 		isHeld = False;
 		super.BeginPlay();
@@ -90,9 +88,10 @@ class ShellEjectingWeapon : SternguardWeapon
 	action void EjectCasing(StateLabel CasingState = "Casing", float casingScale = 1.7 ,float baseSpeedx = -12, float maxSpeedy = -6){
 // 		Draw Casing overlay
 		A_Overlay(invoker.casingIdx, CasingState);
+		A_OverlayFlags(invoker.casingIdx, PSPF_ADDWEAPON, False);
 		A_OverlayPivot(invoker.casingIdx, 0.5, 0.5);
 		A_OverlayScale(invoker.casingIdx, casingScale, casingScale);
-		A_OverlayOffset(invoker.casingIdx, 326 + invoker.extraOffset_x, 45 + invoker.extraOffset_y);
+		A_OverlayOffset(invoker.casingIdx, 326 + invoker.extraOffset_x, 77 + invoker.extraOffset_y);
 		invoker.casingTimeElapsed[invoker.casingIdx - 2] = 0;
 		
 // 		Set base eject speed of the casing
@@ -106,21 +105,22 @@ class ShellEjectingWeapon : SternguardWeapon
 		invoker.soundDelays[invoker.insertIdx] = baseDelay;
 		invoker.insertIdx = (invoker.insertIdx + 1)%invoker.queueLength;
 	}
+	
+	action void RandomShake(int Xmin=2, int Xmax=2, int Ymin=2, int Ymax=2)
+	{
+		invoker.random_shake_x = random(Xmin,Xmax);
+		invoker.random_shake_y = random(Ymin,Ymax);
+		invoker.OverlayRecoil(invoker.random_shake_x, invoker.random_shake_y);
+	}
+	action void RandomShakeRecovery()
+	{
+		invoker.OverlayRecoil(-invoker.random_shake_x, -invoker.random_shake_y);
+	}
+	
 	action void OverlayRecoil(int offsetX, int offsetY){
 		A_WeaponOffset(offsetX, offsetY, WOF_ADD);
-		CompensateOffset(-offsetX, -offsetY);
 	}
 	
-// 	Compensate the movement of casing overlay when recoil moves the weapon offset
-	action void CompensateOffset(int compensationX = 0, int compensationY = 0){
-		invoker.offsetCompensationX = invoker.offsetCompensationX + compensationX;
-		invoker.offsetCompensationY = invoker.offsetCompensationY + compensationY;
-	}
-	
-	action void ResetCompensation(){
-		invoker.offsetCompensationX = 0;
-		invoker.offsetCompensationY = 0;
-	}
 	
 
 
@@ -165,14 +165,16 @@ class ShellEjectingWeapon : SternguardWeapon
 // 				, ejectSpeed_y[i]+ casingTimeElapsed[i] * 0.9 + offsetCompensationY
 // 				, WOF_ADD
 // 				);
+
+// 			Set flags so the casing layers are not affected by other layer's offset
+			
 			owner.A_OverlayOffset(i + 2
-				, GetModifiedSpeed(ejectSpeed_x[i],frandom(0.3,0.5),casingTimeElapsed[i],-0.2) + offsetCompensationX
-				, ejectSpeed_y[i]+ casingTimeElapsed[i] * 0.9 + offsetCompensationY
+				, GetModifiedSpeed(ejectSpeed_x[i],frandom(0.3,0.5),casingTimeElapsed[i],-0.2)
+				, ejectSpeed_y[i]+ casingTimeElapsed[i] * 0.9
 				, WOF_ADD
 				);
 		}
-		offsetCompensationX = 0;
-		offsetCompensationY = 0;
+
 	}
 
 	void CasingDropSoundTick(float dropSoundVolume = 0.3){
