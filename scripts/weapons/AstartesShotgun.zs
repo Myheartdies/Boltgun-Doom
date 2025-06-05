@@ -15,7 +15,6 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		Inventory.PickupMessage "$GOTSHOTGUN";
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.ALT_AMMO_OPTIONAL
-// 		+WEAPON.NOAUTOAIM
 		Weapon.AmmoType1 "ShellInTube";
 		Weapon.AmmoType2 "Shell";
 		Weapon.AmmoGive1 5;
@@ -68,37 +67,31 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 OverlayRecoil(13,25);
 		// TNT1 A 0 A_WeaponOffset(13, 25, WOF_ADD);
-		// TNT1 A 0 CompensateOffset(-13, -25);
 		STGN B 1 ; //Recoil should dampen entirely after first firing frame
 		TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
-		TNT1 A 0 A_WeaponOffset(13, 20, WOF_ADD);
-		TNT1 A 0 CompensateOffset(-13, -20);
+		TNT1 A 0 OverlayRecoil(13, 20);
 		
 		STGN B 1 ;
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
 		TNT1 A 0 A_ZoomFactor(0.995);
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
-		TNT1 A 0 A_WeaponOffset(0, 15, WOF_ADD);
-		TNT1 A 0 CompensateOffset(0, -15);
+		TNT1 A 0 OverlayRecoil(0, 15);
 		TNT1 A 0 A_Quake(1,5,0,20);
 		STGN C 1 Bright FireScoutShotgun; 
-		TNT1 A 0 A_WeaponOffset(-12, -23, WOF_ADD);
+		TNT1 A 0 OverlayRecoil(-12, -23);
 		
-		TNT1 A 0 CompensateOffset(12, 23);
 		TNT1 A 0 A_ZoomFactor(0.997);
 		TNT1 A 0 A_SetPitch(pitch + 0.4);
 		TNT1 A 0 A_OverlayScale(1, 1.1, 1.1);
 		STGN C 1 Bright ;
-		TNT1 A 0 A_WeaponOffset(-8, -22, WOF_ADD);
-		TNT1 A 0 CompensateOffset(8, 22);
+		TNT1 A 0 OverlayRecoil(-8, -22);
 		TNT1 A 0 A_ZoomFactor(1.00);
 		TNT1 A 0 A_SetPitch(pitch + 0.3);
 		TNT1 A 0 A_OverlayScale(1, 1.05, 1.05);
 		STGN C 1 Bright A_SetPitch(pitch + 0.1);
 		STGN D 1;
-		TNT1 A 0 A_WeaponOffset(-6, -15, WOF_ADD);
-		TNT1 A 0 CompensateOffset(6, 15);
+		TNT1 A 0 OverlayRecoil(-6, -15);
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		STGN D 1 Bright;
 		STGN EE 1 Bright;
@@ -211,7 +204,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		player.mo.PlayAttacking2 ();
 
-		A_FireBullets (6, 3, 9, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+		A_FireBullets (5, 1.5, 8, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
 // 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
@@ -263,12 +256,12 @@ class ShotgunProjectile: FastProjectile {
 		Scale 0.8;
 		+PUFFONACTORS
 // 		Damage 7;
-		DamageFunction 5 * random(1,3);
+		DamageFunction 4.5 * random(1,3);
 		Projectile;
 		+RANDOMIZE
 		+DEHEXPLOSION
 		+ZDOOMTRANS
-		alpha 0.7;
+		alpha 0.5;
 		scale 0.3;
 // 		DeathSound "weapons/scout_shotgun_impact";
 	}
@@ -277,9 +270,12 @@ class ShotgunProjectile: FastProjectile {
 	Spawn:
 		TRAC A 1 Bright ShotgunParticle(30, 12, 5);
 		Loop;
+	Crash:
+	XDeath:
+ 		TNT1 A 0 A_Startsound("weapons/scout_shotgun_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.6,attenuation:ATTN_NONE,pitch: frandom(0.7,0.8));
 	Death:
 		TNT1 A 1 {
-			A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, 0, 0.3);
+			A_StartSound("weapons/scout_shotgun_impact", CHAN_AUTO, CHANF_OVERLAP, 0.5);
 			ShotgunParticleTailCompensation(30, 12, 5);
 		}
 // 		Goto LightDone;
