@@ -128,23 +128,23 @@ texture FLMPA0
 	pic FLMPP0 tics 2
 
 // Flamer flame Alternate 
-texture FLMBA0
-	pic FLMBA0 tics 2
-	pic FLMBB0 tics 2
-	pic FLMBC0 tics 2
-	pic FLMBD0 tics 2
-	pic FLMBE0 tics 2
-	pic FLMBF0 tics 2
-	pic FLMBG0 tics 2
-	pic FLMBH0 tics 2
-	pic FLMBI0 tics 2
-	pic FLMBJ0 tics 2
-	pic FLMBK0 tics 2
-	pic FLMBL0 tics 2
-	pic FLMBM0 tics 2
-	pic FLMBN0 tics 2
-	pic FLMBO0 tics 2
-	pic FLMBP0 tics 2
+texture FLMYA0
+	pic FLMYA0 tics 2
+	pic FLMYB0 tics 2
+	pic FLMYC0 tics 2
+	pic FLMYD0 tics 2
+	pic FLMYE0 tics 2
+	pic FLMYF0 tics 2
+	pic FLMYG0 tics 2
+	pic FLMYH0 tics 2
+	pic FLMYI0 tics 2
+	pic FLMYJ0 tics 2
+	pic FLMYK0 tics 2
+	pic FLMYL0 tics 2
+	pic FLMYM0 tics 2
+	pic FLMYN0 tics 2
+	pic FLMYO0 tics 2
+	pic FLMYP0 tics 2
 	
 // Flamer flame Ring
 texture FMRNA0
