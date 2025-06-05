@@ -1,5 +1,11 @@
 class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 {
+	float originalForwardMove;
+	float originalSideMove;
+	float slowDownMultiplier;
+	Bool Slowed;
+	Bool Slowed2;
+	Property SlowDownMultiplier : slowDownMultiplier;
     override void BeginPlay(){
 		queueLength = 10;
         extraOffset_x = -120;
@@ -21,8 +27,9 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		ShellEjectingWeapon.MaxCasingCount 10;
 		ShellEjectingWeapon.CasingDropSound "weapons/heavybolter_casing";
 		ShellEjectingWeapon.DropSoundVolume 0.5;
+		HeavyBolter.SlowDownMultiplier 0.2;
 		Obituary "$OB_MPCHAINGUN";
-		Tag "$TAG_CHAINGUN";
+		Tag "HeavyBolter";
 	}
 	States
 	{
@@ -34,7 +41,11 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		HBTR A 4 A_WeaponReady;
 		Loop;
 	Deselect:
-		TNT1 A 0 A_StopSound(CHAN_5);
+		TNT1 A 0 {
+			A_StopSound(CHAN_5);
+			RevertSlowDown();
+			RevertSlowDown2();
+		}
 		HBTR A 1 {A_Lower(12); CasingLayerExit();}
 		Wait;
 	Select:
@@ -71,7 +82,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
     Windup1:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_windup",CHAN_AUTO,0,0.6,ATTN_NONE);
         HBTR A 4;
-		HBTR B 3;
+		HBTR B 3 SlowDown;
         HBTR B 1 A_ReFire("Windup2");
     Winddown1:
         HBTR B 3 A_ReFire("Windup2");
@@ -80,29 +91,33 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         Goto Ready;
     Windup2:
         HBTR CD 3;
+		TNT1 A 0 SlowDown2;
         HBTR D 1 A_ReFire("Windup3");
     Winddown2:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_winddown",CHAN_AUTO,0,0.8,ATTN_NONE);
         HBTR D 2 A_ReFire("Windup3");
         HBTR C 3 A_ReFire("Windup2");
-		
+		TNT1 A 0 RevertSlowDown;
         Goto Winddown1;
     Windup3:
-
+		HBTR E 1 ;
         HBTR E 1 A_ReFire("StartFiring");
     Winddown3:
 		TNT1 A 0 A_StopSound(CHAN_5);
+		TNT1 A 0 RevertSlowDown2;
         HBTR E 3 A_ReFire("Firing");
+		TNT1 A 0 A_ZoomFactor(1.0);
         HBTR D 1 A_ReFire("Windup3");
         Goto Winddown2;
     StartFiring:
+// 		TNT1 A 0 A_ZoomFactor(1.03);
 // 		TNT1 A 0 A_Startsound("weapons/heavybolter_mechanical",CHAN_5,CHANF_LOOPING|CHANF_NOSTOP,0.8,ATTN_NONE);
 // 		TNT1 A 0 A_JumpIfInventory("isFired",2,2); 
 // 	    HBTR E 3;
 // 		Goto Firing;
 	Firing:
         HBTR G 1 A_Light1;
-        TNT1 A 0 A_ZoomFactor(0.992);
+        TNT1 A 0 A_ZoomFactor(0.992); // was 0.992
 		TNT1 A 0 A_SetPitch(pitch - 1.1);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 round_smoke();
@@ -112,20 +127,20 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         HBTR H 1 Bright FireHeavyBolter;
         TNT1 A 0 A_Recoil(0.8);
         
-        TNT1 A 0 A_ZoomFactor(0.993);
+        TNT1 A 0 A_ZoomFactor(0.993); // was 0.993
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 OverlayRecoil(-6, -10);
         HBTR H 1 Bright;
         TNT1 A 0 A_SetPitch(pitch + 0.4);
-        TNT1 A 0 A_ZoomFactor(0.995);
+        TNT1 A 0 A_ZoomFactor(0.995); // was 0.995
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 OverlayRecoil(-5, -28);
         HBTR H 1;
         TNT1 A 0 A_SetPitch(pitch + 0.7);
         TNT1 A 0 OverlayRecoil(-4, -17);
-		HBTR I 4 {A_ReFire("StartFiring");A_GiveInventory("isFired",1);}
+		HBTR I 4 {A_ReFire("Firing");A_GiveInventory("isFired",1);}
         // TNT1 A 0 A_SetPitch(pitch + 0.35);
-        TNT1 A 0 A_ZoomFactor(1);
+        TNT1 A 0 A_ZoomFactor(1); // was 1.0
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		TNT1 A 0 A_TakeInventory("isFired",255);
 // 		TNT1 A 0 A_StopSound(CHAN_5);
@@ -160,7 +175,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Stop;
 	}
 	
-	action void round_smoke(){
+	action void round_smoke()
+	{
 		Vector3 facing = TrailedProjectile.facingToVector(invoker.owner.angle, invoker.owner.pitch, 40);
 		float speedx = frandom(-0.4,0.4);
 		float speedy = frandom(-0.4,0.4);
@@ -264,10 +280,24 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		A_OverlayAlpha(-2, 0.4);
 	}
 	
-
+	action void SlowDown(){
+		invoker.Slowed = True;
+	}
+	action void SlowDown2(){
+		invoker.Slowed2 = True;
+	}
+	
+	action void RevertSlowDown(){
+		invoker.Slowed = False;
+	}
+	
+	action void RevertSlowDown2(){
+		invoker.Slowed2 = False;
+	}
 
     
-    override void Tick(void){
+    override void Tick(void)
+	{
 		CasingAnimationTick();
 		CasingDropSoundTick(dropSoundVolume);
 		super.Tick();
@@ -275,7 +305,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 }
 class isFired : Inventory
 {
-	Default{
+	Default
+	{
 		Inventory.Amount 0;
 		Inventory.MaxAmount 3;
 	}
@@ -289,6 +320,7 @@ class HeavyBolterProjectile: BolterProjectile{
 		Scale 0.8;
 // 		Damage 15;
 // 		DamageFunction 8 * random(4, 14);
+		DamageType "HeavyBolter";
 		DamageFunction random(5,9)*random(4,10);
 		DeathSound "weapons/bolter_impact";
 	}
@@ -300,7 +332,7 @@ class HeavyBolterProjectile: BolterProjectile{
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
 	Death:
-		HTRE A 2 Bright A_Explode(6 * random(4,8), 50, 0, True, 30, damagetype:"StrongExplosion");
+		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, True, 30, damagetype:"StrongExplosion");
 		HTRE BCDEFGHIJKL 2 Bright;
 		HTRE MNOP 2;
 // 		Goto LightDone;

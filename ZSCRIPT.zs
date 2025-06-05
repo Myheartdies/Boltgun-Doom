@@ -91,6 +91,8 @@ class Z_NashMove : CustomInventory
 	// How much to reduce the slippery movement.
 	// Lower number = less slippery.
 	const DECEL_MULT = 0.8;
+	const HEAVYBOLTER_SLOWDOWN1 = 0.6;
+	const HEAVYBOLTER_SLOWDOWN2 = 0.22;
 
 	//===========================================================================
 	//
@@ -128,6 +130,7 @@ class Z_NashMove : CustomInventory
 	{
 		if (Owner && Owner is "PlayerPawn")
 		{
+			let psp = owner.player.FindPSprite(PSP_WEAPON);
 			if (bIsOnFloor())
 			{
 				// bump up the player's speed to compensate for the deceleration
@@ -144,6 +147,25 @@ class Z_NashMove : CustomInventory
 
 				// make the view bobbing match the player's movement
 				PlayerPawn(Owner).ViewBob = DECEL_MULT * 0.5;
+
+// 				If player is shooting a heavybolter, slow down even more
+				if (owner.player.readyweapon.GetClass() == "HeavyBolter" && 
+				HeavyBolter(owner.player.readyweapon).Slowed)
+				{
+					if (HeavyBolter(owner.player.readyweapon).Slowed2){
+						Owner.vel.x *= HEAVYBOLTER_SLOWDOWN2;
+						Owner.vel.y *= HEAVYBOLTER_SLOWDOWN2;
+						Console.printf("Slowing down2");
+					}
+					else
+					{
+						Owner.vel.x *= HEAVYBOLTER_SLOWDOWN1;
+						Owner.vel.y *= HEAVYBOLTER_SLOWDOWN1;
+						Console.printf("Slowing down1");
+					}
+// 					
+				}
+				else Console.printf("normal speed");
 			}
 		}
 
