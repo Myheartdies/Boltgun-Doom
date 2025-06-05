@@ -3,12 +3,14 @@
 // ========================================================================
 // Autogun alert
 CLTA/sight CLTASIT1
-$pitchset CLTA/sight 0.96 1.1 
+$pitchset CLTA/sight 0.9 1.2 
 // shotgun Alert 
-CLTS/sight CLTSSIT1
+$random CLTS/sight {CLTS/sight1, CLTH/sight1}
+CLTS/sight1 CLTSSIT1
 $pitchset CLTS/sight 0.95 1.05 
 // chaingun alert
-CLTH/sight CLTHSIT1
+$random CLTH/sight {CLTS/sight1, CLTH/sight1}
+CLTH/sight1 CLTHSIT1
 $pitchset CLTH/sight 0.9 0.98 
 // ========================================================================
 // For plasma renegade
@@ -22,6 +24,9 @@ $pitchset CLTP/attack 0.97 1.03
 // ========================================================================
 TCSM/melee sounds/TCSM/melee/melee1.ogg
 $pitchset TCSM/melee 0.95 1.05 
+
+TCSM/melee-miss sounds/TCSM/melee/melee-miss.ogg
+$pitchset TCSM/melee-miss 0.95 1.05 
 
 $random TCSM/sight {TCSM/sight1 TCSM/sight2}
 TCSM/sight1 sounds/TCSM/sight/alert1.ogg
