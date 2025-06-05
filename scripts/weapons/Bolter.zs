@@ -293,6 +293,12 @@ class BolterProjectile: TrailedProjectile{
 		BOLT A 1 Bright bolterParticle(25, 60, 10, 4, 3);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
+	Crash:
+	XDeath:
+ 		TNT1 A 0 A_Startsound("weapons/bolter_impact_flesh",CHAN_WEAPON, flags:CHANF_OVERLAP
+		, volume:0.32, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3));
+		TNT1 A 0 A_Startsound("weapons/bolter_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.5,attenuation:ATTN_NONE);
+
 	Death:
 		BTRE A 2 Bright {
 			A_Explode(6 * random(4,7), 40, 0, damagetype="SmallExplosion");
