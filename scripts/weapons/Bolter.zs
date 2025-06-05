@@ -77,9 +77,10 @@ class Bolter : ShellEjectingWeapon
 			A_SetPitch(pitch - 0.5);
 			A_OverlayScale(1, 1.06,1.06);
 		}
-		BOTR A 1 {
-			A_WeaponOffset(8, 2, WOF_ADD); 
-			CompensateOffset(-8,-2);
+		
+		BOTR B 1 {
+			OverlayRecoil(12, 4);
+// 			CompensateOffset(-12,-2);
 			A_Quake(0.2,2,0,10);
 		}
 		
@@ -91,6 +92,7 @@ class Bolter : ShellEjectingWeapon
 		}
 		TNT1 A 0 A_Jump(256,2);
 		BOTR B 1 Bright nodelay {
+			OverlayRecoil(-7, -2);
 			FireBolter(); 
 			AllowQuickSwitch();
 		}
@@ -98,17 +100,18 @@ class Bolter : ShellEjectingWeapon
 		TNT1 A 0 A_ZoomFactor(0.996);
 		TNT1 A 0 A_OverlayScale(1,1.03,1.03);
 // 		TNT1 A 0 {A_WeaponOffset(20, -2.5, WOF_ADD); CompensateOffset(20,2.5); }
-		BOTR B 1 Bright {
+		BOTR C 1 Bright {
 			A_SetPitch(pitch + 0.3);
-			A_WeaponOffset(-8, -2, WOF_ADD);
-			CompensateOffset(8,2);
+			OverlayRecoil(-5, -2);
+// 			RandomShakeRecovery();
+// 			CompensateOffset(12,2);
 			AllowQuickSwitch();}
 		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
 		BOTR C 1 Bright;
 		TNT1 A 0 A_OverlayScale(1,1,1);
-		BOTR C 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
+		BOTR D 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
 // 		TNT1 A 0 {A_WeaponOffset(1, -2.5, WOF_ADD); CompensateOffset(-1,2.5); }
-		BOTR C 1 {A_SetPitch(pitch + 0.2); AllowQuickSwitch();}
+		BOTR D 1 {A_SetPitch(pitch + 0.2); AllowQuickSwitch();}
 		
 
 		BOTR D 2 A_ReFire;
