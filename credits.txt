@@ -1,7 +1,8 @@
 
-Footstep logic based on zfootstep by  DenisBelmondo
+Footstep logic based on zfootstep by DenisBelmondo
 Nashmove by Nash Muhandes
-ParryMe by 
+ParryMe by zdoom forum user CantSleep https://forum.zdoom.org/viewtopic.php?t=77297
 Sprites and audio of all weapons and enemies from Warhammer40000 Boltgun developed by Auroch Digital, Focus Entertainment
+Sword swing sound effect by Karim-Nessim from https://pixabay.com/
 
 GZBeamz by Lewisk3 https://github.com/Lewisk3/GZBeamz
