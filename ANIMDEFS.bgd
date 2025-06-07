@@ -154,3 +154,49 @@ texture FMRNA0
 	pic FMRND0 tics 5
 // 	pic FLRNE0 tics 1
 // 	pic FLRNF0 tics 1
+
+// ExaltedFlamer Flame 1
+texture XFMNA0
+    pic XFMNB0 tics 2
+    pic XFMNC0 tics 2
+    pic XFMND0 tics 2
+    pic XFMNE0 tics 2
+    pic XFMNF0 tics 2
+    pic XFMNG0 tics 2
+    pic XFMNH0 tics 2
+    pic XFMNI0 tics 2
+    pic XFMNJ0 tics 2
+    pic XFMNK0 tics 2
+    pic XFMNL0 tics 2
+    pic XFMNM0 tics 2
+    pic XFMNN0 tics 2
+    pic XFMNO0 tics 2
+    pic XFMNP0 tics 2
+
+// ExaltedFlamer Flame 1
+texture XFMGA0
+    pic XFMGB0 tics 2
+    pic XFMGC0 tics 2
+    pic XFMGD0 tics 2
+    pic XFMGE0 tics 2
+    pic XFMGF0 tics 2
+    pic XFMGG0 tics 2
+    pic XFMGH0 tics 2
+    pic XFMGI0 tics 2
+    pic XFMGJ0 tics 2
+    pic XFMGK0 tics 2
+    pic XFMGL0 tics 2
+    pic XFMGM0 tics 2
+    pic XFMGN0 tics 2
+    pic XFMGO0 tics 2
+    pic XFMGP0 tics 2
+
+texture XFRNA0
+	pic XFRNA0 tics 3
+	pic XFRNB0 tics 3
+	pic XFRNC0 tics 3
+	pic XFRND0 tics 3
+	pic XFRNE0 tics 3
+	pic XFRNF0 tics 3
+	pic XFRNG0 tics 3
+	
