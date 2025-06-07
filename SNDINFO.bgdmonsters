@@ -173,9 +173,9 @@ flamer/death FLMRDTH1
 $pitchset flamer/death 0.8 0.9
 
 $random flamer/attack {flamer/attack1 flamer/attack2 flamer/attack3 flamer/attack4}
-flamer/attack1 FLMRATK4
-flamer/attack2 FLMRATK4
-flamer/attack3 FLMRATK4
+flamer/attack1 FLMRATK1
+flamer/attack2 FLMRATK2
+flamer/attack3 FLMRATK3
 flamer/attack4 FLMRATK4
 
 flamer/pain FLMRPAIN
@@ -198,13 +198,30 @@ flamer/sight3 FLMRSIT3
 // ========================================================================
 // For  Exalted flamer
 // ========================================================================
+// death
 exflamer/death EFLMDTH1
 
-exflamer/sight EFLMSIT1
+// Alert
+$random exflamer/sight {exflamer/sight1 exflamer/sight2}
+exflamer/sight1 EFLMSIT1
+exflamer/sight2 EFLMSIT2
 // $volume exflamer/sight 1.0
 
+// Attack
+$random exaltedflamer/attack {exaltedflamer/attack1 exaltedflamer/attack2 exaltedflamer/attack3 exaltedflamer/attack4}
+exaltedflamer/attack1 EXFMATK1
+exaltedflamer/attack2 EXFMATK2
+exaltedflamer/attack3 EXFMATK3
+exaltedflamer/attack4 EXFMATK4
+
+// pain
 exflamer/pain FLMRPAIN
 $pitchset exflamer/pain 0.7 0.8
+
+// Active
+$random exflamer/active {exflamer/active1 exflamer/active2}
+exflamer/active1 EFLMACT1
+exflamer/active2 EFLMACT2
 
 // ========================================================================
 // For Blue Horrors
