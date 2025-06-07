@@ -12,7 +12,7 @@ class LegionaryPlasma : ChaosMarine
 	Default
 	{
 		Scale 0.32;
-		Health 650;
+		Health 680;
 		Speed 9;
 		Height 64;
 		SeeSound "PCSM/sight";
@@ -44,7 +44,7 @@ class LegionaryPlasma : ChaosMarine
 		PSMA M 3 A_StartSound("TCSM/active");
 		PSMA M 3 A_FaceTarget;  //2 originally
 		PSMA N 3 A_FaceTarget;  //3
-		PSMA O 12 A_CustomMeleeAttack(random(3, 10) * 8, "TCSM/melee");
+		PSMA O 12 A_CustomMeleeAttack(random(3, 10) * 8, "TCSM/melee", "TCSM/melee-miss");
 		Goto See;
 	DashMissile:
 		PSMA F 2 {A_FaceTarget();BackThrust(18,3);}

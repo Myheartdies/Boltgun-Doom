@@ -11,7 +11,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 	Default
 	{
 		Scale 0.51;
-		Health 650;
+		Health 680;
 		Speed 10;
 		Height 64;
 		SeeSound "TCSM/sight";
@@ -20,7 +20,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		DeathSound  "TCSM/death";
 		PainChance 60;
 		MeleeRange 48;
-		MeleeThreshold 160;
+		MeleeThreshold 140;
 // 		+DropOff
 		MinMissileChance 150;
 		DropItem "ClipBox";
@@ -67,7 +67,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM J 2 A_StartSound("TCSM/active"); 
 		TCSM J 1 DirectedThrust(5);
 		TCSM J 3 A_FaceTarget; 
-		TCSM K 8 A_CustomMeleeAttack(random(3, 9) * 8, "TCSM/melee");
+		TCSM K 8 A_CustomMeleeAttack(random(3, 9) * 8, "TCSM/melee", "TCSM/melee-miss");
 		TCSM J 2;
 		Goto See;
 	Melee:
@@ -75,7 +75,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM J 3 ;  //2 originally
 		TCSM J 3 ;
 		TCSM J 4 A_StartSound("TCSM/active");
-		TCSM K 6 A_CustomMeleeAttack(random(3, 9) * 8, "TCSM/melee");
+		TCSM K 6 A_CustomMeleeAttack(random(3, 9) * 8, "TCSM/melee", "TCSM/melee-miss");
 		TCSM J 2 ; 
 		Goto See;
 	Missile:
@@ -83,13 +83,13 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM G 8 {A_FaceTarget();A_StartSound("TCSM/active");}
 		TCSM H 3 Bright;
 		TCSM H 3 Bright MarineMissile;
-		TCSM H 2 Bright A_FaceTarget;
+		TCSM H 3 Bright A_FaceTarget;
 		TCSM I 2 Bright MarineMissile;
 		TCSM I 3 Bright A_FaceTarget;
 		TCSM I 2 Bright MarineMissile;
-		TCSM I 3 Bright A_FaceTarget;
+		TCSM I 4 Bright A_FaceTarget;
 		TCSM I 2 Bright;
-		TCSM H 3 Bright MarineMissile;
+// 		TCSM H 3 Bright MarineMissile;
 		Goto See;
 	Pain:
 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
@@ -167,14 +167,16 @@ class Legionary : ChaosMarine //Replaces Revenant
 class MarineBall: BolterProjectile{
 	Default
 	{
-		Radius 6;
-		Height 7;
+		Radius 3;
+		Height 4;
 // 		Scale 1;
 		RenderStyle "Add";
 		SeeSound "TCSM/attack";
 		DeathSound "weapons/bolter_impact";
 		Species "BaronOfHell";
-		Damage 4;
+// 		Damage 3;
+		DamageFunction 3.5 * random(1,8);
+// 		DamageFunction 24;
 		Speed 14;
 		FastSpeed 25;
 	}
@@ -182,14 +184,16 @@ class MarineBall: BolterProjectile{
 	{
 	Spawn:
 		BAL1 A 1 Bright {
-			bolterParticle(2,15,8,12,5);
+			bolterParticle(1,15,8,10,5);
 // 			FlameRing();
 		}
 		BAL1 A 1 Bright {
-			bolterParticle(2,15,8,12,5);
+			bolterParticle(1,15,8,10,5);
 			FlameRing();
 		}
 		Loop;
+	Crash:
+	XDeath:
 	Death:
 		BTRE A 2 Bright ;
 		BTRE BDFHJL 2 Bright;
