@@ -256,7 +256,7 @@ class ShotgunProjectile: FastProjectile {
 		Scale 0.8;
 		+PUFFONACTORS
 // 		Damage 7;
-		DamageFunction 4.5 * random(1,3);
+		DamageFunction 5 * random(1,3);
 		Projectile;
 		+RANDOMIZE
 		+DEHEXPLOSION
@@ -332,8 +332,8 @@ class ShotgunProjectile: FastProjectile {
 		, float baseTTL = 120,float baseTTL_trail=10
 		, float mainSmokeSize = 4, float subSmokeSize=3)
 	{
-		if (!particleDrawn) 
-			ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed);
+// 		if (!particleDrawn)
+		ShotgunParticle(subdivide, baseTTL, mainSmokeSize,speedOverride:speed);
 	}
 }
 

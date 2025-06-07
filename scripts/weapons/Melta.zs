@@ -15,9 +15,13 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 	States
 	{
 	Ready:
-		MELT A 1 A_WeaponReady;
+		MELT A 3 {
+			A_WeaponReady();
+			A_SetCrosshair(24);
+		}
 		Loop;
 	Deselect:
+		TNT1 A 0 checkDeath;
 		MELT A 1 A_Lower(18);
 		Loop;
 	Select:

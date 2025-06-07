@@ -37,10 +37,13 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		TNT1 A 0 {
 			A_StopSound(CHAN_5);
 			A_SetCrosshair(23);
+			RevertSlowDown();
+			RevertSlowDown2();
 		}
-		HBTR A 4 A_WeaponReady;
+		HBTR AA 4 A_WeaponReady;
 		Loop;
 	Deselect:
+		TNT1 A 0 checkDeath;
 		TNT1 A 0 {
 			A_StopSound(CHAN_5);
 			RevertSlowDown();
@@ -86,21 +89,27 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
         HBTR B 1 A_ReFire("Windup2");
     Winddown1:
         HBTR B 3 A_ReFire("Windup2");
-
+		TNT1 A 0 {
+			RevertSlowDown();
+			RevertSlowDown2();
+		}
         HBTR A 3 A_ReFire("Windup1");
         Goto Ready;
     Windup2:
         HBTR CD 3;
-		TNT1 A 0 SlowDown2;
+		TNT1 A 0 SlowDown;
         HBTR D 1 A_ReFire("Windup3");
     Winddown2:
 		TNT1 A 0 A_StartSound("weapons/heavybolter_winddown",CHAN_AUTO,0,0.8,ATTN_NONE);
         HBTR D 2 A_ReFire("Windup3");
+		TNT1 A 0  {
+// 			RevertSlowDown();
+			RevertSlowDown2();
+		}
         HBTR C 3 A_ReFire("Windup2");
-		TNT1 A 0 RevertSlowDown;
         Goto Winddown1;
     Windup3:
-		HBTR E 1 ;
+		HBTR E 1 Slowdown2;
         HBTR E 1 A_ReFire("StartFiring");
     Winddown3:
 		TNT1 A 0 A_StopSound(CHAN_5);
@@ -224,7 +233,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 // 		A_FireProjectile("HeavyBolterProjectile", 0, false, 15, 10);
 		// if(isLowAmmo)
 		// 	A_StartSound("weapons/bolter_low_ammo_click", CHAN_AUTO, 0, 0.65);
-		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON,CHANF_OVERLAP,1,pitch:frandom(0.7,0.83));
+		A_StartSound ("weapons/heavybolter_fire", CHAN_WEAPON,CHANF_OVERLAP,0.8,pitch:frandom(0.7,0.83));
         A_Light2();
         // 		Eject casing
 		EjectCasing("Casing");
@@ -331,6 +340,11 @@ class HeavyBolterProjectile: BolterProjectile{
 		BOLT A 1 Bright TrailParticle(10, 50, 20, 6, 4);
 // 		TNT1 A 0 bolterParticle(16, 90, 15, 20, 20);
 		Loop;
+	Crash:
+	XDeath:
+ 		TNT1 A 0 A_Startsound("weapons/bolter_impact_flesh",CHAN_WEAPON, flags:CHANF_OVERLAP
+		, volume:0.65, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3));
+		TNT1 A 0 A_Startsound("weapons/bolter_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.5,attenuation:ATTN_NONE);
 	Death:
 		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, True, 30, damagetype:"StrongExplosion");
 		HTRE BCDEFGHIJKL 2 Bright;

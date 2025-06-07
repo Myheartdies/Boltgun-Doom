@@ -18,13 +18,17 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 	States
 	{
 	Ready:
-		MSLL A 1 A_WeaponReady;
+		MSLL A 1 {
+			A_WeaponReady();
+			A_SetCrosshair(26);
+		}
 		Loop;
 	Deselect:
+		TNT1 A 0 checkDeath;
 		MSLL A 1 {
 			A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 			A_Lower(18);
-			}
+		}
 		Loop;
 	Select:
 		MSLL A 1 {

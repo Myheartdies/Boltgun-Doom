@@ -1,6 +1,6 @@
 class Bolter : ShellEjectingWeapon
 {
-
+	
 	override void BeginPlay(){
 		queueLength = 12;
 		maxCasingCount = 5;
@@ -42,6 +42,7 @@ class Bolter : ShellEjectingWeapon
 		}
 		Loop;
 	Deselect:
+		TNT1 A 0 checkDeath;
 		BOTR E 1{
 			A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 			A_Lower();
@@ -64,7 +65,7 @@ class Bolter : ShellEjectingWeapon
 // 		TNT1 A 0 A_Raise(100);
 		Wait;
 
-
+// 	Old pacing AA B BCCCD
 	Fire:		
 		TNT1 A 0 OverlayReAdjust;
 // 		Go to reload if out of ammo
@@ -82,6 +83,7 @@ class Bolter : ShellEjectingWeapon
 			OverlayRecoil(12, 4);
 // 			CompensateOffset(-12,-2);
 			A_Quake(0.2,2,0,10);
+// 			RandomShake(50,51,50,51);
 		}
 		
 // 		Fire with low ammo click if ammo is less than 8
@@ -114,7 +116,7 @@ class Bolter : ShellEjectingWeapon
 		BOTR D 1 {A_SetPitch(pitch + 0.2); AllowQuickSwitch();}
 		
 
-		BOTR D 2 A_ReFire;
+		BOTR D 2 A_ReFire("Fire");
 		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, "Ready");
 		BOTR A 0 A_GiveInventory("isFullReload", 1);
 		Goto Ready;
@@ -277,14 +279,16 @@ class BolterProjectile: TrailedProjectile{
 	bool particleDrawn;
 	Default
 	{
-		Radius 2;
+		Radius 1;
 		Height 2;
 		Speed 250;
 		Scale 0.65;
-// 		Damage 7;
-		DamageFunction random(5,9)*random(2,10);
+		DamageFunction random(5,8)*random(2,10); //was (5,9) * (2,10)
+// 		DamageFunction 15 *random(2,3);
+		DamageType "Bolter";
 		+FORCEXYBILLBOARD
 		DeathSound "weapons/bolter_impact";
+// 		DeathSound "TCSM/active";
 	}
 	
 	States
@@ -335,8 +339,8 @@ class BolterProjectile: TrailedProjectile{
 class BolterMag : Ammo
 {
 	Default{
-		Inventory.Amount 16;
-		Inventory.MaxAmount 16;
+		Inventory.Amount 18;
+		Inventory.MaxAmount 18;
 		Ammo.BackpackAmount 0;
 		Ammo.BackpackMaxAmount 0;
 	}

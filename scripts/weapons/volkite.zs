@@ -35,6 +35,7 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 		Loop;
 	Deselect:
 		TNT1 A 0 BeamForceStop;
+		TNT1 A 0 checkDeath;
 		TNT1 A 0 {
 			TurnUpBrightness(); 
 			A_ZoomFactor(1.0);

@@ -19,7 +19,7 @@ class SternguardWeapon : DoomWeapon
 		SternguardWeapon.TauntOffsetX 120;
 		SternguardWeapon.TauntOffsetY 10;
 		Weapon.BobRangeX 0.1;
-		Weapon.BobRangeY 1.15;
+		Weapon.BobRangeY 1.0;
 		Weapon.BobSpeed 2;
 	}
 	States
@@ -194,12 +194,17 @@ class SternguardWeapon : DoomWeapon
 
 		super.Tick();
 	}
-	override void doEffect(){
-		let player = owner.player;
-		let psp = owner.player.findpsprite(psp_weapon);
-		if(!playerDied && SternGuard(player.mo).health<=0 && InStateSequence(psp.curstate, ResolveState("Deselect"))){
-			playerDied = true;
-			psp.SetState(ResolveState("DeathFrames"));
+	
+// 	The action function that switch psprite state to death frames when player died, 
+// 	Should be called at the start of deselect
+	action void checkDeath(){
+		let player = invoker.owner.player;
+		let psp = invoker.owner.player.findpsprite(psp_weapon);
+		if(
+		!invoker.playerDied
+		&& SternGuard(player.mo).health<=0){
+			invoker.playerDied = true;
+			psp.SetState(invoker.ResolveState("DeathFrames"));
 		}
 	}
 	
