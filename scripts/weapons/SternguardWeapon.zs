@@ -167,27 +167,33 @@ class SternguardWeapon : DoomWeapon
 			A_Startsound("weapons/chainsword_Strike",CHAN_5,flags: CHANF_OVERLAP);
 			ChargeIfHaveTarget(range: invoker.ChargeRange);
 		}
+		TNT1 A 0 A_QuakeEx(invoker.chainswordQuakeStrength * 2,invoker.chainswordQuakeStrength*2,invoker.chainswordQuakeStrength * 4
+		, 8, 0, 10, flags: QF_SCALEUP);
 		CHNS BCD 2 {
-			FaceChargetarget();
+			
+			FaceChargeTarget();
 // 			A_Refire("Sawing");
 		}
 		CHNS D 1 {
-			FaceChargetarget();
+			FaceChargeTarget();
 // 			A_Refire("Sawing");
 		}
 		CHNS EF 3 {
-			FaceChargetarget();
-			ChainswordCutting(30, range:80);
+			FaceChargeTarget();
+			ChainswordCutting(40, range:80);
+			A_Quake(invoker.chainswordQuakeStrength, 4, 0, 5);
 			RefireIfHasTarget("Sawing", range:80);
 		}
 		Goto Followthroughmiss;
 	Sawing:
-		CHNS F 2 ChainswordCutting(12); 
-		CHNS G 2; 
+		CHNS F 2 ChainswordCutting(20); 
+		CHNS G 2 A_QuakeEx(invoker.chainswordQuakeStrength * 2,invoker.chainswordQuakeStrength*2,invoker.chainswordQuakeStrength * 2, 6, 0, 10, flags: QF_SCALEDOWN);
 		CHNS H 1 RefireIfHasTarget("Sawing", range:80);
 		Goto Followthrough;
 	Followthroughmiss:
 		TNT1 A 0 A_Startsound("weapons/swing_miss",CHAN_7, startTime: 0.3);
+		TNT1 A 0 A_QuakeEx(invoker.chainswordQuakeStrength * 2,invoker.chainswordQuakeStrength*2,invoker.chainswordQuakeStrength * 3
+		, 10, 0, 10, flags: QF_SCALEDOWN);
 		CHNS U 4;
 		CHNS V 3; 
 		Goto Ready;
@@ -199,6 +205,7 @@ class SternguardWeapon : DoomWeapon
 		Goto Ready;
 	Idle:
 		CHNS A 1 {
+			chainswordshake();
 			A_Startsound("weapons/chainsword_Idle",CHAN_7,CHANF_LOOPING);
 			A_Quake(invoker.chainswordQuakeStrength, 2, 0, 5);
 		}
@@ -235,20 +242,26 @@ class SternguardWeapon : DoomWeapon
 		
 		
 	}
-	
+	action void chainswordshake(int range_x= 10,int range_y=5){
+		int period = 35;
+		int breathspeed = 1;
+		invoker.timer = (invoker.timer + breathspeed + frandom(0, 0.1 * breathspeed)) % period;
+		float degree = float(invoker.timer)/float(period) * 360;
+		A_WeaponOffset(-120 + range_x * (- cos(degree))* frandom(0.9,1.1) , 32 + range_y * sin(degree)* frandom(0.9,1.1) );
+	}
 	action void ChargeIfHaveTarget(float range = 300)
 	{
 		invoker.chargeTarget = invoker.getChargeTarget(range);
 		if (invoker.chargeTarget)
 		{
 			Console.printf("Charging");
-			Thrust( (invoker.owner.distance2d(invoker.chargeTarget)/ 50 )**2 );
+			Thrust( sqrt(invoker.owner.distance2d(invoker.chargeTarget) * 2 ) +5 );
 			Console.printf("%d",angle);
 			ThrustThingz(0,10,0,1);
 		}	
 		else Console.printf("No target");
 	}
-	action void FaceChargetarget(){
+	action void FaceChargeTarget(){
 		if(invoker.chargeTarget)
 			invoker.owner.angle = invoker.owner.angleto(invoker.chargeTarget);
 	}
