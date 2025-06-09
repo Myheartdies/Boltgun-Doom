@@ -3,6 +3,7 @@ class Contempt :ArmorBonus Replaces ArmorBonus
 	Default
 	{
 		Scale 0.22;
+		Armor.SavePercent 45;
 	}
 	States
 	{
