@@ -1,21 +1,19 @@
-class Flamer1 : DoomImp
-{
+class FlamerBase : DoomImp{
 	Default
 	{
-		Health 75;
+		Health 70;
 		Radius 20;
 		Height 56;
 		Mass 100;
-		Speed 8;
-		PainChance 200;
+		Speed 10;
+		PainChance 150;
 		Monster;
-		Scale 0.4;
 		DamageFactor "SmallExplosion", 0.5;
-		DamageFactor "Bolter", 0.8;
+		DamageFactor "Bolter", 0.65;
+		DamageFactor "HeavyBolter", 0.7;
 		DamageFactor "StrongExplosion", 0.5;
 		+FLOORCLIP
-		ReactionTime 4;
-// 		MissileChanceMult 0.9;
+		ReactionTime 6;
 // 		+FLOAT +NOGRAVITY
 		SeeSound "flamer/sight";
 		PainSound "flamer/pain";
@@ -28,10 +26,56 @@ class Flamer1 : DoomImp
 	States
 	{
 	Spawn:
+		FLM1 AB 10 ;
+		Fail;
+	Death:
+		FLM1 N 6 A_NoBlocking;
+		FLM1 O -1;
+		Stop;
+	}
+	void FlamerMissile(){
+// 		int deviation  = random(0,1);
+		A_SpawnProjectile("FlamerBall", 50);
+	}
+	
+	void FlamerMissile_Spread(){
+		int deviation  = random(-2,3);
+		let proj1 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:-6.5, flags:CMF_OFFSETPITCH, pitch:0 + deviation));
+		if(proj1!= null) proj1.SetEarlyDestroy();
+		let proj2 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:6.5, flags:CMF_OFFSETPITCH, pitch:0 - deviation));
+		if(proj2!= null) proj2.SetEarlyDestroy();
+// 		Set the projectile going upwards and downwards to be destroyed early to reduce visual noise, and because they cant hit the
+// 		player anymore anyway
+		let proj3 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 - deviation, flags:CMF_OFFSETPITCH, pitch:-6.5));
+		if(proj3!= null) proj3.SetEarlyDestroy();
+		let proj4 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 + deviation, flags:CMF_OFFSETPITCH, pitch:6.5 ));
+		if(proj4!= null) proj4.SetEarlyDestroy();
+	}
+}
+class Flamer1 : FlamerBase
+{
+	Default
+	{
+		Health 75;
+		Speed 10;
+		PainChance 120;
+		Monster;
+		Scale 0.4;
+		DamageFactor "SmallExplosion", 0.5;
+		DamageFactor "Bolter", 0.5;
+		DamageFactor "HeavyBolter", 0.7;
+		DamageFactor "StrongExplosion", 0.5;
+		+FLOORCLIP
+		ReactionTime 4;
+		MissileChanceMult 0.9;
+	}
+	States
+	{
+	Spawn:
 		FLM1 AB 10 A_Look;
 		Loop;
 	See:
-		FLM1 AABBCCDD 3 {
+		FLM1 AAABBBCCCDDD 2 {
 			A_Chase();
 			
 		}
@@ -77,32 +121,14 @@ class Flamer1 : DoomImp
 		TROO KJI 6;
 		Goto See;
 	}
-	void FlamerMissile(){
-// 		int deviation  = random(0,1);
-		A_SpawnProjectile("FlamerBall", 50);
-	}
 	
-	void FlamerMissile_Spread(){
-		int deviation  = random(-2,3);
-		let proj1 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:-6.5, flags:CMF_OFFSETPITCH, pitch:0 + deviation));
-		proj1.SetEarlyDestroy();
-		let proj2 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:6.5, flags:CMF_OFFSETPITCH, pitch:0 - deviation));
-		proj2.SetEarlyDestroy();
-// 		Set the projectile going upwards and downwards to be destroyed early to reduce visual noise, and because they cant hit the
-// 		player anymore anyway
-		let proj3 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 - deviation, flags:CMF_OFFSETPITCH, pitch:-6.5));
-		proj3.SetEarlyDestroy();
-		let proj4 = FlamerBall(A_SpawnProjectile("FlamerBall", 50, angle:0 + deviation, flags:CMF_OFFSETPITCH, pitch:6.5 ));
-		proj4.SetEarlyDestroy();
-	}
 }
 
-class Flamer2 : Flamer1
+class Flamer2 : FlamerBase
 {
 	Default
 	{
 		Scale 0.6;
-		MissileChanceMult 0.9;
 	}
 	States
 	{
@@ -150,7 +176,7 @@ class Flamer2 : Flamer1
 
 }
 
-class Flamer3 : Flamer1
+class Flamer3 : FlamerBase
 {
 	Default
 	{
@@ -209,10 +235,10 @@ class FlamerBall: DoomImpBall{
 	{
 		SeeSound "flamer/attack";
 		Damage 3;
-		Speed 8;
+		Speed 10;
 		Scale 1.1;
-		Alpha 0.3;
-		RenderStyle 'Translucent';
+		Alpha 0.5;
+// 		RenderStyle 'Translucent';
 // 		FastSpeed 25;
 	}
 	States
@@ -233,7 +259,7 @@ class FlamerBall: DoomImpBall{
 		EarlyDestroy = True;
 	}
 	override void Tick(void){
-		if (EarlyDestroy && Counter > 45){
+		if (EarlyDestroy && Counter > 50){
 			destroy();
 		}
 		super.Tick();
@@ -243,10 +269,10 @@ class FlamerBall: DoomImpBall{
 	void FlameParticle(){
 		Counter += 1;
 		TextureID txtr;
-		if (Counter % 3 == 1)
+		if (Counter % 2 == 0)
 			txtr = TexMan.CheckForTexture("FLMPA0");
 		else
-			txtr = TexMan.CheckForTexture("FLMBA0");
+			txtr = TexMan.CheckForTexture("FLMYA0");
 // 		TextureID txtr = TexMan.CheckForTexture("FLMBA0");
 		A_SpawnParticleEx("",txtr,STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 15
 		, 35, 0
@@ -254,16 +280,16 @@ class FlamerBall: DoomImpBall{
 		,random(-3,3),random(-3,3),random(-3,3)
 		,0,0,0,0,0,0
 		, 0.8,0,-2.2
-		, Random(0,12)*30, Random(-2,2));
+		, Random(0,12)*30, Random(-3,3));
 	}
 	
 	void FlameRing(){
 		A_SpawnParticleEx("",TexMan.CheckForTexture("FMRNA0"),STYLE_None,SPF_ROLL|SPF_FULLBRIGHT|SPF_LOCAL_ANIM , 8
-		, 60, 0
+		, 40, 0
 		,0,0,0
 		,0,0,0,0,0,0
-		, 1.0, 0, -5
-		, Random(0,12)*30, 3);
+		, 1.0, 0, -3
+		, Random(0,12)*30, Random(-10,10));
 	}
 
 	void FlamerTrailParticles(int particle_count = 1){
