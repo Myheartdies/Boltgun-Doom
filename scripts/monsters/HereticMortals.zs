@@ -7,8 +7,8 @@ class SergeantReplacer : RandomSpawner Replaces ShotgunGuy
 {
     Default
     {
-        DropItem "PlasmaRenegade";
-		DropItem "CultistShock";
+		DropItem "CultistShock", 255, 2;
+        DropItem "PlasmaRenegade", 255, 1;
     }
 }
 

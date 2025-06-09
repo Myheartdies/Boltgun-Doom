@@ -4,12 +4,13 @@
 #include "scripts/monsters/astartes/PCSM.zs"
 #include "scripts/monsters/astartes/Champion.zs"
 #include "scripts/monsters/astartes/Terminator.zs"
+#include "scripts/monsters/astartes/Havoc.zs"
 
 class LegionarySpawner : RandomSpawner Replaces Hellknight
 {
     Default
     {
-        DropItem "LegionaryPlasma";
         DropItem "Legionary";
+		DropItem "LegionaryPlasma";
     }
 }

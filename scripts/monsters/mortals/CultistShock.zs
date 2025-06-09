@@ -6,15 +6,15 @@ class CultistShock: ShotgunGuy
 		Radius 20;
 		Height 56;
 		Mass 100;
-		Speed 10;
+		Speed 7;
 		PainChance 170;
 		Monster;
 		+FLOORCLIP
 		+DOHARMSPECIES
-		+MISSILEMORE
+		MissileChanceMult 0.8;
 		DamageFactor "Bolt", 2;
 		SeeSound "CLTS/sight";
-		AttackSound "shotguy/attack";
+		AttackSound "weapons/shotgf";//"shotguy/attack";
 		PainSound "shotguy/pain";
 		DeathSound "shotguy/death";
 		ActiveSound "shotguy/active";
@@ -29,12 +29,12 @@ class CultistShock: ShotgunGuy
 		CLTS AB 10 A_Look;
 		Loop;
 	See:
-		CLTS AABBCCDD 3 A_Chase;
+		CLTS AABBCCDD 2 A_Chase;
 		Loop;
 	Missile:
 		CLTS E 10 A_FaceTarget;
 		CLTS F 5 BRIGHT ShotgunnerMissile;//A_SposAttackUseAtkSound;
-		CLTS GI 3 BRIGHT;
+		CLTS GI 3;
 		CLTS JKL 3;
 		Goto See;
 	Pain:
@@ -62,9 +62,9 @@ class CultistShock: ShotgunGuy
 	}
 	
 	action void ShotgunnerMissile(){
-		A_StartSound("shotguy/attac",flags:CHAN_WEAPON);
-		A_CustomBulletAttack(25
-		, 0, 3,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM,missile:"ShotgunTracer");
+		A_StartSound("shotguy/attack", CHAN_WEAPON);
+		for (int i = 0; i < 3; i ++)
+		A_SpawnProjectile("Tracer", angle:random(-11,11), flags: CMF_AIMOFFSET, pitch: random(-2,2));
 // 		A_CustomBulletAttack(22.5, 0, 3,0, pufftype :"BulletPuff", 0, flags:CBAF_NORANDOM);
 // 		A_SpawnProjectile("Tracer");
 	}
