@@ -1,4 +1,4 @@
-class PlasmaRenegade : DoomImp  /*Replaces DoomImp*/
+class PlasmaRenegade : Actor /*Replaces DoomImp*/
 {
 
 	Default
@@ -11,7 +11,9 @@ class PlasmaRenegade : DoomImp  /*Replaces DoomImp*/
 		PainChance 200;
 		Monster;
 		+FLOORCLIP
-		+MISSILEMORE
+// 		+MISSILEMORE
+		ReactionTime 4;
+		MissileChanceMult 0.85;
 		DamageFactor "Bolt", 2;
 		SeeSound "imp/sight";
 		PainSound "imp/pain";
@@ -31,15 +33,16 @@ class PlasmaRenegade : DoomImp  /*Replaces DoomImp*/
 		Loop;
 	See:
 		GCLT AABBCCDD 3 A_Chase;
+// 		GCLT AA 3 A_Chase;
 		Loop;
 	Melee:
 	Missile:
 		GCLT Q 2 A_StartSound("CLTP/charge",0, 1.3);
-		GCLT RSTU 3 Bright A_FaceTarget;
+		GCLT RSTU 3 A_FaceTarget;
 		GCLT E 2 Bright A_FaceTarget;
 		GCLT F 2 Bright A_FaceTarget;
-		GCLT G 2 Bright A_CustomComboAttack("RenegadePlasmaBall", 32, 3 * random(1, 6));
-		GCLT H 3 Bright ;
+		GCLT G 3 Bright A_CustomComboAttack("RenegadePlasmaBall", 32, 3 * random(1, 6));
+		GCLT H 2 ;
 		GCLT IJK 3;
 		Goto See;
 	Pain:
@@ -74,16 +77,17 @@ class RenegadePlasmaBall :CacodemonBall{
 	Default
 		{
 			SeeSound "CLTP/attack";
+			Damage 4;
 // 			StencilColor "f1680a";
 // 			RenderStyle "Shaded";
 		}
 	States
 	{
-	Spawn:
-		BAL2 AB 4 BRIGHT;
-		Wait;
-	Death:
-		BAL2 CDE 6 BRIGHT;
-		Stop;
+// 	Spawn:
+// 		BAL2 AB 4 BRIGHT;
+// 		Wait;
+// 	Death:
+// 		BAL2 CDE 6 BRIGHT;
+// 		Stop;
 	}
 }

@@ -16,6 +16,7 @@ class Cultist1 : ZombieMan
 // 		+MISSILEMORE
 		+FLOORCLIP
 		+DOHARMSPECIES
+		+PUSHABLE
 		DamageFactor "Bolt", 2;
 		SeeSound "CLTA/sight";
 		AttackSound "grunt/attack";
@@ -25,7 +26,8 @@ class Cultist1 : ZombieMan
 		Obituary "$OB_ZOMBIE";
 		Tag "$FN_ZOMBIE";
 		Cultist1.MaxBurstCount 3;
-		DropItem "Clip";
+		FriendlySeeBlocks 5;
+		
 	}
  	States
 	{
@@ -41,7 +43,7 @@ class Cultist1 : ZombieMan
 		CLT1 E 8 A_FaceTarget;
 	Firing:
 		CLT1 E 2 A_FaceTarget;
-		CLT1 F 8 CultistMissile;
+		CLT1 F 8 Bright CultistMissile;
 		CLT1 E 6;
 		CLT1 E 2 A_Jump(CultistRefireChance(),"See");
 		Goto Firing;
@@ -120,7 +122,7 @@ class Cultist1 : ZombieMan
 // 			A_CustomBulletAttack(2
 // 			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
 			A_StartSound("grunt/attack", CHAN_WEAPON,CHANF_OVERLAP);
-			A_SpawnProjectile("Tracer", angle:random(-11,11)+ 0.5*invoker.burstCount, flags: CMF_AIMOFFSET);
+			A_SpawnProjectile("Tracer", angle:random(-13,13)+ 0.5*invoker.burstCount, flags: CMF_AIMOFFSET);
 		}
 		
 // 		A_StartSound("weapons/pistol",flags:CHAN_WEAPON);
@@ -130,6 +132,10 @@ class Cultist1 : ZombieMan
 }
 class Cultist2 : Cultist1
 {
+	Default
+	{
+		DropItem "Clip";
+	}
 	States
 	{
 	Spawn:
@@ -143,8 +149,8 @@ class Cultist2 : Cultist1
 		CLT2 E 8 A_FaceTarget;
 	Firing:
 		CLT2 E 2 A_FaceTarget;
-		CLT2 F 8 CultistMissile;
-		CLT2 E 6;
+		CLT2 F 8 Bright CultistMissile;
+		CLT2 E 5;
 		CLT2 E 2 A_Jump(CultistRefireChance(),"See");
 		Goto Firing;
 	Pain:
@@ -193,7 +199,7 @@ class Cultist3 : Cultist1
 		CLT3 E 8 A_FaceTarget;
 	Firing:
 		CLT3 E 2 A_FaceTarget;
-		CLT3 F 8 CultistMissile;
+		CLT3 F 8 Bright CultistMissile;
 		CLT3 E 6;
 		CLT3 E 2 A_Jump(CultistRefireChance(),"See");
 		Goto Firing;
@@ -232,6 +238,10 @@ class Cultist3 : Cultist1
 // TODO: change it to the same as others
 class Cultist4 : Cultist1
 {
+	Default
+	{
+		DropItem "Clip";
+	}
  	States
 	{
 	Spawn:
@@ -245,8 +255,8 @@ class Cultist4 : Cultist1
 		CLT4 E 8 A_FaceTarget;
 	Firing:
 		CLT4 E 2 A_FaceTarget;
-		CLT4 F 8 CultistMissile;//A_PosAttack;
-		CLT4 E 6;
+		CLT4 F 8 Bright CultistMissile;//A_PosAttack;
+		CLT4 E 5;
 		CLT4 E 2 A_Jump(CultistRefireChance(),"See");
 		Goto Firing;
 	Pain:
@@ -287,11 +297,12 @@ class Tracer : FastProjectile
 		Scale 0.4;
 		Radius 1;
 		Height 1;
-		Speed 45;
+		Speed 55;
 		FastSpeed 120;
 		+FORCEXYBILLBOARD
 //    Damage 3;
-		DamageFunction 3*random(1,4);
+		DamageType "Autogun";
+		DamageFunction 2*random(1,4);
 		Projectile;
 		+RANDOMIZE
 		+ZDOOMTRANS

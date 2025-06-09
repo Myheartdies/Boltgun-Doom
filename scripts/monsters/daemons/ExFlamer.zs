@@ -12,8 +12,8 @@ class ExaltedFlamer : Actor
 		Monster;
 		Scale 0.44;
 		+FLOAT +NOGRAVITY
-		DamageFactor "Bolter", 0.7;
-		DamageFactor "HeavyBolter", 0.7;
+		DamageFactor "Bolter", 0.6;
+		DamageFactor "HeavyBolter", 0.6;
 		SeeSound "exflamer/sight";
 		PainSound "exflamer/pain";
 		DeathSound "exflamer/death";

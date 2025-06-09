@@ -59,9 +59,18 @@ class CultistHeavy : ChaingunGuy Replaces ChaingunGuy
 		if (target)
 		{
 			A_FaceTarget();
-			A_CustomBulletAttack(22.5
-			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
+			A_StartSound("shotguy/attack", CHAN_WEAPON);
+			A_SpawnProjectile("Tracer", angle: frandom(-11.5,11.5), flags: CMF_AIMOFFSET, pitch: random(-2,2));
 		}
 	}
  	
+}
+
+class ChaingunTracer : Tracer
+{
+	Default
+	{
+		DamageFunction 3*random(1,4);
+	}
+
 }

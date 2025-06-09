@@ -17,6 +17,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 		ActiveSound "CCSM/active";
 		PainSound "CCSM/pain";
 		DeathSound  "CCSM/death";
+		PainChance "ChainSword", 20;
 		+BOSSDEATH
 		PainChance 80;
 		MeleeRange 55;
@@ -140,6 +141,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 // 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
 		CPNA Q  2 A_Pain;
 		CPNA R  3 ;
+		TNT1 A 0 FeelNoPain(6);
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
 // 		TNT1 A 0  A_JumpIfInventory("ParryMe_Stack", 2 ,"Pain");
 		Goto See;
