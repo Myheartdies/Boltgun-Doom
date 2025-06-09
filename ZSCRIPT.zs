@@ -134,7 +134,7 @@ class Z_NashMove : CustomInventory
 			{
 				// bump up the player's speed to compensate for the deceleration
 				// TO DO: math here is shit and wrong, please fix
-				double s = 1.27 + (1.0 - DECEL_MULT);
+				double s = 1.23 + (1.0 - DECEL_MULT);
 				Owner.A_SetSpeed(s * 2.0);
 
 				// decelerate the player, if not in pain
