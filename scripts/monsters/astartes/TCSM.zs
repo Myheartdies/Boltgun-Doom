@@ -82,8 +82,8 @@ class Legionary : ChaosMarine //Replaces Revenant
 		Goto See;
 	Missile:
 		TNT1 A 0  A_JumpIf(random(0,4) > 3, "Charge");
-		TNT1 A 0 FeelNoPain(10);
 		TCSM G 8 {A_FaceTarget();A_StartSound("TCSM/active");}
+		TNT1 A 0 FeelNoPain(6);
 		TCSM H 3 Bright;
 		TCSM H 3 Bright MarineMissile;
 		TCSM H 3 Bright A_FaceTarget;
