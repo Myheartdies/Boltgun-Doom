@@ -1,8 +1,7 @@
 version "4.11"
 
 #include "scripts/Decorations.zs"
-#include "scripts/Items.zs"
-
+#include "scripts/heals.zs"
 #include "scripts/Monsters.zs"
 
 
@@ -91,8 +90,8 @@ class Z_NashMove : CustomInventory
 	// How much to reduce the slippery movement.
 	// Lower number = less slippery.
 	const DECEL_MULT = 0.8;
-	const HEAVYBOLTER_SLOWDOWN1 = 0.6;
-	const HEAVYBOLTER_SLOWDOWN2 = 0.22;
+	const HEAVYBOLTER_SLOWDOWN1 = 0.5;
+	const HEAVYBOLTER_SLOWDOWN2 = 0.27;
 
 	//===========================================================================
 	//
@@ -155,17 +154,17 @@ class Z_NashMove : CustomInventory
 					if (HeavyBolter(owner.player.readyweapon).Slowed2){
 						Owner.vel.x *= HEAVYBOLTER_SLOWDOWN2;
 						Owner.vel.y *= HEAVYBOLTER_SLOWDOWN2;
-						Console.printf("Slowing down2");
+// 						Console.printf("Slowing down2");
 					}
 					else
 					{
 						Owner.vel.x *= HEAVYBOLTER_SLOWDOWN1;
 						Owner.vel.y *= HEAVYBOLTER_SLOWDOWN1;
-						Console.printf("Slowing down1");
+// 						Console.printf("Slowing down1");
 					}
 // 					
 				}
-				else Console.printf("normal speed");
+// 				else Console.printf("normal speed");
 			}
 		}
 
