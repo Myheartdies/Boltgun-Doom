@@ -40,11 +40,11 @@ class LegionaryPlasma : ChaosMarine
 		Loop;
 	Melee:
 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "DashMissile");
-		PSMA L 6 A_FaceTarget;
+		PSMA L 7 A_FaceTarget;
 		PSMA M 3 A_StartSound("TCSM/active");
-		PSMA M 3 A_FaceTarget;  //2 originally
-		PSMA N 3 A_FaceTarget;  //3
-		PSMA O 12 A_CustomMeleeAttack(random(3, 10) * 8, "TCSM/melee", "TCSM/melee-miss");
+		PSMA N 2 A_FaceTarget;  //2 originally
+		PSMA O 2 A_FaceTarget;  //3
+		PSMA O 10 A_CustomMeleeAttack(random(3, 10) * 8, "TCSM/melee", "TCSM/melee-miss");
 		Goto See;
 	DashMissile:
 		PSMA F 2 {A_FaceTarget();BackThrust(18,3);}
@@ -72,6 +72,7 @@ class LegionaryPlasma : ChaosMarine
 	Missile:
 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "TurboMissile");
 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "DashMissile");
+		TNT1 A 0 FeelNoPain(8);
 		PSMB H 4 A_StartSound("PCSM/chargeup");
 		PSMB IJK 2 A_FaceTarget;
 		PSMA GH 3 A_FaceTarget;
@@ -83,6 +84,7 @@ class LegionaryPlasma : ChaosMarine
 		PSMA JK 3;
 		Goto See;
 	TurboMissile:
+		TNT1 A 0 FeelNoPain(10);
 		PSMB A 3 A_StartSound("TCSM/bark");
 		PSMB BCDEFG 3 A_FaceTarget;
 		PSMB H 2 A_StartSound("PCSM/chargeup");
@@ -104,6 +106,7 @@ class LegionaryPlasma : ChaosMarine
 	Pain:
 		PSMA P  2;
 		PSMA Q  1 A_Pain;
+		TNT1 A 0 FeelNoPain(3);
 		Goto See;
 // 		TNT1 A 0 special_stagger;
 	Death:

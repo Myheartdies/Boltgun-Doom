@@ -32,9 +32,11 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM TU 10 A_Look;
 		Loop;
 	Charge:
+		TNT1 A 0 FeelNoPain(8);
 		TCSM R 4 A_StartSound("TCSM/bark");
 		TCSM SR 5 A_FaceTarget;
 		TCSM A 3 DirectedThrust(18);
+		TNT1 A 0 FeelNoPain(8);
 		TCSM AA 1 MarineCharge;
 		TCSM B 2 TacticalStep("TCSM/steps",True);
 		TCSM CCDD 1 MarineCharge;
@@ -80,6 +82,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		Goto See;
 	Missile:
 		TNT1 A 0  A_JumpIf(random(0,4) > 3, "Charge");
+		TNT1 A 0 FeelNoPain(10);
 		TCSM G 8 {A_FaceTarget();A_StartSound("TCSM/active");}
 		TCSM H 3 Bright;
 		TCSM H 3 Bright MarineMissile;
@@ -89,7 +92,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM I 2 Bright MarineMissile;
 		TCSM I 4 Bright A_FaceTarget;
 		TCSM I 2 Bright;
-// 		TCSM H 3 Bright MarineMissile;
+		TCSM H 3 Bright MarineMissile;
 		Goto See;
 	Pain:
 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
@@ -97,6 +100,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		TCSM M  4 ;
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
 		TNT1 A 0  A_JumpIfInventory("ParryMe_Stack", 2 ,"Pain");
+		TNT1 A 0 FeelNoPain(6);
 		Goto See+1;
 	Death:
 		TCSM M  6 ;
@@ -174,8 +178,8 @@ class MarineBall: BolterProjectile{
 		SeeSound "TCSM/attack";
 		DeathSound "weapons/bolter_impact";
 		Species "BaronOfHell";
-// 		Damage 3;
-		DamageFunction 3.5 * random(1,8);
+		Damage 4;
+// 		DamageFunction 3.5 * random(1,8);
 // 		DamageFunction 24;
 		Speed 14;
 		FastSpeed 25;

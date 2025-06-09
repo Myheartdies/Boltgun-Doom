@@ -2,12 +2,13 @@ class Terminator : Fatso Replaces Fatso
 {
 	Default
 	{
-		Health 1100;
+		Health 1200;
 		Radius 30;
 		Height 64;
 		Mass 1000;
 		PainChance 30;
-		PainThreshold 12;
+		PainChance "ChainSword", 20;
+// 		PainThreshold 12;
 		Monster;
 		+FLOORCLIP
 		+BOSSDEATH
@@ -22,7 +23,7 @@ class Terminator : Fatso Replaces Fatso
 		DeathSound  "TERM/death";
 		DropItem "ClipBox";
 		DamageFactor "SmallExplosion", 0.2; //used to be 0.1 when bolter damage was 11
-		DamageFactor "StrongExplosion", 0.5;
+		DamageFactor "StrongExplosion", 0.52;
 		Obituary "Terminated";
 		Tag "$FN_TERM";
 	}
@@ -51,11 +52,11 @@ class Terminator : Fatso Replaces Fatso
 		TRMA E 10 TermRaise;
 		TRMA F 10;
 		TRMA G 8 BRIGHT A_FatAttack1;
-		TRMA HH 4 A_FaceTarget;
+		TRMA HH 5 A_FaceTarget;
 		TRMA I 8 BRIGHT A_FatAttack2;
-		TRMA JJ 4 A_FaceTarget;
+		TRMA JJ 5 A_FaceTarget;
 		TRMA G 8 BRIGHT A_FatAttack3;
-		TRMA HH 4 A_FaceTarget;
+		TRMA HH 5 A_FaceTarget;
 		Goto See;
 	Melee:
 		TRMA K 5 A_StartSound("TERM/melee");
