@@ -2,15 +2,9 @@ class GreenAstartesArmor : GreenArmor Replaces GreenArmor
 {
 	Default
 	{
-		Armor.SavePercent 50; //Raise armor save amount from 33% to 50
+		Armor.SavePercent 45; //Raise armor save amount from 33% to 45
 		Inventory.Pickupmessage "Picked up green astartes armor";
-	}
-}
-class AstartesArmorBonus : ArmorBonus Replaces ArmorBonus
-{
-	Default
-	{
-		Armor.SavePercent 45; //Raise armor save amount from 33% to 50
+// 		Inventory.Icon "BONAA0";
 	}
 }
 
@@ -18,15 +12,17 @@ class BlueAstartesArmor : BlueArmor Replaces BlueArmor
 {
 	Default
 	{
-		Armor.SavePercent 80; //Raise armor save amount from 33% to 50
+		Armor.SavePercent 70; //Raise armor save amount from 50 to 70
 		Inventory.Pickupmessage "Picked up blue astartes armor";
+// 		Inventory.Icon "BONAA0";
 	}
 }
 class BlueAstartesArmorForMegasphere: BlueArmorForMegasphere Replaces BlueArmorForMegasphere
 {
 	Default
 	{
-		Armor.SavePercent 75; //Raise armor save amount from 33% to 50
+		Armor.SavePercent 70; //Raise armor save amount from 50 to 70
+// 		Inventory.Icon "BONAA0";
 	}
 }
 
