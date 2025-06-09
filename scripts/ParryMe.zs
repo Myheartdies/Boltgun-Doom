@@ -86,7 +86,7 @@ class ParryMe_System : Inventory {
 			--noParryTime;
 		} else {
 			if ((parryTime <= 0||reparry)
-				&& (buttons & BT_USER1)
+				&& (buttons & BT_USER2)
 // 				&& !(owner.GetPlayerInput(Input_OldButtons) & BT_USER1 /*BT_Forward*/)
 				) {
 				if (parryTime>0) A_log("Reparried");
