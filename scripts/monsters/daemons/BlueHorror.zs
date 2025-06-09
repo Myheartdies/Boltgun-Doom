@@ -29,9 +29,12 @@ class BlueHorror : Demon replaces Demon
 		BLHR EEFF 2 A_Chase;
 		Loop;
 	Melee:
-		BLHR G 8 A_FaceTarget;
-		BLHR H 8 A_CustomMeleeAttack(random(2, 6) * 4, "bluehorror/attack");
-		BLHR I 8 A_SargAttack;
+		BLHR G 12 {
+			A_StartSound("bluehorror/attack", CHAN_AUTO, pitch: 1.1, startTime:0.5);
+			A_FaceTarget();
+		}
+		BLHR H 6 A_CustomMeleeAttack(random(1, 5) * 5, "bluehorror/attack");
+		BLHR I 8 A_CustomMeleeAttack(random(1, 5) * 5, "bluehorror/attack");
 		Goto See;
 	Pain:
 		BLHR K 2 Fast;
