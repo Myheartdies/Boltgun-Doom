@@ -27,7 +27,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		ShellEjectingWeapon.MaxCasingCount 10;
 		ShellEjectingWeapon.CasingDropSound "weapons/heavybolter_casing";
 		ShellEjectingWeapon.DropSoundVolume 0.5;
-		HeavyBolter.SlowDownMultiplier 0.2;
+		HeavyBolter.SlowDownMultiplier 0.2; //This is acutally not working
 		Obituary "$OB_MPCHAINGUN";
 		Tag "HeavyBolter";
 	}
@@ -40,7 +40,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 			RevertSlowDown();
 			RevertSlowDown2();
 		}
-		HBTR AA 4 A_WeaponReady;
+		HBTR AA 4 A_WeaponReadyBob;
 		Loop;
 	Deselect:
 		TNT1 A 0 checkDeath;
@@ -330,7 +330,7 @@ class HeavyBolterProjectile: BolterProjectile{
 // 		Damage 15;
 // 		DamageFunction 8 * random(4, 14);
 		DamageType "HeavyBolter";
-		DamageFunction random(5,9)*random(4,10);
+		DamageFunction random(5,8)*random(4,10);
 		DeathSound "weapons/bolter_impact";
 	}
 

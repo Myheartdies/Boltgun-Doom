@@ -34,8 +34,8 @@ class Bolter : ShellEjectingWeapon
 	States
 	{
 	Ready:
-		BOTR E 4 {
-			A_WeaponReady(WRF_ALLOWRELOAD);
+		BOTR E 2 {
+			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(21);
 			CasingLayerReady();
 // 			A_JumpIfInventory("clipEjected", 1, "ReloadingPartialReinsert");
@@ -74,27 +74,28 @@ class Bolter : ShellEjectingWeapon
 		Goto Reload;
 		
 		BOTR A 1 {
+			OverlayRecoil(5, 3);
 			A_ZoomFactor(0.994);
 			A_SetPitch(pitch - 0.5);
-			A_OverlayScale(1, 1.06,1.06);
+			A_OverlayScale(1, 1.05,1.05);
 		}
 		
 		BOTR B 1 {
-			OverlayRecoil(12, 4);
+			OverlayRecoil(1, 1);
 // 			CompensateOffset(-12,-2);
-			A_Quake(0.2,2,0,10);
+			A_Quake(0.3,3,0,10);
 // 			RandomShake(50,51,50,51);
 		}
 		
 // 		Fire with low ammo click if ammo is less than 8
-		TNT1 A 0 A_JumpIfInventory("BolterMag", 8, 3);
+		TNT1 A 0 A_JumpIfInventory("BolterMag", 6, 3);
 		BOTR B 1 Bright {
 			FireBolter(True); 
 			AllowQuickSwitch();
 		}
 		TNT1 A 0 A_Jump(256,2);
 		BOTR B 1 Bright nodelay {
-			OverlayRecoil(-7, -2);
+			OverlayRecoil(-4, -2);
 			FireBolter(); 
 			AllowQuickSwitch();
 		}
@@ -102,13 +103,11 @@ class Bolter : ShellEjectingWeapon
 		TNT1 A 0 A_ZoomFactor(0.996);
 		TNT1 A 0 A_OverlayScale(1,1.03,1.03);
 // 		TNT1 A 0 {A_WeaponOffset(20, -2.5, WOF_ADD); CompensateOffset(20,2.5); }
-		BOTR C 1 Bright {
+		BOTR B 1 Bright {
 			A_SetPitch(pitch + 0.3);
-			OverlayRecoil(-5, -2);
-// 			RandomShakeRecovery();
-// 			CompensateOffset(12,2);
+			OverlayRecoil(-2, -2);
 			AllowQuickSwitch();}
-		TNT1 A 0 A_OverlayScale(1,1.02,1.02);
+		TNT1 A 0 A_OverlayScale(1,1.01,1.01);
 		BOTR C 1 Bright;
 		TNT1 A 0 A_OverlayScale(1,1,1);
 		BOTR D 1 Bright {A_ZoomFactor(1.00); AllowQuickSwitch();}
@@ -283,7 +282,7 @@ class BolterProjectile: TrailedProjectile{
 		Height 2;
 		Speed 250;
 		Scale 0.65;
-		DamageFunction random(5,8)*random(2,10); //was (5,9) * (2,10)
+		DamageFunction random(5,9)*random(2,9); //was (5,9) * (2,10)
 // 		DamageFunction 15 *random(2,3);
 		DamageType "Bolter";
 		+FORCEXYBILLBOARD
@@ -300,7 +299,7 @@ class BolterProjectile: TrailedProjectile{
 	Crash:
 	XDeath:
  		TNT1 A 0 A_Startsound("weapons/bolter_impact_flesh",CHAN_WEAPON, flags:CHANF_OVERLAP
-		, volume:0.32, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3));
+		, volume:0.32, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3), starttime:0.1);
 		TNT1 A 0 A_Startsound("weapons/bolter_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.5,attenuation:ATTN_NONE);
 
 	Death:

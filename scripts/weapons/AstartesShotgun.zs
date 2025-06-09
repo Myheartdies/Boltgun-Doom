@@ -9,7 +9,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	}
 	Default
 	{
-		Weapon.SelectionOrder 1300;
+		Weapon.SelectionOrder 600;
 		Weapon.AmmoUse 1;
 		Weapon.KickBack 200;
 		Inventory.PickupMessage "$GOTSHOTGUN";
@@ -32,7 +32,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	{
 	Ready:
 		STGN A 4 {
-			A_WeaponReady(WRF_ALLOWRELOAD);
+			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(22);
 		}
 		Loop;
@@ -204,7 +204,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		player.mo.PlayAttacking2 ();
 
-		A_FireBullets (5, 1.5, 8, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+		A_FireBullets (5.5, 1.5, 8, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
 // 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
@@ -272,6 +272,10 @@ class ShotgunProjectile: FastProjectile {
 		Loop;
 	Crash:
 	XDeath:
+		TNT1 A 0 A_Jump(120, 2); //Have only part of the shotgun bullets play the impact flesh sound to make it not too loud
+		TNT1 A 0 A_Startsound("weapons/bolter_impact_flesh",CHAN_WEAPON, flags:CHANF_OVERLAP
+		, volume:0.3, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3), starttime:0.1);
+		TNT1 A 0 A_Jump(100, 2); //Do the same for the shotgun impact sound
  		TNT1 A 0 A_Startsound("weapons/scout_shotgun_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.6,attenuation:ATTN_NONE,pitch: frandom(0.7,0.8));
 	Death:
 		TNT1 A 1 {
@@ -287,6 +291,7 @@ class ShotgunProjectile: FastProjectile {
 		vector3 vec = quat.FromAngles(angle, pitch, 0) * (length, 0, 0);
 		return vec;
 	}
+	
 
 	
 

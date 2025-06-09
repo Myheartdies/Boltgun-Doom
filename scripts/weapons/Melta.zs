@@ -4,7 +4,7 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 	{
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
-		Weapon.SelectionOrder 400;
+		Weapon.SelectionOrder 800;
 		Weapon.AmmoUse 2;
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType "Shell";
@@ -53,10 +53,6 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 		SHT2 B 7;
 		SHT2 A 3;
 		Goto Deselect;
-	Flash:
-		SHT2 I 4 Bright A_Light1;
-		SHT2 J 3 Bright A_Light2;
-		Goto LightDone;
 	Spawn:
 		SGN2 A -1;
 		Stop;
@@ -78,7 +74,6 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 			if (!weap.DepleteAmmo (weap.bAltFire, true, 2))
 				return;
 			
-			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
 		}
 		player.mo.PlayAttacking2 ();
 
