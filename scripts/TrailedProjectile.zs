@@ -167,10 +167,13 @@ class TrailedProjectile: FastProjectile {
 		int length ;
 // 		Speed override for simulating a trail it would have its speed is different from the actual speed
 		if (speedOverride != 0)
+		{
 			length = speedOverride/subdivide;
+			facing = facingToVector(angle, pitch, length);
+		}
+// 		If it's flying normally, just take the 
 		else
-			length = vel.length()/subdivide;
-		facing = facingToVector(angle, pitch, length);
+			facing = (vel.x/subdivide, vel.y/subdivide, vel.z/subdivide);
 		
 		
 // 		Spawn center smoke trail
@@ -218,9 +221,9 @@ class TrailedProjectile: FastProjectile {
 			
 
 // 			Spawn side smoke trail
-			speedx = frandom(-0.1,0.1);
-			speedy = frandom(-0.1,0.1);
-			speedz = frandom(-0.1,0.1);
+			speedx = frandom(-0.15,0.15);
+			speedy = frandom(-0.15,0.15);
+			speedz = frandom(-0.15,0.15);
 			A_SpawnParticle("7f7f7f",0,baseTTL,subSmokeSize+frandom(-0.5,0.5), 0
 			,-facing.x*div+frandom(-0.3,0.3),-facing.y*div+frandom(-0.3,0.3),-facing.z*div+frandom(-0.3,0.3)
 			,speedx,speedy,speedz, -speedx/2000,-speedy/2000,-speedz/2000
