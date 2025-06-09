@@ -366,3 +366,28 @@ weapons/meltagun_fire MLTAFRE0
 // Reloading
 weapons/meltagun_reload MLTARLD0
 // $pitchset weapons/meltagun_reload 0.7 0.7
+
+
+// ========================================================================
+// For chainsword
+// ========================================================================
+// Idle
+weapons/chainsword_Idle CNSDIDL1
+
+// Strike
+weapons/chainsword_strike CNSDSTK1
+
+// cutting
+weapons/chainsword_cutting CNSDCUT1
+$pitchset weapons/chainsword_cutting 0.7 0.7
+
+// LowRev
+weapons/chainsword_lowrev CNSDLOW1
+
+// Follow through hit
+weapons/swing_cut CNSDFTH1
+$pitchset weapons/swing_cut 0.6 0.6
+
+// Follow through miss
+weapons/swing_miss CNSDFTM1
+$pitchset weapons/swing_miss 0.6 0.6
