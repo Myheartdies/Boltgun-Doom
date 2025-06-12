@@ -35,7 +35,19 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(22);
 		}
-		Loop;
+		Wait;
+	NoChainSword:
+		TNT1 A 1 OverlayReAdjust;
+	NoChainSwordLoop:
+		STGN A 3 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(22);
+		}
+		STGN A 3 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_Refire("NoChainSwordLoop");
+		}	
+		Goto Ready;
 	Deselect:
 // 		STGN A 1 Offset(0, 34);
 // 		STGN A 1 Offset(0, 60);
@@ -66,32 +78,31 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_SetPitch(pitch - 1.15);
 		TNT1 A 0 A_OverlayScale(1, 1.15,1.15);
 		TNT1 A 0 OverlayRecoil(13,25);
-		// TNT1 A 0 A_WeaponOffset(13, 25, WOF_ADD);
 		STGN B 1 ; //Recoil should dampen entirely after first firing frame
 		TNT1 A 0 A_ZoomFactor(0.993);
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 OverlayRecoil(13, 20);
 		
-		STGN B 1 ;
+		STGN B 1;
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
 		TNT1 A 0 A_ZoomFactor(0.995);
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
-		TNT1 A 0 OverlayRecoil(0, 15);
-		TNT1 A 0 A_Quake(1,5,0,20);
+		TNT1 A 0 OverlayRecoil(0, 10);
+		TNT1 A 0 A_Quake(1,5,0,15);
 		STGN C 1 Bright FireScoutShotgun; 
-		TNT1 A 0 OverlayRecoil(-12, -23);
+		TNT1 A 0 OverlayRecoil(-12, -22);
 		
 		TNT1 A 0 A_ZoomFactor(0.997);
 		TNT1 A 0 A_SetPitch(pitch + 0.4);
 		TNT1 A 0 A_OverlayScale(1, 1.1, 1.1);
 		STGN C 1 Bright ;
-		TNT1 A 0 OverlayRecoil(-8, -22);
+		TNT1 A 0 OverlayRecoil(-8, -18);
 		TNT1 A 0 A_ZoomFactor(1.00);
 		TNT1 A 0 A_SetPitch(pitch + 0.3);
 		TNT1 A 0 A_OverlayScale(1, 1.05, 1.05);
 		STGN C 1 Bright A_SetPitch(pitch + 0.1);
 		STGN D 1;
-		TNT1 A 0 OverlayRecoil(-6, -15);
+		TNT1 A 0 OverlayRecoil(-6, -12);
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
 		STGN D 1 Bright;
 		STGN EE 1 Bright;
@@ -111,7 +122,6 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		STGN J 2  A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		STGN K 2 {
-			
 			A_WeaponReady(WRF_ALLOWRELOAD);
 		}
 // 		STGN K 1 A_WeaponReady(WRF_ALLOWRELOAD);
@@ -169,11 +179,12 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	MuzzleFlash:
 		TNT1 A 0 A_jump(255, "FireRing");
 	FireRing:
-		BTRF A 2 Bright  A_Light(2);
+		TNT1 A 1;
+		BTRF A 1 Bright  A_Light(2);
 		BTRF BC 1 Bright  A_Light(2);
 		Goto LightDone;
 	Spawn:
-		SHOT A -1;
+		SSTN A -1;
 		Stop;
 	}
 	action void smoke_puff(){
@@ -204,7 +215,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		}
 		player.mo.PlayAttacking2 ();
 
-		A_FireBullets (5.5, 1.5, 8, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+		A_FireBullets (6, 1.5, 9, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
 // 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
@@ -256,7 +267,7 @@ class ShotgunProjectile: FastProjectile {
 		Scale 0.8;
 		+PUFFONACTORS
 // 		Damage 7;
-		DamageFunction 5 * random(1,3);
+		DamageFunction 4 * random(1,3);
 		Projectile;
 		+RANDOMIZE
 		+DEHEXPLOSION

@@ -1,4 +1,4 @@
-class Bolter : ShellEjectingWeapon
+class Bolter : ShellEjectingWeapon Replaces Pistol
 {
 	
 	override void BeginPlay(){
@@ -30,17 +30,36 @@ class Bolter : ShellEjectingWeapon
 		ShellEjectingWeapon.CasingDropSound "weapons/bolter_casing";
 		ShellEjectingWeapon.DropSoundVolume 0.3;
 // 		CrosshairScale 0.5;
+// 		Scale 0.5;
 	}
 	States
 	{
 	Ready:
+		TNT1 A 0 A_JumpIfInventory("BolterMag", 1, 2);
+		TNT1 A 0 A_GiveInventory("isFullReload", 1);
+		Goto Reload;
 		BOTR E 2 {
 			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(21);
 			CasingLayerReady();
 // 			A_JumpIfInventory("clipEjected", 1, "ReloadingPartialReinsert");
 		}
-		Loop;
+		Wait;
+	NoChainSword:
+		TNT1 A 1 OverlayReAdjust;
+	NoChainSwordLoop:
+		BOTR E 2 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(21);
+			CasingLayerReady();
+		}
+		BOTR E 2 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(21);
+			CasingLayerReady();
+			A_Refire("NoChainSwordLoop");
+		}	
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 checkDeath;
 		BOTR E 1{
@@ -126,8 +145,22 @@ class Bolter : ShellEjectingWeapon
 	MuzzleFlash:
 		TNT1 A 0 A_jump(256, "FireRing");
 	FireRing:
-		BTRF A 1 Bright A_Light(2);
-		BTRF BC 1 Bright A_Light(2);
+		TNT1 A 2;
+		BTRF A 1 Bright {
+			A_Light(2);
+			invoker.A_overlayalpha(-2, 0.1);
+		}
+		BTRF B 1 Bright {
+			A_Light(2);
+			invoker.A_overlayalpha(-2, 0.1);
+		}
+		BTRF C 1 Bright {
+			A_Light(2);
+			invoker.A_overlayalpha(-2, 0.1);
+		}
+		Goto LightDone;
+	MuzzleFlash2:
+		BTRP CHOU 1 Bright A_Light(2);
 		Goto LightDone;
 	Casing:
 // 		BTRF AAAAAAAAAA 4;
@@ -213,7 +246,7 @@ class Bolter : ShellEjectingWeapon
 		BOTR MNO 3;
 		Goto Ready;
  	Spawn:
-		PIST A -1;
+		SBTR A -1;
 		Stop;
 	}
 	
@@ -257,11 +290,19 @@ class Bolter : ShellEjectingWeapon
 		AddToSoundQueue(25);
 
 		A_Overlay(-2, "MuzzleFlash");
+		A_OverlayFlags(-2,PSPF_ALPHA, True);
 		A_OverlayPivot(-2, 0.5, 0.5);
-		A_OverlayScale(-2, 0.3 + random(-3,3)/100, 0.3 + random(-3,3)/100);
-		A_OverlayOffset(-2, 278 + random(-5,5), 63 + random(-5,5));
+		A_OverlayScale(-2, 0.32 + random(-3,3)/100, 0.32 + random(-3,3)/100);
+		A_OverlayOffset(-2, 280 + random(-3,3), 60 + random(-3,3));
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
-		A_OverlayAlpha(-2, 0.95);
+		A_OverlayAlpha(-2, 0.1);
+		
+		A_Overlay(-3, "MuzzleFlash2");
+		A_OverlayPivot(-3, 0.5, 0.5);
+		A_OverlayScale(-3, 3.5 + random(-2,2)/100, 3.5 + random(-2,2)/100);
+		A_OverlayOffset(-3, 280 + random(-3,3), 55 + random(-3,3));
+		A_OverlayRotate(-3, random(0,8)*30, WOF_ADD );
+// 		A_OverlayAlpha(-3, 0.9);
 		
 		
 	}

@@ -42,6 +42,23 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		}
 		HBTR AA 4 A_WeaponReadyBob;
 		Loop;
+	NoChainSword:
+		TNT1 A 1 {
+			A_StopSound(CHAN_5);
+			A_SetCrosshair(23);
+			RevertSlowDown();
+			RevertSlowDown2();
+			OverlayReAdjust();
+		}
+	NoChainSwordLoop:
+		HBTR A 4 {
+			A_WeaponReadyBob_NoCS();
+		}
+		HBTR A 4 {
+			A_WeaponReadyBob_NoCS();
+			A_Refire("NoChainSwordLoop");
+		}
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 checkDeath;
 		TNT1 A 0 {
@@ -172,7 +189,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		Goto LightDone;
 	MuzzleFlash:
 // 		HBTF A 1 Bright A_Light1;
-		HBTF C 1 Bright A_Light1;
+		HBTF CA 1 Bright A_Light1;
 		HBTF C 1 Bright {
 			A_Light1();
 			A_OverlayAlpha(-2, 0.1);
@@ -180,7 +197,7 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 		}
 		Goto LightDone;
 	Spawn:
-		MGUN A -1;
+		SHBT A -1;
 		Stop;
 	}
 	
@@ -266,8 +283,8 @@ class HeavyBolter : ShellEjectingWeapon Replaces Chaingun
 // 		draw muzzle spike
 		A_Overlay(-3, "MuzzleFlash");
 		A_OverlayPivot(-3, 0.5, 0.5);
-		A_OverlayScale(-3, 0.2 + random(-3,3)/50, 0.2 + random(-3,3)/50);
-		A_OverlayOffset(-3, 194 + random(-10,10), 220 + random(-10,10));
+		A_OverlayScale(-3, 1.7 + random(-3,3)/40, 1.6 + random(-3,3)/40);
+		A_OverlayOffset(-3, 170 + random(-10,10), 15 + random(-10,10));
 		A_OverlayRotate(-3, 90 + random(-3,3), WOF_ADD );
 		A_OverlayAlpha(-3, 0.8);
 		
@@ -342,8 +359,11 @@ class HeavyBolterProjectile: BolterProjectile{
 		Loop;
 	Crash:
 	XDeath:
+		
  		TNT1 A 0 A_Startsound("weapons/bolter_impact_flesh",CHAN_WEAPON, flags:CHANF_OVERLAP
-		, volume:0.65, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3));
+		, volume:0.4, attenuation:ATTN_NONE, pitch:frandom(0.8,1.3));
+// 		TNT1 A 0 A_Startsound("weapons/impact_strong",CHAN_WEAPON, flags:CHANF_OVERLAP
+// 		, volume:1.0, attenuation:ATTN_NONE);
 		TNT1 A 0 A_Startsound("weapons/bolter_impact",CHAN_WEAPON, flags:CHANF_OVERLAP,volume:0.5,attenuation:ATTN_NONE);
 	Death:
 		HTRE A 2 Bright A_Explode(6 * random(4,7), 50, 0, True, 30, damagetype:"StrongExplosion");

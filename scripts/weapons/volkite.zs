@@ -28,11 +28,23 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 	{
 	Ready:
 		TNT1 A 0 A_StopSound(CHAN_WEAPON);
-		VKT1 A 1 {
-			A_WeaponReady(WRF_ALLOWRELOAD);
+		VKT1 A 4 {
+			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(25);
 		}
 		Loop;
+	NoChainSword:
+		TNT1 A 1 OverlayReAdjust;
+	NoChainSwordLoop:
+		VKT1 A 3{
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(25);
+		}
+		VKT1 A 3{
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_Refire("NoChainSwordLoop");
+		}	
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 BeamForceStop;
 		TNT1 A 0 checkDeath;
@@ -104,7 +116,7 @@ class VolkiteCaliver : SternguardWeapon Replaces PlasmaRifle
 // 		PLSF B 4 Bright A_Light1;
 		Goto LightDone;
 	Spawn:
-		PLAS A -1;
+		SVKT A -1;
 		Stop;
 	}
 

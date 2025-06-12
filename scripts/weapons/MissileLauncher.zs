@@ -14,6 +14,9 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		Weapon.BobSpeed 1.8;	
 		SternguardWeapon.TauntOffsetX 80;
 		SternguardWeapon.TauntOffsetY 45;
+		
+		SternguardWeapon.ChainswordOffsetX 70;
+		SternguardWeapon.ChainswordOffsetY 96;
 	}
 	States
 	{
@@ -23,6 +26,18 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 			A_SetCrosshair(26);
 		}
 		Loop;
+	NoChainSword:
+		TNT1 A 1 OverlayReAdjust;
+	NoChainSwordLoop:
+		MSLL A 2 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(26);
+		}
+		MSLL A 2 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_Refire("NoChainSwordLoop");
+		}	
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 checkDeath;
 		MSLL A 1 {
@@ -37,7 +52,7 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		}
 		Loop;
 	Fire:
-// 		TNT1 A 0 OverlayReAdjust;
+		TNT1 A 0 OverlayReAdjust;
 		MSLL B 3 Bright{A_GunFlash();A_Light2();}
 		MSLL C 3 Bright FireFragMissile();
 		MSLL C 3 Bright ;
@@ -57,7 +72,7 @@ class MissileLauncher : SternguardWeapon Replaces RocketLauncher
 		MISF CD 0 Bright A_Light2;
 		Goto LightDone;
 	Spawn:
-		LAUN A -1;
+		SMSL A -1;
 		Stop;
 	}
 	action void FireFragMissile(){
@@ -104,7 +119,7 @@ class FragMissile : Rocket
 		TNT1 A 6 ;
 		TNT1 A 24 {
 			firering("",270,0);
-			firering("orange", 460, 0,0.5);
+			firering("f1680a", 460, 0,0.5);
 			}
 		TNT1 B 15 ;
 // 		MISL D 4 Bright;

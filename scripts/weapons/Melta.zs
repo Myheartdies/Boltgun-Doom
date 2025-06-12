@@ -16,10 +16,22 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 	{
 	Ready:
 		MELT A 3 {
-			A_WeaponReady();
+			A_WeaponReadyBob();
 			A_SetCrosshair(24);
 		}
 		Loop;
+	NoChainSword:
+		TNT1 A 1 OverlayReAdjust;
+	NoChainSwordLoop:
+		MELT A 3 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_SetCrosshair(24);
+		}
+		MELT A 3 {
+			A_WeaponReadyBob_NoCS(WRF_ALLOWRELOAD);
+			A_Refire("NoChainSwordLoop");
+		}	
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 checkDeath;
 		MELT A 1 A_Lower(18);
@@ -54,7 +66,7 @@ class MeltaGun : SternguardWeapon Replaces SuperShotgun
 		SHT2 A 3;
 		Goto Deselect;
 	Spawn:
-		SGN2 A -1;
+		SMLT A -1;
 		Stop;
 	}
 
