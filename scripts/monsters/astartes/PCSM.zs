@@ -19,7 +19,7 @@ class LegionaryPlasma : ChaosMarine
 		ActiveSound "TCSM/active";
 		PainSound "PCSM/pain";
 		DeathSound  "PCSM/death";
-		PainChance 50;
+		PainChance 60;
 		MeleeRange 60;
 		MeleeThreshold 95;
 // 		+DropOff
@@ -47,7 +47,7 @@ class LegionaryPlasma : ChaosMarine
 		PSMA O 10 A_CustomMeleeAttack(random(3, 10) * 8, "TCSM/melee", "TCSM/melee-miss");
 		Goto See;
 	DashMissile:
-		PSMA F 2 {A_FaceTarget();BackThrust(18,3);}
+		PSMA F 2 {A_FaceTarget(); BackThrust(18,3);}
 		PSMA E 2 PlasmaStep("TCSM/charge",True);
 		PSMA DC 2;
 		PSMA B 3 PlasmaStep("TCSM/charge",True);
@@ -105,8 +105,8 @@ class LegionaryPlasma : ChaosMarine
 		
 	Pain:
 		PSMA P  2;
-		PSMA Q  1 A_Pain;
-		TNT1 A 0 FeelNoPain(3);
+		PSMA Q  3 A_Pain;
+		TNT1 A 0 FeelNoPain(6);
 		Goto See;
 // 		TNT1 A 0 special_stagger;
 	Death:

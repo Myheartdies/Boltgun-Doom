@@ -1,5 +1,8 @@
 class Terminator : Fatso Replaces Fatso
 {
+	int staggerRes;
+	int defaultPainChance;
+	bool dead;
 	Default
 	{
 		Health 1200;
@@ -8,7 +11,9 @@ class Terminator : Fatso Replaces Fatso
 		Mass 1000;
 		PainChance 30;
 		PainChance "ChainSword", 20;
-// 		PainThreshold 12;
+		PainChance "Shotgun", 8;
+		DamageFactor "Shotgun", 0.6;
+		PainThreshold 12;
 		Monster;
 		+FLOORCLIP
 		+BOSSDEATH
@@ -22,6 +27,7 @@ class Terminator : Fatso Replaces Fatso
 		PainSound "TERM/pain";
 		DeathSound  "TERM/death";
 		DropItem "ClipBox";
+		DropItem "Chaingun";
 		DamageFactor "SmallExplosion", 0.2; //used to be 0.1 when bolter damage was 11
 		DamageFactor "StrongExplosion", 0.52;
 		Obituary "Terminated";
@@ -66,6 +72,7 @@ class Terminator : Fatso Replaces Fatso
 	Pain:
 		TRMA O 3;
 		TRMA P 3 A_Pain;
+		TNT1 A 0 FeelNoPain(8);
 		Goto See;
 	Death:
 		TRMA P 20 A_Scream;
@@ -92,6 +99,33 @@ class Terminator : Fatso Replaces Fatso
 	void MarineStep(string footStep, statelabel melee, statelabel missile,int flags = 0){
 		A_StartSound(footStep);
 		A_Chase(melee, missile, flags);
+	}
+	
+	override void BeginPlay(void)
+	{
+		defaultPainChance = painchance;
+	}
+	void FeelNoPain(int painlessTime = 8){
+		staggerRes = painlessTime;
+// 		Console.printf("set staggerres %d nopain`mads %d",staggerRes, bNOPAIN);
+	}
+	
+	override void Die(Actor source, Actor inflictor, int dmgflags, Name MeansOfDeath){
+		super.Die(source, inflictor, dmgflags, MeansOfDeath);
+		dead = True;
+	}
+	
+	override void Tick(void)
+	{
+		super.Tick();
+		if (dead) return;
+		if (staggerRes > 0 && target && health > 0)
+		{
+			staggerRes -= 1;
+			painchance = 0;
+		}
+		else painchance = defaultpainchance;
+// 		Console.printf("%d nopain %d",staggerRes, bNOPAIN);
 	}
 }
 

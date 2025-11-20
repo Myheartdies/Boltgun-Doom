@@ -8,22 +8,25 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 //  2 taunt frame RS
 // 	2 grenade frames TU
 	int grenade;
+	int sinceLastFire;
 	Default
 	{
 		Scale 0.42;
-		Health 1100;
+		Health 1200;
 		Speed 12;
+		Height 64;
 		SeeSound "CCSM/sight";
 		ActiveSound "CCSM/active";
 		PainSound "CCSM/pain";
 		DeathSound  "CCSM/death";
-		PainChance "ChainSword", 20;
+		PainChance "ChainSword", 38;
 		DamageFactor "SmallExplosion", 0.3;
 		+BOSSDEATH
-		PainChance 80;
-		MeleeRange 55;
-		MeleeThreshold 100;
+		PainChance 35;
+		MeleeRange 68;
+		MeleeThreshold 180;
 		MinMissileChance 150;
+		MissileChanceMult 0.95;
 		DropItem "ClipBox";
 		Tag "$FN_CAPN";
 	}
@@ -71,6 +74,7 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 		TNT1 A 0  A_JumpIfInventory("Rage", 20 ,"Bark");
 		TNT1 A 0  A_JumpIfCloser(480, "Intermediate");
 		TNT1 A 0  A_JumpIfCloser(200, "See");
+		TNT1 A 0  FeelNoPain(5);
 		CPNA AA 2 A_Chase("_a_chase_default","_a_chase_default",CHF_NORANDOMTURN);
 		CPNA B 1 ChampionStep("TCSM/steps",True);
 // 		Deduct rage if taken one step
@@ -92,18 +96,21 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 // 	An intermediate state between advance and leap attack to give it a jump with possibility
 	Intermediate:
 		TNT1 A 0  A_JumpIfInventory("Rage", 20 ,"Bark");
-		TNT1 A 0  A_Jump(100, "LeapAttack");
+		TNT1 A 0  A_Jump(120, "LeapAttack");
 		Goto Advance+3;
 	LeapAttack:
-		TNT1 A 0 A_GiveInventory("Rage", 5);
-		CPNA A 0 DirectedThrust(10);
+		TNT1 A 0 A_GiveInventory("Rage", 4);
+		CPNA A 0 DirectedThrust(12);
 		CPNA AA 1 MarineCharge;
-		TNT1 A 0 FeelNoPain(6);
+		TNT1 A 0 FeelNoPain(16);
 		CPNA B 2 ChampionStep("TCSM/charge",True);
 		CPNA CCDD 1 MarineCharge;
-		CPNA E 2 ChampionStep("TCSM/charge",True);
-		CPNA L 2 { 
+		CPNA E 2 {
+			ChampionStep("TCSM/charge",True);
 			A_StartSound("CCSM/melee"); 
+		}
+		CPNA L 2 { 
+// 			A_StartSound("CCSM/melee");
 			LeapSwing();
 			A_JumpIfTargetInsideMeleeRange("MeleeSwing");
 		}
@@ -119,30 +126,30 @@ class AspiringChampion : ChaosMarine Replaces BaronOfHell
 	MeleeSwing:
 		TNT1 A 0 A_GiveInventory("Rage", 2);
 		CPNA M 6 {A_FaceTarget(); DirectedThrust(8);}
-		CPNA N 4 A_CustomMeleeAttack(random(4, 10) * 7, "TCSM/melee");
+		CPNA N 4 A_CustomMeleeAttack(random(4, 10) * 7, "CCSM/meleehit");
 // 		CPNA N 0 A_MonsterRefire(0, "MeleeFollowThrough");
 // 		TNT1 A 0 A_JumpIfTargetOutsideMeleeRange("MeleeFollowThrough");
 // 		Goto Melee + 1;
 	MeleeFollowThrough:
-		CPNA O 10 A_CustomMeleeAttack(random(2, 6) * 5, "TCSM/melee");
+		CPNA O 10 A_CustomMeleeAttack(random(2, 6) * 5, "CCSM/meleehit");
 		CPNA P 5; 
 		Goto See;
 	Missile:
 		TNT1 A 0  A_JumpIfInventory("Rage", 20 ,"Bark");
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
-		CPNA G 6 {A_FaceTarget(); A_StartSound("PCSM/chargeup");}
+		CPNA G 4 {A_FaceTarget(); A_StartSound("PCSM/chargeup");}
 		CPNA H 4 Bright;
-		CPNA H 2 Bright ChampionMissile;
+		CPNA H 3 Bright ChampionMissile;
 // 		CPNA G 6 Bright;
 // 		CPNA H 2 Bright ChampionMissile;
-		TNT1 A 0 A_GiveInventory("Rage", 2);
-		CPNA I 4 Bright A_FaceTarget;
+		TNT1 A 0 A_GiveInventory("Rage", 3);
+		CPNA I 2 Bright A_FaceTarget;
 		CPNA J 2 A_Chase;
 		Goto Advance;
 	Pain:
 // 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
-		CPNA Q  2 A_Pain;
-		CPNA R  3 ;
+		CPNA R  3 A_Pain;
+		CPNA Q  3 ;
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
 // 		TNT1 A 0  A_JumpIfInventory("ParryMe_Stack", 2 ,"Pain");
 		Goto See;
@@ -219,7 +226,7 @@ class Rage : Inventory{
 class ChampionPlasmaBall: BaronBall{
 		Default
 		{
-			Speed 17;
+			Speed 16;
 // 			Damage 7;
 			SeeSound "CCSM/attack";
 		
