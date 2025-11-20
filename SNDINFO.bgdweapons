@@ -367,6 +367,9 @@ weapons/meltagun_fire MLTAFRE0
 weapons/meltagun_reload MLTARLD0
 // $pitchset weapons/meltagun_reload 0.7 0.7
 
+// Charge
+weapons/meltagun_chargeup MLTACRG0
+
 
 // ========================================================================
 // For chainsword
