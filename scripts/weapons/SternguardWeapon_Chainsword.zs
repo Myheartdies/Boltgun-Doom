@@ -35,8 +35,8 @@ extend class SternguardWeapon
 // 		A_WeaponOffset(-120, 32);
 		SternguardWeapon.ChainSwordChargeRange 500; //charge range of chainsword
 		SternguardWeapon.ChainswordQuakeStrength 1.5; //intensity of all chainsword related screenshake
-		SternguardWeapon.ChainswordDamageStrike 36; //Damage of chainsword on first two hit
-		SternguardWeapon.ChainswordDamageSaw 25; //Damage of chainsword during the sawing
+		SternguardWeapon.ChainswordDamageStrike 30; //Damage of chainsword on first two hit
+		SternguardWeapon.ChainswordDamageSaw 20; //Damage of chainsword during the sawing
 		SternguardWeapon.ChainswordInvulnLength 10; //The length of invulnerabilty time when charging in ticks
 		SternguardWeapon.ChainswordSwingAngle 1.0;
 		SternguardWeapon.ChainswordAttackRange 70;
@@ -107,8 +107,7 @@ extend class SternguardWeapon
 // 			A_SetPitch(pitch - invoker.csSwingAngle * 0.4);
 			FaceChargeTarget(thrust:False);
 // 			A strong shake if the chainswod hit something
-			if (ChainswordCutting(invoker.chainswordDamageStrike, range:invoker.csAttackRange + 20)){
-// 				Console.printf("TARGETHIT");
+			if (ChainswordCutting(invoker.chainswordDamageStrike/2 * random(2,3), range:invoker.csAttackRange + 20)){
 				A_QuakeEx(invoker.csQuakeStrength * 20,invoker.csQuakeStrength*20,invoker.csQuakeStrength * 40
 				, 6, 0, 10, "", flags: QF_SCALEDOWN);
 			}
@@ -144,7 +143,7 @@ extend class SternguardWeapon
 		CHNS H 1 CsRefire("Sawing", range:invoker.csAttackRange);
 		Goto Followthrough;
 	Followthroughmiss:
-		TNT1 A 0 A_Startsound("weapons/swing_miss",CHAN_7, startTime: 0.3);
+		TNT1 A 0 A_Startsound("weapons/swing_miss",CHAN_7, startTime: 0.25);
 		TNT1 A 0;
 		CHNS U 2 {
 			FaceChargeTarget(thrust:False, trystop:True);
@@ -224,7 +223,7 @@ extend class SternguardWeapon
 	// 	First try to get a charge target, then charge towards it if one is found
 	action void ChargeIfHaveTarget(float range = 300)
 	{
-		invoker.chargeTarget = invoker.getChargeTarget(range, spread_xy: 10, raycastCount:6);
+		invoker.chargeTarget = invoker.getChargeTarget(range, spread_xy: 6, raycastCount:6);
 		if (invoker.chargeTarget)
 		{
 // 			Reset speed to prepare for charge
@@ -234,6 +233,7 @@ extend class SternguardWeapon
 			double chargeAngle = 0;
 			chargeAngle = invoker.owner.AngleTo (invoker.chargeTarget);
 			invoker.owner.angle = chargeAngle;
+			invoker.owner.vel = (0.1,0.1,0.1);
 			if (invoker.owner.distance2d(invoker.chargeTarget) > range * 2.0 /3.0)
 			{
 				Thrust(sqrt(invoker.owner.distance2d(invoker.chargeTarget)), chargeAngle);
@@ -244,7 +244,7 @@ extend class SternguardWeapon
 // 			else{
 			
 // 			}
-			invoker.owner.bnogravity = True;
+			invoker.owner.bNoGravity = True;
 			ThrustThingz(0,15,0,1);
 			invoker.isCsCharging = True;
 			invoker.FaceChargeTarget(Thrust: False);
@@ -252,7 +252,7 @@ extend class SternguardWeapon
 	}
 	
 	// 	The wobbling animation when a chainsword is revving
-	action void chainswordShake(int range_x= 10,int range_y=3, int period = 35, int randomrange = 0.1){
+	action void chainswordShake(int range_x= 10,int range_y=3, int period = 35, float randomrange = 0.1){
 		int breathspeed = 1;
 		invoker.timer = (invoker.timer + breathspeed + frandom(0, 0.1 * breathspeed)) % period;
 		float degree = float(invoker.timer)/float(period) * 360;
@@ -306,6 +306,7 @@ extend class SternguardWeapon
 		if (trystop){
 			invoker.isCsCharging = False;
 			invoker.owner.bnogravity = False;
+			invoker.owner.bSolid = True;
 		}
 	}
 	
@@ -381,7 +382,7 @@ extend class SternguardWeapon
 			return False;
 		}
 
-		class<Actor> pufftype = 'BulletPuff';
+		class<Actor> pufftype = 'ChainswordPuff';
 
 		double ang = angle + spread_xy * (Random2[Saw]() / 255.);
 // 		Give a kickback effect to the final cleave strike so the player can be safe from the follow up melee
@@ -422,7 +423,8 @@ extend class SternguardWeapon
 				t.linetarget.SetStateLabel("Pain");
 			}
 // 			Stop the player if they hit something
-			invoker.owner.speed = 0;
+			invoker.owner.vel.x = 0;
+			invoker.owner.vel.y = 0;
 			invoker.chainswordFirstStrike = False;
 		}
 		if (invoker.chainswordFirstStrike)
@@ -453,7 +455,7 @@ extend class SternguardWeapon
 			bJustAttacked = true;
 		}
 		invoker.kickback = invoker.originalKickBack;
-		return False;
+		return True;
 	}
 	
 	action void AdjustChainswordScale(){
@@ -461,4 +463,11 @@ extend class SternguardWeapon
 		, invoker.csTargetScaleY/invoker.WeaponScaleY);
 	}
 	
+}
+
+class ChainswordPuff : bulletpuff{
+	Default 
+	{
+		+EXTREMEDEATH
+	}
 }

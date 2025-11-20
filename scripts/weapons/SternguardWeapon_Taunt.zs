@@ -47,8 +47,8 @@ class SternguardWeapon : DoomWeapon
 		SternguardWeapon.TauntOffsetX 160;
 		SternguardWeapon.TauntOffsetY -50;
 		
-		XScale 0.55;
-		YScale 0.495;
+		XScale 0.45;
+		YScale 0.405;
 		
 		SternguardWeapon.TauntWaitTime 40;
 		Weapon.BobRangeX 0.1;
@@ -89,7 +89,7 @@ class SternguardWeapon : DoomWeapon
 // 		TNT1 A 0 A_SetPitch(pitch - 0.6);
 		TNT1 A 0 A_StartSound("sternguard/taunt_directed_foley2",CHAN_AUTO,volume:0.2);
 		TUNA ABC 3 A_SetPitch(pitch + 0.08);
-		TUNA DE 4 A_SetPitch(pitch - 0.12);
+		TUNA DE 4 A_SetPitch(pitch - 0.3);
 		TUNA FGHIJ 4;
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY|WRF_ALLOWRELOAD);
 		TNT1 A 0 A_WeaponOffset(-invoker.tauntOffsetX, invoker.tauntOffsetY);
@@ -176,8 +176,8 @@ class SternguardWeapon : DoomWeapon
 	action void A_WeaponReadyBob(int flags = 0){
 		int period = 80;
 		int breathspeed = 1;
-		int range_x = 1.2;
-		int range_y = 1.5;
+		float range_x = 1.4;
+		float range_y = 1.7;
 		A_WeaponReady(flags);
 // 		Reset iframe
 		invoker.iFrame = 0;
