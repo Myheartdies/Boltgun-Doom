@@ -17,8 +17,8 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		+WEAPON.ALT_AMMO_OPTIONAL
 		Weapon.AmmoType1 "ShellInTube";
 		Weapon.AmmoType2 "Shell";
-		Weapon.AmmoGive1 5;
-		Weapon.AmmoGive2 10;
+		Weapon.AmmoGive1 1;
+		Weapon.AmmoGive2 8;
 		Weapon.WeaponScaleX 0.6; 
 		Weapon.WeaponScaleY 0.6; 
 		
@@ -31,7 +31,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	States
 	{
 	Ready:
-		STGN A 4 {
+		STGN A 2 {
 			A_WeaponReadyBob(WRF_ALLOWRELOAD);
 			A_SetCrosshair(22);
 		}
@@ -71,7 +71,8 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 	Fire:
 		TNT1 A 0 OverlayReadjust;
 // 		Go to reload if out of ammo
-		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 1);
+		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 2);
+		TNT1 A 0 A_JumpIfInventory("Shell", 1, "Reload");
 		Goto Reload;
 		
 		TNT1 A 0 A_ZoomFactor(0.99);
@@ -83,13 +84,13 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_OverlayScale(1, 1.14,1.14);
 		TNT1 A 0 OverlayRecoil(13, 20);
 		
-		STGN B 1;
+		STGN B 1; //B
 		TNT1 A 0 A_SetPitch(pitch + 0.35);
 		TNT1 A 0 A_ZoomFactor(0.995);
 		TNT1 A 0 A_OverlayScale(1, 1.12,1.12);
 		TNT1 A 0 OverlayRecoil(0, 10);
-		TNT1 A 0 A_Quake(1,5,0,15);
-		STGN C 1 Bright FireScoutShotgun; 
+		TNT1 A 0 A_Quake(1.3,5,0,15);
+		STGN C 2 Bright FireScoutShotgun; 
 		TNT1 A 0 OverlayRecoil(-12, -22);
 		
 		TNT1 A 0 A_ZoomFactor(0.997);
@@ -100,7 +101,7 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_ZoomFactor(1.00);
 		TNT1 A 0 A_SetPitch(pitch + 0.3);
 		TNT1 A 0 A_OverlayScale(1, 1.05, 1.05);
-		STGN C 1 Bright A_SetPitch(pitch + 0.1);
+		STGN D 2 Bright A_SetPitch(pitch + 0.1); //C
 		STGN D 1;
 		TNT1 A 0 OverlayRecoil(-6, -12);
 		TNT1 A 0 A_OverlayScale(1, 1, 1);
@@ -153,6 +154,10 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
         TNT1 A 0 A_JumpIfInventory("Shell",1, "ReloadStart");
         Goto Ready;
 	ReloadStart:
+		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 3);
+		STGN MN 2 A_WeaponReady(WRF_NOFIRE);
+		STGN O 2;
+		GoTo LoadShell;
 		STGN MN 2 A_WeaponReady;
 		STGN O 2;
 	LoadShell:
@@ -164,6 +169,9 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		TNT1 A 0 A_StartSound("weapons/scout_shotgun_insert_shell",CHAN_AUTO, 0, 1.05);
 		STGN P 1;
 		STGN QR 1;
+		TNT1 A 0 A_JumpIfInventory("ShellInTube", 1, 3);
+		STGN S 2 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_jump(225,2);
 		STGN S 2 A_WeaponReady;
 
         TNT1 A 0 A_Giveinventory("ShellInTube",1);
@@ -187,6 +195,21 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		SSTN A -1;
 		Stop;
 	}
+	override bool HandlePickup (Inventory item)
+    {
+        if (super.HandlePickup(item))
+        {
+            // Only give extra ammo if it's a real pickup (not dropped, respawned, etc.)
+            if (item == self)
+            {
+                Owner.GiveInventory("MeltaAmmo", 2);
+            }
+            return true;
+        }
+        return false;
+    }
+	
+	
 	action void smoke_puff(){
 		Vector3 facing = TrailedProjectile.facingToVector(invoker.owner.angle, invoker.owner.pitch, 30);
 // SMKAE0
@@ -205,7 +228,6 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 		{
 			return;
 		}
-
 		A_StartSound ("weapons/scout_shotgun_fire", CHAN_AUTO, 0, 1.08);
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
@@ -214,15 +236,15 @@ class AstartesShotgun : ShellEjectingWeapon Replaces Shotgun
 				return;
 		}
 		player.mo.PlayAttacking2 ();
-
-		A_FireBullets (6, 1.5, 9, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:14);
+		A_FireBullets (5, 3, 5, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:12);
+		A_FireBullets (11, 3, 5, /*7*/ 0, "ClearPuff", flags:0, missile:"ShotgunProjectile",Spawnheight:-1,Spawnofs_xy:12);
 // 		alternatShotgunFire(4, "ShotgunProjectile", 2);
 		A_Overlay(-2, "MuzzleFlash");
 		A_OverlayPivot(-2, 0.5, 0.5);
 		A_OverlayScale(-2, 0.4 + random(-3,3)/100, 0.4 + random(-3,3)/100);
 		A_OverlayOffset(-2, 250 + random(-5,5), 40 + random(-5,5));
 		A_OverlayRotate(-2, random(0,8)*30, WOF_ADD );
-		A_OverlayAlpha(-2, 0.95);
+		A_OverlayAlpha(-2, 0.1);
 		smoke_puff();
 		smoke_puff();
 	}
@@ -267,7 +289,7 @@ class ShotgunProjectile: FastProjectile {
 		Scale 0.8;
 		+PUFFONACTORS
 // 		Damage 7;
-		DamageFunction 4 * random(1,3);
+		DamageFunction 4.7 * random(1,3);
 		Projectile;
 		+RANDOMIZE
 		+DEHEXPLOSION
