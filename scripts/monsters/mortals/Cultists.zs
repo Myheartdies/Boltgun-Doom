@@ -6,7 +6,7 @@ class Cultist1 : ZombieMan
 	Default
 	{
 		Health 20;
-		GibHealth 8;
+		GibHealth 15;
 		Radius 20;
 		Height 56;
 		Speed 8;
@@ -16,10 +16,11 @@ class Cultist1 : ZombieMan
 // 		+MISSILEMORE
 		+FLOORCLIP
 		+DOHARMSPECIES
-		+PUSHABLE
-		DamageFactor "Bolt", 2;
+// 		+PUSHABLE
+		DamageFactor "Melta", 2;
 		SeeSound "CLTA/sight";
-		AttackSound "grunt/attack";
+// 		AttackSound "grunt/attack";
+		AttackSound "CLTA/fire";
 		PainSound "grunt/pain";
 		DeathSound "grunt/death";
 		ActiveSound "grunt/active";
@@ -27,26 +28,35 @@ class Cultist1 : ZombieMan
 		Tag "$FN_ZOMBIE";
 		Cultist1.MaxBurstCount 3;
 		FriendlySeeBlocks 5;
+		MeleeRange 60;
+		ReactionTime 4;
 		
 	}
  	States
 	{
 	Spawn:
-		TNT1 A 1 spawnTeammate;
-		CLT1 MN 10 A_Look;
-		Wait;
+// 		TNT1 A 0 {
+// 			A_SpawnTeammate("Cultist2", angle + 90);
+// 			A_SpawnTeammate("Cultist3", angle + 270);
+// 		}
+		CLT1 ABMN 10 A_Look;
+		Loop;
 	See:
 		TNT1 A 0 BurstCountReset;
 		CLT1 AABBCCDD 4 A_Chase;
 		Loop;
 	Missile:
+		TNT1 A 0 A_StartSound("CLTA/aim",CHAN_WEAPON, CHANF_OVERLAP);
 		CLT1 E 8 A_FaceTarget;
 	Firing:
-		CLT1 E 2 A_FaceTarget;
-		CLT1 F 8 Bright CultistMissile;
+		CLT1 E 4 {
+			A_FaceTarget();
+// 			A_JumpIfTargetInsideMeleeRange("Melee");
+		}
+		CLT1 F 6 Bright CultistMissile;
 		CLT1 E 6;
 		CLT1 E 2 A_Jump(CultistRefireChance(),"See");
-		Goto Firing;
+		Goto Firing +1;
 	Pain:
 		CLT1 H 3;
 		CLT1 H 3 A_Pain;
@@ -59,9 +69,9 @@ class Cultist1 : ZombieMan
 		CLT1 L -1;
 		Stop;
 	XDeath:
-		OVKS A 5 A_NoBlocking;
-		OVKS B 5 A_XScream;
-		OVKS C 5 A_NoBlocking;
+		OVKS A 3 A_NoBlocking;
+		OVKS B 3 A_XScream;
+		OVKS C 3 A_NoBlocking;
 		OVKS DEFGHI 3;
 		OVKS J -1;
 		Stop;
@@ -121,13 +131,142 @@ class Cultist1 : ZombieMan
 			A_FaceTarget();
 // 			A_CustomBulletAttack(2
 // 			, 0, 1,0, pufftype :"BulletPuff",0, flags:CBAF_NORANDOM, missile:"Tracer");
-			A_StartSound("grunt/attack", CHAN_WEAPON,CHANF_OVERLAP);
+			A_StartSound("CLTA/fire", CHAN_WEAPON,CHANF_OVERLAP);
+			A_StartSound("CLTA/fire", CHAN_WEAPON,CHANF_OVERLAP,pitch:0.8);
 			A_SpawnProjectile("Tracer", angle:random(-13,13)+ 0.5*invoker.burstCount, flags: CMF_AIMOFFSET);
 		}
 		
 // 		A_StartSound("weapons/pistol",flags:CHAN_WEAPON);
 // 		A_SpawnProjectile("Tracer");
 // 		A_CustomBulletAttack(22.5, 0, 3,0, pufftype :"BulletPuff", 0, flags:CBAF_NORANDOM);
+	}
+	void A_SpawnTeammate(Class<Actor> spawntype, double angle, int flags = 0, int limit = -1)
+	{
+		// Don't spawn if we get massacred.
+		if (DamageType == 'Massacre') return;
+
+		if (spawntype == null) spawntype = "LostSoul";
+
+		// [RH] check to make sure it's not too close to the ceiling
+		if (pos.z + height + 8 > ceilingz)
+		{
+			if (bFloat)
+			{
+				Vel.Z -= 2;
+				bInFloat = true;
+				bVFriction = true;
+			}
+			return;
+		}
+
+		// [RH] make this optional
+		if (limit < 0 && (Level.compatflags & COMPATF_LIMITPAIN))
+			limit = 21;
+
+		if (limit > 0)
+		{
+			// count total number of skulls currently on the level
+			// if there are already 21 skulls on the level, don't spit another one
+			int count = limit;
+			ThinkerIterator it = ThinkerIterator.Create(spawntype);
+			Thinker othink;
+
+			while ( (othink = it.Next ()) )
+			{
+				if (--count == 0)
+					return;
+			}
+		}
+
+		// okay, there's room for another one
+		double otherradius = GetDefaultByType(spawntype).radius;
+		double prestep = 4 + (radius + otherradius) * 1.5;
+
+		Vector2 move = AngleToVector(angle, prestep);
+		Vector3 spawnpos = pos + (0,0,8);
+		Vector3 destpos = spawnpos + move;
+
+		Actor other = Spawn(spawntype, spawnpos, ALLOW_REPLACE);
+
+		// Now check if the spawn is legal. Unlike Boom's hopeless attempt at fixing it, let's do it the same way
+		// P_XYMovement solves the line skipping: Spawn the Lost Soul near the PE's center and then use multiple
+		// smaller steps to get it to its intended position. This will also result in proper clipping, but
+		// it will avoid all the problems of the Boom method, which checked too many lines that weren't even touched
+		// and despite some adjustments never worked with portals.
+
+		if (other != null)
+		{
+			double maxmove = other.radius - 1;
+
+			if (maxmove <= 0) maxmove = 16;
+
+			double xspeed = abs(move.X);
+			double yspeed = abs(move.Y);
+
+			int steps = 1;
+
+			if (xspeed > yspeed)
+			{
+				if (xspeed > maxmove)
+				{
+					steps = int(1 + xspeed / maxmove);
+				}
+			}
+			else
+			{
+				if (yspeed > maxmove)
+				{
+					steps = int(1 + yspeed / maxmove);
+				}
+			}
+
+			Vector2 stepmove = move / steps;
+			bool savedsolid = bSolid;
+			bool savednoteleport = other.bNoTeleport;
+			
+			// make the PE nonsolid for the check and the LS non-teleporting so that P_TryMove doesn't do unwanted things.
+			bSolid = false;
+			other.bNoTeleport = true;
+			for (int i = 0; i < steps; i++)
+			{
+				Vector2 ptry = other.pos.xy + stepmove;
+				double oldangle = other.angle;
+				if (!other.TryMove(ptry, 0))
+				{
+					// kill it immediately
+					other.ClearCounters();
+					other.Destroy();
+// 					other.DamageMobj(self, self, TELEFRAG_DAMAGE, 'None');
+// 					bSolid = savedsolid;
+// 					other.bNoTeleport = savednoteleport;
+					return;
+				}
+
+				if (other.pos.xy != ptry)
+				{
+					// If the new position does not match the desired position, the player
+					// must have gone through a portal.
+					// For that we need to adjust the movement vector for the following steps.
+					double anglediff = deltaangle(oldangle, other.angle);
+
+					if (anglediff != 0)
+					{
+						stepmove = RotateVector(stepmove, anglediff);
+					}
+				}
+
+			}
+			bSolid = savedsolid;
+			other.bNoTeleport = savednoteleport;
+
+			// [RH] Lost souls hate the same things as their pain elementals
+			other.CopyFriendliness (self, !(flags & PAF_NOTARGET));
+
+			if (!(flags & PAF_NOSKULLATTACK))
+			{
+				other.A_SkullAttack();
+			}
+		}
 	}
 }
 class Cultist2 : Cultist1
@@ -139,6 +278,10 @@ class Cultist2 : Cultist1
 	States
 	{
 	Spawn:
+// 		TNT1 A 0 {
+// 			A_SpawnTeammate("Cultist3", angle + 90);
+// 			A_SpawnTeammate("Cultist4", angle + 270);
+// 		}
 		CLT2 MN 10 A_Look;
 		Loop;
 	See:
@@ -146,13 +289,14 @@ class Cultist2 : Cultist1
 		CLT2 AABBCCDD 4 A_Chase;
 		Loop;
 	Missile:
+		TNT1 A 0 A_StartSound("CLTA/aim",CHAN_WEAPON, CHANF_OVERLAP);
 		CLT2 E 8 A_FaceTarget;
 	Firing:
-		CLT2 E 2 A_FaceTarget;
-		CLT2 F 8 Bright CultistMissile;
+		CLT2 E 4 A_FaceTarget() ;
+		CLT2 F 6 Bright CultistMissile;
 		CLT2 E 5;
 		CLT2 E 2 A_Jump(CultistRefireChance(),"See");
-		Goto Firing;
+		Goto Firing +1;
 	Pain:
 		CLT2 H 3;
 		CLT2 H 3 A_Pain;
@@ -189,6 +333,10 @@ class Cultist3 : Cultist1
 	States
 	{
 	Spawn:
+// 		TNT1 A 0 {
+// 			A_SpawnTeammate("Cultist4", angle + 90);
+// 			A_SpawnTeammate("Cultist1", angle + 270);
+// 		}
 		CLT3 MN 10 A_Look;
 		Loop;
 	See:
@@ -196,13 +344,14 @@ class Cultist3 : Cultist1
 		CLT3 AABBCCDD 4 A_Chase;
 		Loop;
 	Missile:
+		TNT1 A 0 A_StartSound("CLTA/aim",CHAN_WEAPON, CHANF_OVERLAP);
 		CLT3 E 8 A_FaceTarget;
 	Firing:
-		CLT3 E 2 A_FaceTarget;
-		CLT3 F 8 Bright CultistMissile;
+		CLT3 E 4 A_FaceTarget;
+		CLT3 F 6 Bright CultistMissile;
 		CLT3 E 6;
 		CLT3 E 2 A_Jump(CultistRefireChance(),"See");
-		Goto Firing;
+		Goto Firing+1;
 	Pain:
 		CLT3 H 3;
 		CLT3 H 3 A_Pain;
@@ -245,6 +394,10 @@ class Cultist4 : Cultist1
  	States
 	{
 	Spawn:
+// 		TNT1 A 0 {
+// 			A_SpawnTeammate("Cultist1", angle + 90);
+// 			A_SpawnTeammate("Cultist2", angle + 270);
+// 		}
 		CLT4 AB 10 A_Look;
 		Loop;
 	See:
@@ -252,13 +405,14 @@ class Cultist4 : Cultist1
 		CLT4 AABBCCDD 4 A_Chase;
 		Loop;
 	Missile:
+		TNT1 A 0 A_StartSound("CLTA/aim",CHAN_WEAPON, CHANF_OVERLAP);
 		CLT4 E 8 A_FaceTarget;
 	Firing:
-		CLT4 E 2 A_FaceTarget;
-		CLT4 F 8 Bright CultistMissile;//A_PosAttack;
+		CLT4 E 4 A_FaceTarget;
+		CLT4 F 6 Bright CultistMissile;//A_PosAttack;
 		CLT4 E 5;
 		CLT4 E 2 A_Jump(CultistRefireChance(),"See");
-		Goto Firing;
+		Goto Firing +1;
 	Pain:
 		CLT4 G 3;
 		CLT4 G 3 A_Pain;
