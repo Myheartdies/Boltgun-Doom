@@ -1,4 +1,4 @@
-class FlamerBase : DoomImp{
+class FlamerBase : Actor{
 	Default
 	{
 		Health 70;
@@ -8,8 +8,8 @@ class FlamerBase : DoomImp{
 		Speed 10;
 		PainChance 150;
 		Monster;
-		DamageFactor "SmallExplosion", 0.5;
-		DamageFactor "Bolter", 0.65;
+		DamageFactor "SmallExplosion", 0.45;
+		DamageFactor "Bolter", 0.8;
 		DamageFactor "HeavyBolter", 0.7;
 		DamageFactor "StrongExplosion", 0.5;
 		+FLOORCLIP
@@ -31,6 +31,19 @@ class FlamerBase : DoomImp{
 	Death:
 		FLM1 N 6 A_NoBlocking;
 		FLM1 O -1;
+		Stop;
+	XDeath:
+		TNT1 A 0 {
+			scale.x = 0.52;
+			scale.y = 0.52;}
+		OVKM A 3 {
+			A_StartSound("flamer/death");
+			A_XScream();
+		}
+		OVKM B 3 A_NoBlocking;
+		OVKM CDEF 3;
+		OVKM GHIJ 2;
+		OVKM K -1;
 		Stop;
 	}
 	void FlamerMissile(){
@@ -57,7 +70,7 @@ class Flamer1 : FlamerBase
 	Default
 	{
 		Health 75;
-		Speed 10;
+		Speed 8;
 		PainChance 120;
 		Monster;
 		Scale 0.4;
@@ -66,7 +79,7 @@ class Flamer1 : FlamerBase
 		DamageFactor "HeavyBolter", 0.7;
 		DamageFactor "StrongExplosion", 0.5;
 		+FLOORCLIP
-		ReactionTime 4;
+		ReactionTime 6;
 		MissileChanceMult 0.9;
 	}
 	States
@@ -75,9 +88,11 @@ class Flamer1 : FlamerBase
 		FLM1 AB 10 A_Look;
 		Loop;
 	See:
-		FLM1 AAABBBCCCDDD 2 {
+		FLM1 AAABBB 2 {
 			A_Chase();
-			
+		}
+		FLM1 CCDD 3  {
+			A_Chase();
 		}
 		Loop;
 	Melee:
@@ -101,15 +116,7 @@ class Flamer1 : FlamerBase
 		FLM1 N 6 A_NoBlocking;
 		FLM1 O -1;
 		Stop;
-	XDeath:
-		OVKS J 1;
-		FLM1 K 5 A_StartSound("flamer/death");
-		FLM1 L 5 A_NoBlocking;
-		FLM1 M 5;
-		FLM1 N 5;
-		FLM2 OOO 5;
-		OVKS J -1;
-		Stop;
+
 // 		OVKS A 5 A_NoBlocking;
 // 		OVKS B 5 A_XScream;
 // 		OVKS C 5 A_NoBlocking;
@@ -159,15 +166,15 @@ class Flamer2 : FlamerBase
 		FLM2 N 6 A_NoBlocking;
 		FLM2 O -1;
 		Stop;
-	XDeath:
-		OVKS J 1;
-		FLM2 K 5 A_StartSound("flamer/death");
-		FLM2 L 5;
-		FLM2 M 5;
-		FLM2 N 5 A_NoBlocking;
-		FLM2 OOO 5;
-		TROO U -1;
-		Stop;
+// 	XDeath:
+// 		OVKS J 1;
+// 		FLM2 K 5 A_StartSound("flamer/death");
+// 		FLM2 L 5;
+// 		FLM2 M 5;
+// 		FLM2 N 5 A_NoBlocking;
+// 		FLM2 OOO 5;
+// 		TROO U -1;
+// 		Stop;
 	Raise:
 		TROO ML 8;
 		TROO KJI 6;
@@ -211,15 +218,15 @@ class Flamer3 : FlamerBase
 		FLM3 N 6 A_NoBlocking;
 		FLM3 O -1;
 		Stop;
-	XDeath:
-		OVKS J 1;
-		FLM3 K 5 A_StartSound("flamer/death");
-		FLM3 L 5;
-		FLM3 M 5;
-		FLM3 N 5 A_NoBlocking;
-		FLM3 OOO 5;
-		TROO U -1;
-		Stop;
+// 	XDeath:
+// 		OVKS J 1;
+// 		FLM3 K 5 A_StartSound("flamer/death");
+// 		FLM3 L 5;
+// 		FLM3 M 5;
+// 		FLM3 N 5 A_NoBlocking;
+// 		FLM3 OOO 5;
+// 		TROO U -1;
+// 		Stop;
 	Raise:
 		TROO ML 8;
 		TROO KJI 6;
@@ -235,7 +242,7 @@ class FlamerBall: DoomImpBall{
 	{
 		SeeSound "flamer/attack";
 		Damage 3;
-		Speed 10;
+		Speed 11;
 		Scale 1.1;
 		Alpha 0.5;
 // 		RenderStyle 'Translucent';

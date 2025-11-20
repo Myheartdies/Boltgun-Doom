@@ -1,4 +1,4 @@
-class Legionary : ChaosMarine //Replaces Revenant
+class Legionary : ChaosMarine 
 {
 //  6 movement frame ABCDEF  , foot step happens at state B and E
 //  4 ranged attack frame reduce to 3 GHI
@@ -22,7 +22,7 @@ class Legionary : ChaosMarine //Replaces Revenant
 		MeleeRange 48;
 		MeleeThreshold 140;
 // 		+DropOff
-		MinMissileChance 150;
+		MinMissileChance 130;
 		DropItem "ClipBox";
 		Tag "$FN_CSM";
 	}
@@ -97,23 +97,15 @@ class Legionary : ChaosMarine //Replaces Revenant
 	Pain:
 		TNT1 A 0 A_TakeInventory("ParryMe_Stack",1);
 		TCSM L  2 A_Pain;
+		TNT1 A 0 FeelNoPain(10);
 		TCSM M  4 ;
 // 		TNT1 A 0  A_JumpIf(random(0,3) > 2, "Charge");
 		TNT1 A 0  A_JumpIfInventory("ParryMe_Stack", 2 ,"Pain");
-		TNT1 A 0 FeelNoPain(6);
+		
 		Goto See+1;
 	Death:
 		TCSM M  6 ;
 		TCSM N  6 A_Scream;
-		TCSM O  6;
-		TCSM O  4 A_NoBlocking;
-		TCSM P  11;
-		TCSM Q -1;
-		Stop;
-	XDeath:
-		OVKS J 1;
-		TCSM M  6 ;
-		TCSM N  6 A_StartSound("TCSM/death");
 		TCSM O  6;
 		TCSM O  4 A_NoBlocking;
 		TCSM P  11;
@@ -163,10 +155,126 @@ class Legionary : ChaosMarine //Replaces Revenant
 //     Angle_to to get angle
 	
 	}
-	
+	override void MarineXDeath(){
+		bool spawned;
+		Actor gib;
+		A_SpawnItemEx("GibHeadTCSM", xofs:5, zofs:64,xvel: frandom(1,2), yvel: frandom(-3,3), zvel: random(6,12));
+// 		left arm
+		A_SpawnItemEx("GibArmTCSM", xofs:3, yofs: -6,  zofs:40, xvel: frandom(1,2), yvel: frandom(-5,-3), zvel: random(1,3));
+// 		right arm
+		[spawned, gib] =  A_SpawnItemEx("GibArmTCSM", xofs:3, yofs: 6, zofs:40,xvel: frandom(1,2), yvel: frandom(3,5), zvel: random(1,3));
+		if (spawned) gib.scale.x = gib.scale.x * -1;
+		return ;
+	}
 	
 }
 
+
+class GibArmTCSM: GibActor
+{
+	Default
+	{
+		Radius 8.0;
+		Height 4.0;
+		Gravity 0.6;
+		Scale 0.52;
+		BounceFactor 0.4;
+		BounceCount 6;
+		BounceSound "TCSM/gibbounce";
+	}
+	States
+	{
+// 		First loop has bright frames
+		Spawn:
+			TNT1 A 0 {Gravity = Gravity * 0.5; A_Setroll(random(180,270));}
+			TSMA ABCDE 2 Bright;
+			TNT1 A 0 {Gravity = Gravity * 2;}
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop2");
+			}
+			TSMA F -1;
+			Stop;
+		RollLoop1:
+			TSMA ABCDE 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop2");
+			}
+			TSMA F -1;
+			Stop;
+		RollLoop2:
+			TSMA FGHABC 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop3");
+			}
+			TSMA F -1;
+			Stop;
+		RollLoop3:
+			TSMA DEFGH 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop1");
+			}
+			TSMA I -1;
+			Stop;
+		Death:
+			TSMA I -1;
+			Stop;
+	}
+}
+
+class GibHeadTCSM: GibActor 
+{
+	Default
+	{
+		Radius 8.0;
+		Height 4.0;
+		Gravity 0.6;
+		Scale 0.6;
+		BounceType 'Doom';
+		BounceFactor 0.4;
+		BounceCount 6;
+		BounceSound "TCSM/gibbounce";
+	}
+	States
+	{
+// 		First loop has bright frames
+		Spawn:
+			TNT1 A 0 {Gravity = Gravity * 0.25;}
+			TSMH ABC 2 Bright;
+			TNT1 A 0 {Gravity = Gravity * 2;}
+			TSMH DEF 2 Bright;
+			TNT1 A 0 {Gravity = Gravity * 2;}
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop2");
+			}
+			TSMH F -1;
+			Stop;
+		RollLoop1:
+			TSMH ABCDEF 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop2");
+			}
+			TSMH F -1;
+			Stop;
+		RollLoop2: 
+			TSMH GHIABC 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop3");
+			}
+			TSMH F -1;
+			Stop;
+		RollLoop3: 
+			TSMH DEFGHI 2;
+			TNT1 A 0 {
+				return A_Jumpif(abs(vel.x) > 0.2 || abs(vel.y) > 0.2 || abs(vel.z) > 0.2, "RollLoop1");
+			}
+			TSMH I -1;
+			Stop;
+		Death:
+			TNT1 A 0 {scale.x = scale.x * (random(0,1)-0.5) * 2;}
+			TSMH A -1;
+			Stop;
+	}
+}
 
 class MarineBall: BolterProjectile{
 	Default
@@ -182,7 +290,7 @@ class MarineBall: BolterProjectile{
 // 		DamageFunction 3.5 * random(1,8);
 // 		DamageFunction 24;
 		Speed 14;
-		FastSpeed 25;
+		FastSpeed 20;
 	}
 	States
 	{
