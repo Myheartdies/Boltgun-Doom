@@ -3,7 +3,7 @@
 // ========================================================================
 // Autogun alert
 CLTA/sight CLTASIT1
-$pitchset CLTA/sight 0.9 1.2 
+$pitchset CLTA/sight 0.8 0.95 
 // shotgun Alert 
 $random CLTS/sight {CLTS/sight1, CLTH/sight1}
 CLTS/sight1 CLTSSIT1
@@ -12,6 +12,18 @@ $pitchset CLTS/sight 0.95 1.05
 $random CLTH/sight {CLTS/sight1, CLTH/sight1}
 CLTH/sight1 CLTHSIT1
 $pitchset CLTH/sight 0.9 0.98 
+
+// Autogun aim
+$random CLTA/aim {CLTA/aim1 CLTA/aim2 CLTA/aim3 CLTA/aim4}
+CLTA/aim1 CLTAAIM1
+CLTA/aim2 CLTAAIM2
+CLTA/aim3 CLTAAIM3
+CLTA/aim4 CLTAAIM4
+
+// Autogun Fire
+CLTA/fire CLTAFRE2
+$pitchset CLTA/fire 0.97 1.02 
+$volume CLTA/fire 1.0
 // ========================================================================
 // For plasma renegade
 // ========================================================================
@@ -60,6 +72,15 @@ TCSM/attack4 TCSMFRE4
 TCSM/attack5 TCSMFRE5
 
 TCSM/charge sounds/TCSM/steps/step_charge.wav
+
+// For when gib hits the ground
+$random TCSM/gibbounce {TCSM/gibbounce1 TCSM/gibbounce2 TCSM/gibbounce3}
+TCSM/gibbounce1 CSMGMTL1
+TCSM/gibbounce2 CSMGMTL2
+TCSM/gibbounce3 CSMGMTL3
+$volume TCSM/gibbounce1 0.9
+$volume TCSM/gibbounce2 0.9
+$volume TCSM/gibbounce3 0.9
 
 // ========================================================================
 
@@ -151,6 +172,9 @@ $pitchset CCSM/melee 0.97 1.03
 CCSM/attack CAPNATK1
 $pitchset CCSM/attack 0.97 1.03
 
+CCSM/meleehit CNSDFTH1
+$pitchset CCSM/meleehit 1.2 1.2
+
 $random CCSM/death {CCSM/death1 CCSM/death2 CCSM/death3 CCSM/death4 CCSM/death5}
 CCSM/death1 CAPNDTH1
 CCSM/death2 CAPNDTH2
@@ -230,15 +254,16 @@ $random bluehorror/sight {bluehorror/sight1 bluehorror/sight2 bluehorror/sight3}
 bluehorror/sight1 BLHRSIT1
 bluehorror/sight2 BLHRSIT2
 bluehorror/sight3 BLHRSIT3
+$volume bluehorror/sight 0.65
 
 $random bluehorror/active {bluehorror/active1 bluehorror/active2 bluehorror/active3}
 bluehorror/active1 BLHRACT1
 bluehorror/active2 BLHRACT2
 bluehorror/active3 BLHRACT3
 
-$pitchset bluehorror/active1 0.6 0.65
-$pitchset bluehorror/active2 0.6 0.65
-$pitchset bluehorror/active2 0.6 0.65
+$pitchset bluehorror/active1 0.63 0.7
+$pitchset bluehorror/active2 0.63 0.7
+$pitchset bluehorror/active2 0.63 0.7
 
 
 $random bluehorror/death {bluehorror/death1 bluehorror/death2 bluehorror/death3 }
@@ -256,3 +281,39 @@ $pitchset bluehorror/pain 0.8 1.05
 $random bluehorror/attack {bluehorror/attack1 bluehorror/attack2}
 bluehorror/attack1 BLHRATK1
 bluehorror/attack2 BLHRATK2
+
+
+// ========================================================================
+// For Pink Horrors
+// ========================================================================
+$random pinkhorror/sight { pinkhorror/sight1 pinkhorror/sight2 pinkhorror/sight3 }
+pinkhorror/sight1 PKHRSIT1
+pinkhorror/sight2 PKHRSIT2
+pinkhorror/sight3 PKHRSIT3
+
+$random pinkhorror/active { pinkhorror/active1 pinkhorror/active2 }
+pinkhorror/active1 PKHRACT1
+pinkhorror/active2 PKHRACT2
+
+$random pinkhorror/attack { pinkhorror/attack1 pinkhorror/attack2 }
+pinkhorror/attack1 PKHRATK1
+pinkhorror/attack2 PKHRATK2
+
+$volume pinkhorror/attack1 0.7
+$volume pinkhorror/attack2 0.7
+
+$random pinkhorror/death { pinkhorror/death1 pinkhorror/death2 pinkhorror/death3 }
+pinkhorror/death1 PKHRDTH1
+pinkhorror/death2 PKHRDTH2
+pinkhorror/death3 PKHRDTH3
+
+$random pinkhorror/pain { pinkhorror/pain1 pinkhorror/pain2 pinkhorror/pain3 }
+pinkhorror/pain1 PKHRPAN1
+pinkhorror/pain2 PKHRPAN2
+pinkhorror/pain3 PKHRPAN3
+
+pinkhorror/fire PKHRFRE1
+
+pinkhorror/impact PKHRIMP1
+$volume pinkhorror/impact 0.5
+
